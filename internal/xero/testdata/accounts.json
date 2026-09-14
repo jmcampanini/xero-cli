@@ -1,0 +1,26 @@
+{
+  "Id": "00000000-0000-0000-0000-000000000010",
+  "Status": "OK",
+  "ProviderName": "Example connection",
+  "DateTimeUTC": "/Date(1573755038314)/",
+  "Accounts": [
+    {
+      "AccountID": "00000000-0000-0000-0000-000000000001",
+      "Code": "200",
+      "Name": "Sales",
+      "Status": "ACTIVE",
+      "Type": "REVENUE",
+      "TaxType": "OUTPUT",
+      "Description": "",
+      "Class": "REVENUE",
+      "EnablePaymentsToAccount": false,
+      "ShowInExpenseClaims": false,
+      "BankAccountType": "",
+      "ReportingCode": "REV",
+      "ReportingName": "",
+      "HasAttachments": false,
+      "UpdatedDateUTC": "/Date(1573755038314+0000)/",
+      "AddToWatchlist": true
+    }
+  ]
+}

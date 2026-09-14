@@ -1,0 +1,87 @@
+{
+  "Id": "00000000-0000-0000-0000-000000000010",
+  "Status": "OK",
+  "ProviderName": "Example connection",
+  "DateTimeUTC": "/Date(1573755038314)/",
+  "TrackingCategories": [
+    {
+      "Name": "Region",
+      "Status": "ACTIVE",
+      "TrackingCategoryID": "00000000-0000-0000-0000-000000000002",
+      "Options": [
+        {
+          "TrackingOptionID": "00000000-0000-0000-0000-000000000010",
+          "Name": "Option 1",
+          "Status": "ACTIVE",
+          "HasValidationErrors": false,
+          "IsDeleted": false,
+          "IsArchived": false,
+          "IsActive": true
+        },
+        {
+          "TrackingOptionID": "00000000-0000-0000-0000-000000000011",
+          "Name": "Option 2",
+          "Status": "ACTIVE",
+          "HasValidationErrors": false,
+          "IsDeleted": false,
+          "IsArchived": false,
+          "IsActive": true
+        },
+        {
+          "TrackingOptionID": "00000000-0000-0000-0000-000000000012",
+          "Name": "Option 3",
+          "Status": "ACTIVE",
+          "HasValidationErrors": false,
+          "IsDeleted": false,
+          "IsArchived": false,
+          "IsActive": true
+        },
+        {
+          "TrackingOptionID": "00000000-0000-0000-0000-000000000013",
+          "Name": "Option 4",
+          "Status": "ACTIVE",
+          "HasValidationErrors": false,
+          "IsDeleted": false,
+          "IsArchived": false,
+          "IsActive": true
+        },
+        {
+          "TrackingOptionID": "00000000-0000-0000-0000-000000000014",
+          "Name": "Option 5",
+          "Status": "ACTIVE",
+          "HasValidationErrors": false,
+          "IsDeleted": false,
+          "IsArchived": false,
+          "IsActive": true
+        },
+        {
+          "TrackingOptionID": "00000000-0000-0000-0000-000000000015",
+          "Name": "Option 6",
+          "Status": "ACTIVE",
+          "HasValidationErrors": false,
+          "IsDeleted": false,
+          "IsArchived": false,
+          "IsActive": true
+        },
+        {
+          "TrackingOptionID": "00000000-0000-0000-0000-000000000016",
+          "Name": "Option 7",
+          "Status": "ACTIVE",
+          "HasValidationErrors": false,
+          "IsDeleted": false,
+          "IsArchived": false,
+          "IsActive": true
+        },
+        {
+          "TrackingOptionID": "00000000-0000-0000-0000-000000000017",
+          "Name": "Option 8",
+          "Status": "ACTIVE",
+          "HasValidationErrors": false,
+          "IsDeleted": false,
+          "IsArchived": false,
+          "IsActive": true
+        }
+      ]
+    }
+  ]
+}
