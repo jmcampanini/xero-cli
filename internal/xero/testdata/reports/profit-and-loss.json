@@ -1,0 +1,341 @@
+{
+  "Id": "00000000-0000-0000-0000-000000000001",
+  "Status": "OK",
+  "ProviderName": "Example connection",
+  "DateTimeUTC": "/Date(1767225600000)/",
+  "Reports": [
+    {
+      "ReportID": "ProfitAndLoss",
+      "ReportName": "Profit and Loss",
+      "ReportType": "ProfitAndLoss",
+      "ReportTitles": [
+        "Income Statement",
+        "Example Holdings Ltd",
+        "1 December 2025 to 31 December 2025"
+      ],
+      "ReportDate": "14 September 2026",
+      "UpdatedDateUTC": "/Date(1767225600000)/",
+      "Fields": [],
+      "Rows": [
+        {
+          "RowType": "Header",
+          "Cells": [
+            {
+              "Value": ""
+            },
+            {
+              "Value": "31 Dec 25"
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Revenue",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 002",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "100.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Revenue"
+                },
+                {
+                  "Value": "100.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Less Cost of Sales",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 003",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "117.01",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 004",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "134.02",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 005",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "151.03",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 006",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "168.04",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 007",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "185.05",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Cost of Sales"
+                },
+                {
+                  "Value": "202.06"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Gross Profit"
+                },
+                {
+                  "Value": "219.07"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Operating Income / (Loss)"
+                },
+                {
+                  "Value": "219.07"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Other Income and Expense",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 008",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "236.08",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Other Income and Expense"
+                },
+                {
+                  "Value": "236.08"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Net Income  / (Loss) before Tax"
+                },
+                {
+                  "Value": "253.09"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": []
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Net Income"
+                },
+                {
+                  "Value": "253.09"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": []
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Total Comprehensive Income"
+                },
+                {
+                  "Value": "253.09"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
