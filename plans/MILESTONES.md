@@ -91,6 +91,10 @@ in the test organisation and verified line by line through `show`.
 
 - Browser authorisation (`auth login`) for a user without a Custom
   Connection.
+- `report bank-summary --periods N --timeframe month`: Xero's bank
+  summary has no period columns, so the tool would run one call per
+  whole month ending at the range end and lay the columns side by side
+  per bank account (opening, received, spent, closing for each month).
 - `--csv` on list commands, history, a response cache, export,
   `describe`, relative and financial-year date forms.
 - The general ledger feed, last: `journals list`, `journal show`, and
