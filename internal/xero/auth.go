@@ -1,10 +1,12 @@
 package xero
 
 import (
+	"cmp"
 	"context"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
@@ -43,67 +45,77 @@ func (c *Client) AuthStatus(ctx context.Context) (AuthStatus, error) {
 		status.Token = err.Error()
 		return status, err
 	}
+
+	claimsErr, scopeErr := c.checkClaims(token.AccessToken, &status)
+	identityErr := c.checkOrganisation(ctx, &status)
+	status.Limits = limitsSummary(c.Limits())
+	// An identity fault outranks a scope gap: fix who you talk to before what you may read.
+	return status, cmp.Or(claimsErr, identityErr, scopeErr)
+}
+
+// checkClaims fills the token, scope and command rows from the decoded JWT.
+// It returns the decoding fault and, separately, the scope gap for this milestone's commands.
+func (c *Client) checkClaims(token string, status *AuthStatus) (claimsErr, scopeErr error) {
+	scopes, expiry, err := tokenClaims(token)
+	if err != nil {
+		status.Token = err.Error()
+		return err, nil
+	}
 	status.TokenOK = true
-	status.Token = "ok"
-	var scopeErr error
-	scopes, expiry, firstErr := tokenClaims(token.AccessToken)
-	if firstErr == nil {
-		status.Token = fmt.Sprintf("ok, expires in %dm", int(time.Until(expiry).Round(time.Minute).Minutes()))
-		status.Scopes = strings.Join(scopes, " ")
-		capabilities := Capabilities(scopes)
-		var commands []string
-		for _, group := range []string{"accounts", "tracking", "reports", "transactions", "contacts"} {
-			state := "ok"
-			if !capabilities[group] {
-				state = "missing (" + requiredScope(group) + ")"
-			}
-			commands = append(commands, group+" "+state)
+	status.Token = fmt.Sprintf("ok, expires in %dm", int(time.Until(expiry).Round(time.Minute).Minutes()))
+	status.Scopes = strings.Join(scopes, " ")
+
+	capabilities := Capabilities(scopes)
+	var commands []string
+	for _, group := range []string{"accounts", "tracking", "reports", "transactions", "contacts"} {
+		state := "ok"
+		if !capabilities[group] {
+			state = "missing (" + requiredScope(group) + ")"
 		}
-		status.Commands = strings.Join(commands, " · ")
-		if !capabilities["accounts"] || !capabilities["tracking"] {
-			scopeErr = apperr.New("forbidden", "organisation %s: accounts and tracking require accounting.settings.read or accounting.settings; update the Custom Connection in the developer portal", c.options.Name)
+		commands = append(commands, group+" "+state)
+	}
+	status.Commands = strings.Join(commands, " · ")
+	if !capabilities["accounts"] || !capabilities["tracking"] {
+		return nil, apperr.New("forbidden", "organisation %s: accounts and tracking require accounting.settings.read or accounting.settings; update the Custom Connection in the developer portal", c.options.Name)
+	}
+	return nil, nil
+}
+
+// checkOrganisation fills the organisation rows and returns the identity fault, if any.
+// A sole connection is always reported so an unset or mismatched config still shows the discovered ID.
+func (c *Client) checkOrganisation(ctx context.Context, status *AuthStatus) error {
+	connections, err := c.connections(ctx)
+	if err != nil {
+		status.Organisation = err.Error()
+		return err
+	}
+	if len(connections) == 1 {
+		status.OrganisationID = connections[0].TenantID
+		status.OrganisationName = connections[0].TenantName
+	}
+	if c.options.OrganisationID == "" {
+		if len(connections) != 1 {
+			err := apperr.New("forbidden", "organisation %s: Custom Connection returned %d organisations; expected one", c.options.Name, len(connections))
+			status.Organisation = err.Error()
+			return err
 		}
-	} else {
-		status.Token = firstErr.Error()
-		status.TokenOK = false
+		status.Organisation = "not set in config (copy this ID)"
+		return nil
 	}
 
-	connections, connectionErr := c.connections(ctx)
-	if connectionErr != nil {
-		status.Organisation = connectionErr.Error()
-	} else {
-		if len(connections) == 1 {
-			status.OrganisationID = connections[0].TenantID
-			status.OrganisationName = connections[0].TenantName
-		}
-		if c.options.OrganisationID == "" {
-			if len(connections) == 1 {
-				status.Organisation = "not set in config (copy this ID)"
-			} else {
-				connectionErr = apperr.New("forbidden", "organisation %s: Custom Connection returned %d organisations; expected one", c.options.Name, len(connections))
-				status.Organisation = connectionErr.Error()
-			}
-		} else {
-			connection, matchErr := c.matchConnection(connections)
-			connectionErr = matchErr
-			if matchErr != nil {
-				status.Organisation = "MISMATCH: config says " + c.options.OrganisationID
-			} else {
-				status.OrganisationID = connection.TenantID
-				status.OrganisationName = connection.TenantName
-				status.Organisation = "matches config"
-				status.OrganisationOK = true
-			}
-		}
+	connection, err := c.matchConnection(connections)
+	if err != nil {
+		status.Organisation = "MISMATCH: config says " + c.options.OrganisationID
+		return err
 	}
-	// An identity fault outranks a scope gap: fix who you talk to before what you may read.
-	if firstErr == nil {
-		firstErr = connectionErr
-	}
-	if firstErr == nil {
-		firstErr = scopeErr
-	}
-	limits := c.Limits()
+	status.OrganisationID = connection.TenantID
+	status.OrganisationName = connection.TenantName
+	status.Organisation = "matches config"
+	status.OrganisationOK = true
+	return nil
+}
+
+func limitsSummary(limits http.Header) string {
 	var rows []string
 	for _, entry := range [][2]string{{"day", "X-DayLimit-Remaining"}, {"minute", "X-MinLimit-Remaining"}, {"app minute", "X-AppMinLimit-Remaining"}} {
 		value := limits.Get(entry[1])
@@ -114,8 +126,7 @@ func (c *Client) AuthStatus(ctx context.Context) (AuthStatus, error) {
 		}
 		rows = append(rows, entry[0]+" "+value)
 	}
-	status.Limits = strings.Join(rows, " · ")
-	return status, firstErr
+	return strings.Join(rows, " · ")
 }
 
 // secretFileStatus drops the path from a ReadSecret error; the status row already shows it.

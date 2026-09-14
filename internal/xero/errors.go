@@ -1,6 +1,7 @@
 package xero
 
 import (
+	"cmp"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -37,16 +38,7 @@ func responseError(status int, headers http.Header, body []byte) error {
 		}
 		problem.Message = string(body)
 	}
-	message := problem.Message
-	if message == "" {
-		message = problem.Detail
-	}
-	if message == "" {
-		message = problem.Title
-	}
-	if message == "" {
-		message = http.StatusText(status)
-	}
+	message := cmp.Or(problem.Message, problem.Detail, problem.Title, http.StatusText(status))
 	code := "api"
 	switch status {
 	case 400:

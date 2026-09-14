@@ -12,6 +12,9 @@ import (
 	"golang.org/x/term"
 )
 
+// cellSanitizer keeps every cell on one line and strips escape characters.
+var cellSanitizer = strings.NewReplacer("\n", " ", "\r", " ", "\t", " ", "\x1b", "")
+
 // Terminal reports whether the writer is a terminal file.
 func Terminal(w io.Writer) bool {
 	f, ok := w.(*os.File)
@@ -31,10 +34,11 @@ func Table(w io.Writer, header []string, rows [][]string, color string) error {
 		}
 	}
 	for _, row := range rows {
+		cells := make([]string, len(row))
 		for i, cell := range row {
-			row[i] = strings.NewReplacer("\n", " ", "\r", " ", "\t", " ", "\x1b", "").Replace(cell)
+			cells[i] = cellSanitizer.Replace(cell)
 		}
-		if _, err := fmt.Fprintln(tw, strings.Join(row, "\t")); err != nil {
+		if _, err := fmt.Fprintln(tw, strings.Join(cells, "\t")); err != nil {
 			return err
 		}
 	}
@@ -42,11 +46,21 @@ func Table(w io.Writer, header []string, rows [][]string, color string) error {
 		return err
 	}
 	output := buf.String()
-	useColor := color == "always" || color == "auto" && Terminal(w) && os.Getenv("TERM") != "dumb" && os.Getenv("NO_COLOR") == ""
-	if useColor && len(header) > 0 {
+	if useColor(w, color) && len(header) > 0 {
 		first, rest, _ := strings.Cut(output, "\n")
 		output = "\x1b[1m" + first + "\x1b[0m\n" + rest
 	}
 	_, err := io.WriteString(w, output)
 	return err
+}
+
+func useColor(w io.Writer, color string) bool {
+	switch color {
+	case "always":
+		return true
+	case "auto":
+		return Terminal(w) && os.Getenv("TERM") != "dumb" && os.Getenv("NO_COLOR") == ""
+	default:
+		return false
+	}
 }

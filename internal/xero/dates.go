@@ -42,29 +42,40 @@ func normalizeValue(value any) {
 	switch object := value.(type) {
 	case map[string]any:
 		for key, value := range object {
-			text, ok := value.(string)
-			if ok && (strings.HasPrefix(text, "/Date(") || strings.HasPrefix(key, "Date") || key == "UpdatedDateUTC" || key == "CreatedDateUTC") {
-				date, err := ParseDate(text)
-				if err != nil {
-					date, err = time.Parse(time.RFC3339Nano, text)
+			if text, ok := value.(string); ok {
+				if normalized, ok := normalizeDate(key, text); ok {
+					object[key] = normalized
 				}
-				if err != nil {
-					date, err = time.Parse("2006-01-02T15:04:05", text)
-				}
-				if err == nil {
-					layout := "2006-01-02"
-					if key == "UpdatedDateUTC" || key == "CreatedDateUTC" {
-						layout = time.RFC3339Nano
-					}
-					object[key] = date.UTC().Format(layout)
-				}
-			} else {
-				normalizeValue(value)
+				continue
 			}
+			normalizeValue(value)
 		}
 	case []any:
 		for _, item := range object {
 			normalizeValue(item)
 		}
 	}
+}
+
+// normalizeDate converts a date-like field to a UTC calendar day, or to an RFC 3339
+// UTC timestamp for UpdatedDateUTC and CreatedDateUTC. Unrecognized text is left as is.
+func normalizeDate(key, text string) (string, bool) {
+	timestamp := key == "UpdatedDateUTC" || key == "CreatedDateUTC"
+	if !timestamp && !strings.HasPrefix(text, "/Date(") && !strings.HasPrefix(key, "Date") {
+		return "", false
+	}
+	date, err := ParseDate(text)
+	if err != nil {
+		date, err = time.Parse(time.RFC3339Nano, text)
+	}
+	if err != nil {
+		date, err = time.Parse("2006-01-02T15:04:05", text)
+	}
+	if err != nil {
+		return "", false
+	}
+	if timestamp {
+		return date.UTC().Format(time.RFC3339Nano), true
+	}
+	return date.UTC().Format("2006-01-02"), true
 }

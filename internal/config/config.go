@@ -32,6 +32,11 @@ type OrgConfig struct {
 	Scopes         []string `toml:"scopes"`
 }
 
+var (
+	namePattern   = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
+	clientPattern = regexp.MustCompile(`^[a-fA-F0-9]{32}$`)
+)
+
 func defaults() Config { return Config{} }
 
 // Load applies file, environment and flag overrides, then validates and resolves paths.
@@ -85,8 +90,6 @@ func Load(flags *pflag.FlagSet, explicitPath string) (Config, configloader.LoadR
 
 // Validate checks identifiers without reading secrets or requiring an organisation selection.
 func (c Config) Validate() error {
-	namePattern := regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
-	clientPattern := regexp.MustCompile(`^[a-fA-F0-9]{32}$`)
 	for _, name := range c.Names() {
 		org := c.Orgs[name]
 		if !namePattern.MatchString(name) {

@@ -58,28 +58,28 @@ diagnostic; use the NAME operand. This command never changes Xero data.`,
 				if err := render.JSON(command.OutOrStdout(), statuses); err != nil {
 					return err
 				}
-			} else {
-				for i, status := range statuses {
-					if i > 0 {
-						if _, err := fmt.Fprintln(command.OutOrStdout()); err != nil {
-							return err
-						}
-					}
-					// Fall back to the configured ID so a failed check still names the org.
-					header := status.Name
-					if status.OrganisationName != "" {
-						header += "  " + status.OrganisationName
-					}
-					if id := cmp.Or(status.OrganisationID, cfg.Orgs[names[i]].OrganisationID); id != "" {
-						header += "  (" + id + ")"
-					}
-					if _, err := fmt.Fprintln(command.OutOrStdout(), header); err != nil {
+				return firstErr
+			}
+			for i, status := range statuses {
+				if i > 0 {
+					if _, err := fmt.Fprintln(command.OutOrStdout()); err != nil {
 						return err
 					}
-					rows := [][]string{{"  client id", status.ClientID}, {"  secret file", status.SecretFile + "  (" + status.SecretFileStatus + ")"}, {"  token", status.Token}, {"  organisation", status.Organisation}, {"  scopes", status.Scopes}, {"  commands", status.Commands}, {"  limits", status.Limits}}
-					if err := render.Table(command.OutOrStdout(), nil, rows, o.color); err != nil {
-						return err
-					}
+				}
+				// Fall back to the configured ID so a failed check still names the org.
+				header := status.Name
+				if status.OrganisationName != "" {
+					header += "  " + status.OrganisationName
+				}
+				if id := cmp.Or(status.OrganisationID, cfg.Orgs[names[i]].OrganisationID); id != "" {
+					header += "  (" + id + ")"
+				}
+				if _, err := fmt.Fprintln(command.OutOrStdout(), header); err != nil {
+					return err
+				}
+				rows := [][]string{{"  client id", status.ClientID}, {"  secret file", status.SecretFile + "  (" + status.SecretFileStatus + ")"}, {"  token", status.Token}, {"  organisation", status.Organisation}, {"  scopes", status.Scopes}, {"  commands", status.Commands}, {"  limits", status.Limits}}
+				if err := render.Table(command.OutOrStdout(), nil, rows, o.color); err != nil {
+					return err
 				}
 			}
 			return firstErr

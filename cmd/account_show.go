@@ -10,6 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var guidPattern = regexp.MustCompile(`(?i)^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
+
 func newAccountShow(o *options) *cobra.Command {
 	return &cobra.Command{Use: "show CODE", Short: "Show an account by code, GUID or exact name", Args: cobra.ExactArgs(1),
 		Long: `Find an exact account code first, including archived accounts. If no code
@@ -45,7 +47,7 @@ func resolveAccount(ctx context.Context, api client, operand string) (xero.Accou
 			return account, nil
 		}
 	}
-	if regexp.MustCompile(`(?i)^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`).MatchString(operand) {
+	if guidPattern.MatchString(operand) {
 		account, err := api.Account(ctx, operand)
 		if err == nil {
 			return account, nil

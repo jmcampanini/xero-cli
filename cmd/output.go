@@ -18,7 +18,7 @@ func (o *options) object(command *cobra.Command, object any) error {
 	value := reflect.ValueOf(object)
 	typ := value.Type()
 	var rows [][]string
-	for i := 0; i < value.NumField(); i++ {
+	for i := range value.NumField() {
 		if !value.Field(i).CanInterface() {
 			continue
 		}
