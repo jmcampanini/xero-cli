@@ -31,10 +31,11 @@ func responseError(status int, headers http.Header, body []byte) error {
 		Type     string
 	}
 	if err := json.Unmarshal(body, &problem); err != nil {
+		// The status still decides the code; the first 200 bytes become the message.
 		if len(body) > 200 {
 			body = body[:200]
 		}
-		return apperr.New("api", "Xero HTTP %d: %s", status, strings.Join(strings.Fields(string(body)), " "))
+		problem.Message = string(body)
 	}
 	message := problem.Message
 	if message == "" {

@@ -43,9 +43,10 @@ type Budget struct {
 	slots   chan struct{}
 }
 
-// NewBudget permits at most five concurrent requests and sixty per minute.
+// NewBudget permits at most five concurrent requests and sixty per minute,
+// refilled one per second with a burst of five.
 func NewBudget() *Budget {
-	return &Budget{limiter: rate.NewLimiter(rate.Every(time.Second), 1), slots: make(chan struct{}, 5)}
+	return &Budget{limiter: rate.NewLimiter(rate.Every(time.Second), 5), slots: make(chan struct{}, 5)}
 }
 
 // Client owns one connection's in-memory token and verified organisation identity.

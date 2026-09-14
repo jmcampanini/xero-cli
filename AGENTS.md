@@ -1,4 +1,4 @@
-`xero` is a Go CLI for Xero Custom Connections. This repository follows the code, go, and cli facets in Gibson. Milestone contracts live in the corresponding GitHub issue; `plans/` records the broader command design.
+`xero` is a Go CLI for Xero Custom Connections. Milestone contracts live in the corresponding GitHub issue; `plans/` records the broader command design.
 
 - Use Go 1.27.1 and module `github.com/jmcampanini/xero-cli`; the binary is `xero`.
 - Run `make check` before proposing a commit. It verifies formatting, module tidiness, lint, race tests, the production build, version identity, and reachable vulnerabilities without rewriting source.

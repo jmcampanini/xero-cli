@@ -10,10 +10,12 @@ import (
 	"time"
 )
 
+var xeroDate = regexp.MustCompile(`^/Date\((-?\d+)(?:[+-]\d{4})?\)/$`)
+
 // ParseDate decodes a Xero /Date(milliseconds+offset)/ value in UTC.
 // The optional offset is metadata; milliseconds already identify a UTC instant.
 func ParseDate(value string) (time.Time, error) {
-	match := regexp.MustCompile(`^/Date\((-?\d+)(?:[+-]\d{4})?\)/$`).FindStringSubmatch(value)
+	match := xeroDate.FindStringSubmatch(value)
 	if match == nil {
 		return time.Time{}, fmt.Errorf("invalid Xero date %q", value)
 	}

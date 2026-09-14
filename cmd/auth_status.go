@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"cmp"
 	"fmt"
 
 	"github.com/jmcampanini/xero-cli/internal/apperr"
@@ -22,9 +23,10 @@ fail this check; missing scopes for later commands are informational.
 Granular report access means at least one report, not every report.
 
 Human status blocks go to stdout. --json writes an array with name,
-client_id, secret_file, secret, secret_ok, token, token_ok, organisation_id,
-organisation_name, organisation, organisation_ok, scopes, commands and
-limits as strings or booleans. Unavailable checks are marked explicitly.
+client_id, secret_file, secret_file_status, secret_ok, token, token_ok,
+organisation_id, organisation_name, organisation, organisation_ok, scopes,
+commands and limits as strings or booleans. Unavailable checks are marked
+explicitly.
 Rate limits are unavailable when Xero omits the response headers; this
 command does not make extra accounting requests to obtain them.
 
@@ -63,10 +65,18 @@ diagnostic; use the NAME operand. This command never changes Xero data.`,
 							return err
 						}
 					}
-					if _, err := fmt.Fprintf(command.OutOrStdout(), "%s  %s  (%s)\n", status.Name, status.OrganisationName, status.OrganisationID); err != nil {
+					// Fall back to the configured ID so a failed check still names the org.
+					header := status.Name
+					if status.OrganisationName != "" {
+						header += "  " + status.OrganisationName
+					}
+					if id := cmp.Or(status.OrganisationID, cfg.Orgs[names[i]].OrganisationID); id != "" {
+						header += "  (" + id + ")"
+					}
+					if _, err := fmt.Fprintln(command.OutOrStdout(), header); err != nil {
 						return err
 					}
-					rows := [][]string{{"  client id", status.ClientID}, {"  secret file", status.SecretFile + "  (" + status.Secret + ")"}, {"  token", status.Token}, {"  organisation", status.Organisation}, {"  scopes", status.Scopes}, {"  commands", status.Commands}, {"  limits", status.Limits}}
+					rows := [][]string{{"  client id", status.ClientID}, {"  secret file", status.SecretFile + "  (" + status.SecretFileStatus + ")"}, {"  token", status.Token}, {"  organisation", status.Organisation}, {"  scopes", status.Scopes}, {"  commands", status.Commands}, {"  limits", status.Limits}}
 					if err := render.Table(command.OutOrStdout(), nil, rows, o.color); err != nil {
 						return err
 					}

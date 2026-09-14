@@ -42,7 +42,8 @@ func All(ctx context.Context, request Request, do func(context.Context, Request)
 			PageCount int
 			ItemCount int
 		}
-		if err := json.Unmarshal(envelope["pagination"], &pagination); err != nil || pagination.Page != page || pagination.PageCount < page {
+		// Page one with pageCount 0 is an empty collection, not invalid paging.
+		if err := json.Unmarshal(envelope["pagination"], &pagination); err != nil || pagination.Page != page || pagination.PageCount < page && (page > 1 || pagination.PageCount != 0) {
 			return status, headers, nil, apperr.New("invalid_argument", "--all requires valid pagination with page and pageCount")
 		}
 		key := ""

@@ -255,6 +255,10 @@ func TestResponseErrorMapping(t *testing.T) {
 		{503, `{"Title":"unavailable"}`, "api", "unavailable"},
 		{409, `{"Message":"other"}`, "api", "other"},
 		{502, strings.Repeat("x", 300), "api", strings.Repeat("x", 200)},
+		{401, ``, "unauthenticated", "Unauthorized"},
+		{404, ``, "not_found", "Not Found"},
+		{404, `The resource cannot be found`, "not_found", "The resource cannot be found"},
+		{429, ``, "rate_limited", "retry after"},
 	} {
 		t.Run(fmt.Sprint(tc.status, "-", tc.part[:min(len(tc.part), 12)]), func(t *testing.T) {
 			err := responseError(tc.status, http.Header{}, []byte(tc.body))
@@ -360,6 +364,12 @@ func TestPagingAcrossThreePages(t *testing.T) {
 	}
 	if len(result.Items) != 3 || result.Items[2].ID != 3 {
 		t.Errorf("combined response = %s", body)
+	}
+	_, _, body, err = All(context.Background(), Request{}, func(context.Context, Request) (int, http.Header, []byte, error) {
+		return 200, nil, []byte(`{"pagination":{"page":1,"pageSize":100,"pageCount":0,"itemCount":0},"Items":[]}`), nil
+	})
+	if err != nil || !strings.Contains(string(body), `"Items":[]`) {
+		t.Errorf("empty collection = %s, %v", body, err)
 	}
 	for _, body := range []string{`{"Items":[]}`, `{"pagination":{"page":1,"pageCount":1},"One":[],"Two":[]}`} {
 		_, _, _, err := All(context.Background(), Request{}, func(context.Context, Request) (int, http.Header, []byte, error) { return 200, nil, []byte(body), nil })

@@ -17,7 +17,7 @@ type AuthStatus struct {
 	Name             string `json:"name"`
 	ClientID         string `json:"client_id"`
 	SecretFile       string `json:"secret_file"`
-	Secret           string `json:"secret"`
+	SecretFileStatus string `json:"secret_file_status"`
 	SecretOK         bool   `json:"secret_ok"`
 	Token            string `json:"token"`
 	TokenOK          bool   `json:"token_ok"`
@@ -32,9 +32,9 @@ type AuthStatus struct {
 
 // AuthStatus inspects credentials and identity, including when the configured ID is absent.
 func (c *Client) AuthStatus(ctx context.Context) (AuthStatus, error) {
-	status := AuthStatus{Name: c.options.Name, ClientID: c.options.ClientID, SecretFile: c.options.SecretFile, Secret: "ok", Token: "unavailable", Organisation: "unavailable", Scopes: "unavailable", Commands: "unavailable", Limits: "unavailable"}
+	status := AuthStatus{Name: c.options.Name, ClientID: c.options.ClientID, SecretFile: c.options.SecretFile, SecretFileStatus: "ok", Token: "unavailable", Organisation: "unavailable", Scopes: "unavailable", Commands: "unavailable", Limits: "unavailable"}
 	if _, err := config.ReadSecret(c.options.SecretFile); err != nil {
-		status.Secret = err.Error()
+		status.SecretFileStatus = secretFileStatus(c.options.SecretFile, err)
 		return status, err
 	}
 	status.SecretOK = true
@@ -45,9 +45,10 @@ func (c *Client) AuthStatus(ctx context.Context) (AuthStatus, error) {
 	}
 	status.TokenOK = true
 	status.Token = "ok"
+	var scopeErr error
 	scopes, expiry, firstErr := tokenClaims(token.AccessToken)
 	if firstErr == nil {
-		status.Token = fmt.Sprintf("ok, expires in %s", time.Until(expiry).Round(time.Minute))
+		status.Token = fmt.Sprintf("ok, expires in %dm", int(time.Until(expiry).Round(time.Minute).Minutes()))
 		status.Scopes = strings.Join(scopes, " ")
 		capabilities := Capabilities(scopes)
 		var commands []string
@@ -60,7 +61,7 @@ func (c *Client) AuthStatus(ctx context.Context) (AuthStatus, error) {
 		}
 		status.Commands = strings.Join(commands, " · ")
 		if !capabilities["accounts"] || !capabilities["tracking"] {
-			firstErr = apperr.New("forbidden", "organisation %s: accounts and tracking require accounting.settings.read or accounting.settings; update the Custom Connection in the developer portal", c.options.Name)
+			scopeErr = apperr.New("forbidden", "organisation %s: accounts and tracking require accounting.settings.read or accounting.settings; update the Custom Connection in the developer portal", c.options.Name)
 		}
 	} else {
 		status.Token = firstErr.Error()
@@ -95,8 +96,12 @@ func (c *Client) AuthStatus(ctx context.Context) (AuthStatus, error) {
 			}
 		}
 	}
+	// An identity fault outranks a scope gap: fix who you talk to before what you may read.
 	if firstErr == nil {
 		firstErr = connectionErr
+	}
+	if firstErr == nil {
+		firstErr = scopeErr
 	}
 	limits := c.Limits()
 	var rows []string
@@ -111,6 +116,12 @@ func (c *Client) AuthStatus(ctx context.Context) (AuthStatus, error) {
 	}
 	status.Limits = strings.Join(rows, " · ")
 	return status, firstErr
+}
+
+// secretFileStatus drops the path from a ReadSecret error; the status row already shows it.
+func secretFileStatus(path string, err error) string {
+	text := strings.TrimPrefix(err.Error(), fmt.Sprintf("secret file %q", path))
+	return strings.TrimSpace(strings.TrimPrefix(text, ":"))
 }
 
 func requiredScope(group string) string {

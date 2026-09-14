@@ -59,8 +59,8 @@ func TestMinuteBudgetAndTokenExpiry(t *testing.T) {
 		t.Errorf("rate = %v, want one request per second", got)
 	}
 	now := time.Now()
-	if !budget.limiter.AllowN(now, 1) || budget.limiter.AllowN(now, 1) || !budget.limiter.AllowN(now.Add(time.Second), 1) {
-		t.Error("minute budget did not space requests one second apart")
+	if budget.limiter.Burst() != 5 || !budget.limiter.AllowN(now, 5) || budget.limiter.AllowN(now, 1) || !budget.limiter.AllowN(now.Add(time.Second), 1) {
+		t.Error("minute budget did not allow a burst of five and then one per second")
 	}
 	c := testClient(t, nil)
 	c.token = &oauth2.Token{AccessToken: "expired", Expiry: time.Now().Add(-time.Minute)}

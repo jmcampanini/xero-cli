@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+	"syscall"
 
 	"github.com/jmcampanini/go-config-loader/pflagloader"
 	"github.com/jmcampanini/xero-cli/internal/apperr"
@@ -47,7 +48,7 @@ func usage(format string, args ...any) error { return &usageError{fmt.Errorf(for
 
 // Execute runs with process streams; only main owns os.Exit.
 func Execute() int {
-	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	return execute(ctx, os.Args[1:], os.Stdin, os.Stdout, os.Stderr, nil)
 }
