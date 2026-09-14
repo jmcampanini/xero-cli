@@ -141,8 +141,8 @@ func (c *Client) verify(ctx context.Context) (string, error) {
 	if c.tenantID != "" {
 		return c.tenantID, nil
 	}
-	if c.options.OrganisationID == "" {
-		return "", apperr.New("invalid_argument", "orgs.%s.organisation_id is not set; run 'xero auth status %s' and copy the ID it prints", c.options.Name, c.options.Name)
+	if err := config.RequireOrganisationID(c.options.Name, c.options.OrganisationID); err != nil {
+		return "", err
 	}
 	connections, err := c.connections(ctx)
 	if err != nil {

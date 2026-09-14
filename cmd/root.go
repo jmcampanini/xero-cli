@@ -155,5 +155,8 @@ func (o *options) selectedClient(command *cobra.Command) (client, error) {
 	if err != nil {
 		return nil, err
 	}
+	if err := config.RequireOrganisationID(name, cfg.Orgs[name].OrganisationID); err != nil {
+		return nil, err
+	}
 	return o.factory(name, cfg.Orgs[name]), nil
 }

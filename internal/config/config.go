@@ -132,6 +132,14 @@ func (c Config) Effective() (string, error) {
 	return "", apperr.New("invalid_argument", "no organisation selected; use --org, XERO_ORG, or default_org (configured: %s)", strings.Join(names, ", "))
 }
 
+// RequireOrganisationID rejects incomplete identity setup before command input or HTTP work.
+func RequireOrganisationID(name, id string) error {
+	if id == "" {
+		return apperr.New("invalid_argument", "orgs.%s.organisation_id is not set; run 'xero auth status %s' and copy the ID it prints", name, name)
+	}
+	return nil
+}
+
 // ResolveSecretPath expands ~/ and resolves relative paths against their source file.
 func ResolveSecretPath(path, source string) (string, error) {
 	if strings.HasPrefix(path, "~/") {
