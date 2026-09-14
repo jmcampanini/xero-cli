@@ -46,7 +46,7 @@ func Table(w io.Writer, header []string, rows [][]string, color string) error {
 		return err
 	}
 	output := buf.String()
-	if useColor(w, color) && len(header) > 0 {
+	if ColorEnabled(w, color) && len(header) > 0 {
 		first, rest, _ := strings.Cut(output, "\n")
 		output = "\x1b[1m" + first + "\x1b[0m\n" + rest
 	}
@@ -54,7 +54,8 @@ func Table(w io.Writer, header []string, rows [][]string, color string) error {
 	return err
 }
 
-func useColor(w io.Writer, color string) bool {
+// ColorEnabled reports whether human output should use ANSI color for this writer.
+func ColorEnabled(w io.Writer, color string) bool {
 	switch color {
 	case "always":
 		return true

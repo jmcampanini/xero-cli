@@ -176,7 +176,7 @@ xero accounts list [--type TYPE] [--class CLASS] [--bank]
                    [--status active|archived|all]
 xero accounts add NAME --code CODE --type TYPE [--tax TAXTYPE]
                        [--description TEXT] [--enable-payments] [--dry-run]
-xero account show CODE [--date DATE]
+xero account show CODE [--date DATE] [--basis cash|accrual]
 xero account edit CODE [--name TEXT] [--code CODE] [--description TEXT]
                        [--tax TAXTYPE] [--enable-payments|--no-enable-payments]
                        [--dry-run]
@@ -186,7 +186,9 @@ xero account transactions CODE (--from DATE --to DATE | --month YYYY-MM)
 ```
 
 - `account show --date` adds the account's balance at that date from the
-  trial balance. Without it, no report call is made.
+  trial balance. Without it, no report call is made, and an explicit
+  `--basis` is a usage error. Balances use exact YTD debit/credit
+  subtraction, with financial-year-to-date labels for income and expenses.
 - `account transactions` is assembled client-side (see `DOMAIN.md`). For a
   bank account it unions bank transactions, payments, transfers,
   prepayments, and overpayments on that account. For any other account it
@@ -248,7 +250,12 @@ Every `report` command and `account transactions` also take `--csv`.
   whole months combined with `--timeframe month` is `invalid_argument`
   rather than a silently partial comparison.
 - `--periods` with `--timeframe` adds comparison columns; every column
-  Xero returns is kept in both output modes.
+  Xero returns is kept in every output mode. The supplied date range
+  applies to each native comparison; a year is not split into months.
+  Whole-period validation does not correct Xero's truncation of earlier
+  31-day months when the base month has 30 days. For twelve monthly
+  columns ending in December, use `--month YYYY-12 --periods 11
+  --timeframe month` and verify the returned captions.
 - `--tracking CAT=OPT` filters to one option (`trackingOptionID1/2` on
   the balance sheet, `trackingCategoryID` plus `trackingOptionID` on
   profit and loss). Names resolve to IDs through one `TrackingCategories`
@@ -257,15 +264,18 @@ Every `report` command and `account transactions` also take `--csv`.
 - `--by CATEGORY` produces one column per option plus `Unassigned` and
   `Total`. Profit and loss does this natively. Balance sheet cannot, so
   the tool issues one call per active option plus the unfiltered total
-  and lays the columns side by side; help states that untagged balances
-  appear only in the total column and the columns do not foot. `--by`
+  and selects the requested date from each response before laying the
+  columns side by side. Native balance sheets include a previous-year
+  column even without comparison parameters. Help states that untagged
+  balances appear only in the total column and the columns do not foot. `--by`
   and `--tracking` on the same category is a usage error. `--by` always
   takes the category name; nothing is implied from config.
 - `bank-summary` is the monthly cash-movement view: opening balance,
   received, spent, closing balance per bank account for the exact range.
   Help states it is not a profit and loss and that transfers count as
   movements. It is the entry point for `account transactions` when a
-  movement needs explaining.
+  movement needs explaining. Its endpoint has no accounting-basis option,
+  so its output omits basis, filters and breakdown metadata.
 - Human output keeps the section structure as a table. `--json` is a
   flattened shape owned by the tool: organisation, report name, basis,
   dates, filters, column captions, then rows with section path, label,

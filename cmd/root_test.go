@@ -34,9 +34,18 @@ type fakeClient struct {
 	err           error
 	identity      xero.Identity
 	org           xero.Organisation
+	report        xero.Report
+	reportFn      func(string, url.Values) (xero.Report, error)
 	request       xero.Request
 	response      []byte
 	status        xero.AuthStatus
+}
+
+func (f *fakeClient) Report(_ context.Context, name string, query url.Values) (xero.Report, error) {
+	if f.reportFn != nil {
+		return f.reportFn(name, query)
+	}
+	return f.report, f.err
 }
 
 func (f *fakeClient) Identity() xero.Identity                                 { return f.identity }

@@ -28,6 +28,7 @@ type client interface {
 	Identity() xero.Identity
 	AuthStatus(context.Context) (xero.AuthStatus, error)
 	Organisation(context.Context) (xero.Organisation, error)
+	Report(context.Context, string, url.Values) (xero.Report, error)
 	Accounts(context.Context, url.Values) ([]xero.Account, error)
 	Account(context.Context, string) (xero.Account, error)
 	TrackingCategories(context.Context) ([]xero.TrackingCategory, error)
@@ -98,8 +99,8 @@ func newRoot(o *options) (*cobra.Command, error) {
 			return xero.New(xero.Options{Budget: budget, ClientID: org.ClientID, Name: name, OrganisationID: org.OrganisationID, Scopes: org.Scopes, SecretFile: org.SecretFile, Version: Version})
 		}
 	}
-	root := &cobra.Command{Use: "xero", Short: "Inspect Xero organisations, accounts and tracking", Version: Version, SilenceUsage: true, SilenceErrors: true, DisableSuggestions: true,
-		Long: `Read Xero organisation settings, chart of accounts and tracking categories.
+	root := &cobra.Command{Use: "xero", Short: "Inspect Xero settings, accounts, tracking and reports", Version: Version, SilenceUsage: true, SilenceErrors: true, DisableSuggestions: true,
+		Long: `Read Xero settings, chart of accounts, tracking categories and reports.
 Use api to call Accounting API endpoints without a dedicated command.
 
 Configure a Custom Connection per organisation with xero config --help.
@@ -121,7 +122,7 @@ Use xero help exit-codes for error categories and process exit statuses.`,
 	root.InitDefaultHelpFlag()
 	root.InitDefaultVersionFlag()
 	root.CompletionOptions.DisableDefaultCmd = true
-	root.AddCommand(newConfig(o), newExitCodes(), newCompletion(), newAuth(o), newOrgs(o), newOrg(o), newAPI(o), newAccounts(o), newAccount(o), newTrackingCategories(o), newTrackingCategory(o))
+	root.AddCommand(newConfig(o), newExitCodes(), newCompletion(), newAuth(o), newOrgs(o), newOrg(o), newAPI(o), newAccounts(o), newAccount(o), newTrackingCategories(o), newTrackingCategory(o), newReport(o))
 	return root, nil
 }
 

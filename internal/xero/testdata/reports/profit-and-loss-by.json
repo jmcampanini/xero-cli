@@ -1,0 +1,1152 @@
+{
+  "Id": "00000000-0000-0000-0000-000000000009",
+  "Status": "OK",
+  "ProviderName": "Example connection",
+  "DateTimeUTC": "/Date(1767225600000)/",
+  "Reports": [
+    {
+      "ReportID": "ProfitAndLoss",
+      "ReportName": "Profit and Loss",
+      "ReportType": "ProfitAndLoss",
+      "ReportTitles": [
+        "Income Statement",
+        "Example Holdings Ltd",
+        "All Properties",
+        "1 December 2025 to 31 December 2025"
+      ],
+      "ReportDate": "14 September 2026",
+      "UpdatedDateUTC": "/Date(1767225600000)/",
+      "Fields": [],
+      "Rows": [
+        {
+          "RowType": "Header",
+          "Cells": [
+            {
+              "Value": ""
+            },
+            {
+              "Value": "Option 1"
+            },
+            {
+              "Value": "Option 2"
+            },
+            {
+              "Value": "Option 3"
+            },
+            {
+              "Value": "Option 4"
+            },
+            {
+              "Value": "Option 5"
+            },
+            {
+              "Value": "Option 6"
+            },
+            {
+              "Value": "Option 7"
+            },
+            {
+              "Value": "Option 8"
+            },
+            {
+              "Value": "Unassigned"
+            },
+            {
+              "Value": "Total"
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Revenue",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 002",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "270.10",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "287.11",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "304.12",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "321.13",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "338.14",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "355.15",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "372.16",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "389.17",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "100.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Revenue"
+                },
+                {
+                  "Value": "270.10"
+                },
+                {
+                  "Value": "287.11"
+                },
+                {
+                  "Value": "304.12"
+                },
+                {
+                  "Value": "321.13"
+                },
+                {
+                  "Value": "338.14"
+                },
+                {
+                  "Value": "355.15"
+                },
+                {
+                  "Value": "372.16"
+                },
+                {
+                  "Value": "389.17"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "100.00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Less Cost of Sales",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 003",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "406.18",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "423.19",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "440.20",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "457.21",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "474.22",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "491.23",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "508.24",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "525.25",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "117.01",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 004",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "542.26",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "559.27",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "134.02",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 005",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "576.28",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "593.29",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "610.30",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "627.31",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "644.32",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "661.33",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "678.34",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "695.35",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "151.03",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 006",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "338.14",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "712.36",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "729.37",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "746.38",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "763.39",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "168.04",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 007",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "185.05",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "185.05",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Cost of Sales"
+                },
+                {
+                  "Value": "780.40"
+                },
+                {
+                  "Value": "797.41"
+                },
+                {
+                  "Value": "814.42"
+                },
+                {
+                  "Value": "831.43"
+                },
+                {
+                  "Value": "848.44"
+                },
+                {
+                  "Value": "865.45"
+                },
+                {
+                  "Value": "882.46"
+                },
+                {
+                  "Value": "899.47"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "202.06"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Gross Profit"
+                },
+                {
+                  "Value": "916.48"
+                },
+                {
+                  "Value": "933.49"
+                },
+                {
+                  "Value": "950.50"
+                },
+                {
+                  "Value": "967.51"
+                },
+                {
+                  "Value": "984.52"
+                },
+                {
+                  "Value": "1001.53"
+                },
+                {
+                  "Value": "1018.54"
+                },
+                {
+                  "Value": "1035.55"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "219.07"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Operating Income / (Loss)"
+                },
+                {
+                  "Value": "916.48"
+                },
+                {
+                  "Value": "933.49"
+                },
+                {
+                  "Value": "950.50"
+                },
+                {
+                  "Value": "967.51"
+                },
+                {
+                  "Value": "984.52"
+                },
+                {
+                  "Value": "1001.53"
+                },
+                {
+                  "Value": "1018.54"
+                },
+                {
+                  "Value": "1035.55"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "219.07"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Other Income and Expense",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 008",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "236.08",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "236.08",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Other Income and Expense"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "0.00"
+                },
+                {
+                  "Value": "236.08"
+                },
+                {
+                  "Value": "236.08"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Net Income  / (Loss) before Tax"
+                },
+                {
+                  "Value": "916.48"
+                },
+                {
+                  "Value": "933.49"
+                },
+                {
+                  "Value": "950.50"
+                },
+                {
+                  "Value": "967.51"
+                },
+                {
+                  "Value": "984.52"
+                },
+                {
+                  "Value": "1001.53"
+                },
+                {
+                  "Value": "1018.54"
+                },
+                {
+                  "Value": "1035.55"
+                },
+                {
+                  "Value": "236.08"
+                },
+                {
+                  "Value": "253.09"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": []
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Net Income"
+                },
+                {
+                  "Value": "916.48"
+                },
+                {
+                  "Value": "933.49"
+                },
+                {
+                  "Value": "950.50"
+                },
+                {
+                  "Value": "967.51"
+                },
+                {
+                  "Value": "984.52"
+                },
+                {
+                  "Value": "1001.53"
+                },
+                {
+                  "Value": "1018.54"
+                },
+                {
+                  "Value": "1035.55"
+                },
+                {
+                  "Value": "236.08"
+                },
+                {
+                  "Value": "253.09"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": []
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Total Comprehensive Income"
+                },
+                {
+                  "Value": "916.48"
+                },
+                {
+                  "Value": "933.49"
+                },
+                {
+                  "Value": "950.50"
+                },
+                {
+                  "Value": "967.51"
+                },
+                {
+                  "Value": "984.52"
+                },
+                {
+                  "Value": "1001.53"
+                },
+                {
+                  "Value": "1018.54"
+                },
+                {
+                  "Value": "1035.55"
+                },
+                {
+                  "Value": "236.08"
+                },
+                {
+                  "Value": "253.09"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
