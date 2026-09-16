@@ -1,0 +1,118 @@
+{
+  "Contacts": [
+    {
+      "ContactID": "00000000-0000-0000-0000-000000000030",
+      "ContactStatus": "ACTIVE",
+      "Name": "Example 14",
+      "EmailAddress": "",
+      "BankAccountDetails": "",
+      "Addresses": [
+        {
+          "AddressType": "STREET",
+          "City": "",
+          "Region": "",
+          "PostalCode": "",
+          "Country": ""
+        },
+        {
+          "AddressType": "POBOX",
+          "City": "",
+          "Region": "",
+          "PostalCode": "",
+          "Country": ""
+        }
+      ],
+      "Phones": [
+        {
+          "PhoneType": "DDI",
+          "PhoneNumber": "",
+          "PhoneAreaCode": "",
+          "PhoneCountryCode": ""
+        },
+        {
+          "PhoneType": "DEFAULT",
+          "PhoneNumber": "",
+          "PhoneAreaCode": "",
+          "PhoneCountryCode": ""
+        },
+        {
+          "PhoneType": "FAX",
+          "PhoneNumber": "",
+          "PhoneAreaCode": "",
+          "PhoneCountryCode": ""
+        },
+        {
+          "PhoneType": "MOBILE",
+          "PhoneNumber": "",
+          "PhoneAreaCode": "",
+          "PhoneCountryCode": ""
+        }
+      ],
+      "UpdatedDateUTC": "/Date(1735776000000+0000)/",
+      "ContactGroups": [],
+      "IsSupplier": false,
+      "IsCustomer": false,
+      "DefaultCurrency": "USD",
+      "ContactPersons": [],
+      "HasAttachments": false,
+      "HasValidationErrors": false
+    },
+    {
+      "ContactID": "00000000-0000-0000-0000-000000000031",
+      "ContactStatus": "ACTIVE",
+      "Name": "Example 15",
+      "EmailAddress": "",
+      "BankAccountDetails": "",
+      "Addresses": [
+        {
+          "AddressType": "STREET",
+          "City": "",
+          "Region": "",
+          "PostalCode": "",
+          "Country": ""
+        },
+        {
+          "AddressType": "POBOX",
+          "City": "",
+          "Region": "",
+          "PostalCode": "",
+          "Country": ""
+        }
+      ],
+      "Phones": [
+        {
+          "PhoneType": "DDI",
+          "PhoneNumber": "",
+          "PhoneAreaCode": "",
+          "PhoneCountryCode": ""
+        },
+        {
+          "PhoneType": "DEFAULT",
+          "PhoneNumber": "",
+          "PhoneAreaCode": "",
+          "PhoneCountryCode": ""
+        },
+        {
+          "PhoneType": "FAX",
+          "PhoneNumber": "",
+          "PhoneAreaCode": "",
+          "PhoneCountryCode": ""
+        },
+        {
+          "PhoneType": "MOBILE",
+          "PhoneNumber": "",
+          "PhoneAreaCode": "",
+          "PhoneCountryCode": ""
+        }
+      ],
+      "UpdatedDateUTC": "/Date(1735776000000+0000)/",
+      "ContactGroups": [],
+      "IsSupplier": false,
+      "IsCustomer": false,
+      "DefaultCurrency": "USD",
+      "ContactPersons": [],
+      "HasAttachments": false,
+      "HasValidationErrors": false
+    }
+  ]
+}

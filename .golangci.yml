@@ -15,6 +15,7 @@ linters:
       ignore-rules:
         - organisation
         - organisations
+        - authorised
     revive:
       rules:
         - name: exported

@@ -67,7 +67,7 @@ func (c *Client) checkClaims(token string, status *AuthStatus) (claimsErr, scope
 
 	capabilities := Capabilities(scopes)
 	var commands []string
-	for _, group := range []string{"accounts", "tracking", "reports", "transactions", "contacts"} {
+	for _, group := range []string{"accounts", "tracking", "reports", "bank-transactions", "bank-transfers", "manual-journals", "contacts", "attachments"} {
 		state := "ok"
 		if !capabilities[group] {
 			state = "missing (" + requiredScope(group) + ")"
@@ -143,6 +143,12 @@ func requiredScope(group string) string {
 		return "accounting.reports.read or accounting.reports.<name>.read"
 	case "transactions":
 		return "accounting.transactions.read or banktransactions/manualjournals.read"
+	case "bank-transactions", "bank-transfers":
+		return "accounting.transactions.read or accounting.banktransactions.read"
+	case "manual-journals":
+		return "accounting.transactions.read or accounting.manualjournals.read"
+	case "attachments":
+		return "accounting.attachments.read"
 	case "contacts":
 		return "accounting.contacts.read"
 	default:

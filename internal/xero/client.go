@@ -245,7 +245,9 @@ func (c *Client) request(ctx context.Context, request Request, tenantID string) 
 			req.Header[key] = append([]string(nil), values...)
 		}
 		req.Header.Set("Authorization", "Bearer "+token.AccessToken)
-		req.Header.Set("Accept", "application/json")
+		if req.Header.Get("Accept") == "" {
+			req.Header.Set("Accept", "application/json")
+		}
 		req.Header.Set("User-Agent", "xero-cli/"+c.options.Version)
 		if tenantID != "" {
 			req.Header.Set("xero-tenant-id", tenantID)

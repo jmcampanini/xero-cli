@@ -1,0 +1,84 @@
+{
+  "ManualJournals": [
+    {
+      "Date": "/Date(1735776000000+0000)/",
+      "Status": "POSTED",
+      "LineAmountTypes": "NoTax",
+      "UpdatedDateUTC": "/Date(1735776000000+0000)/",
+      "ManualJournalID": "00000000-0000-0000-0000-000000000024",
+      "Narration": "Example 12",
+      "JournalLines": [
+        {
+          "TaxType": "NONE",
+          "TaxAmount": 0.0,
+          "LineAmount": 20.0,
+          "AccountCode": "200",
+          "Tracking": [],
+          "AccountID": "00000000-0000-0000-0000-000000000025",
+          "SortOrder": 25.125,
+          "IsBlank": false
+        },
+        {
+          "TaxType": "NONE",
+          "TaxAmount": 0.0,
+          "LineAmount": -10.0,
+          "AccountCode": "200",
+          "Tracking": [],
+          "AccountID": "00000000-0000-0000-0000-000000000026",
+          "SortOrder": 25.125,
+          "IsBlank": false
+        },
+        {
+          "TaxType": "NONE",
+          "TaxAmount": 0.0,
+          "LineAmount": -10.0,
+          "AccountCode": "200",
+          "Tracking": [],
+          "AccountID": "00000000-0000-0000-0000-000000000027",
+          "SortOrder": 25.125,
+          "IsBlank": false
+        }
+      ],
+      "ShowOnCashBasisReports": true,
+      "DebitTotal": 25.125,
+      "CreditTotal": -25.125,
+      "HasAttachments": false
+    },
+    {
+      "Date": "/Date(1735776000000+0000)/",
+      "Status": "VOIDED",
+      "LineAmountTypes": "NoTax",
+      "UpdatedDateUTC": "/Date(1735776000000+0000)/",
+      "ManualJournalID": "00000000-0000-0000-0000-000000000028",
+      "Narration": "Example 13",
+      "JournalLines": [
+        {
+          "Description": "Example 13",
+          "TaxType": "NONE",
+          "TaxAmount": 0.0,
+          "LineAmount": -10.0,
+          "AccountCode": "200",
+          "Tracking": [],
+          "AccountID": "00000000-0000-0000-0000-000000000029",
+          "SortOrder": 25.125,
+          "IsBlank": false
+        },
+        {
+          "Description": "Example 13",
+          "TaxType": "NONE",
+          "TaxAmount": 0.0,
+          "LineAmount": 10.0,
+          "AccountCode": "200",
+          "Tracking": [],
+          "AccountID": "00000000-0000-0000-0000-000000000029",
+          "SortOrder": 25.125,
+          "IsBlank": false
+        }
+      ],
+      "ShowOnCashBasisReports": true,
+      "DebitTotal": 25.125,
+      "CreditTotal": -25.125,
+      "HasAttachments": false
+    }
+  ]
+}

@@ -22,6 +22,10 @@ func Capabilities(scopes []string) map[string]bool {
 		}
 	}
 	return map[string]bool{
+		"bank-transactions":   has("accounting.transactions", "accounting.transactions.read", "accounting.banktransactions", "accounting.banktransactions.read"),
+		"bank-transfers":      has("accounting.transactions", "accounting.transactions.read", "accounting.banktransactions", "accounting.banktransactions.read"),
+		"manual-journals":     has("accounting.transactions", "accounting.transactions.read", "accounting.manualjournals", "accounting.manualjournals.read"),
+		"attachments":         has("accounting.attachments", "accounting.attachments.read"),
 		"accounts":            has("accounting.settings", "accounting.settings.read"),
 		"tracking":            has("accounting.settings", "accounting.settings.read"),
 		"reports":             reports,

@@ -32,6 +32,10 @@ type client interface {
 	Accounts(context.Context, url.Values) ([]xero.Account, error)
 	Account(context.Context, string) (xero.Account, error)
 	TrackingCategories(context.Context) ([]xero.TrackingCategory, error)
+	Records(context.Context, string, xero.ListQuery) (xero.RecordList, error)
+	Record(context.Context, string, string) (xero.Record, error)
+	Attachments(context.Context, string, string) ([]xero.Record, error)
+	Attachment(context.Context, string, string, string) ([]byte, error)
 	DoRequest(context.Context, xero.Request) (int, http.Header, []byte, error)
 }
 
@@ -99,8 +103,9 @@ func newRoot(o *options) (*cobra.Command, error) {
 			return xero.New(xero.Options{Budget: budget, ClientID: org.ClientID, Name: name, OrganisationID: org.OrganisationID, Scopes: org.Scopes, SecretFile: org.SecretFile, Version: Version})
 		}
 	}
-	root := &cobra.Command{Use: "xero", Short: "Inspect Xero settings, accounts, tracking and reports", Version: Version, SilenceUsage: true, SilenceErrors: true, DisableSuggestions: true,
-		Long: `Read Xero settings, chart of accounts, tracking categories and reports.
+	root := &cobra.Command{Use: "xero", Short: "Inspect Xero accounts, transactions, contacts and reports", Version: Version, SilenceUsage: true, SilenceErrors: true, DisableSuggestions: true,
+		Long: `Read Xero settings, accounts, tracking, reports, transactions and contacts.
+Inspect saved document lines and download bank transaction or journal files.
 Use api to call Accounting API endpoints without a dedicated command.
 
 Configure a Custom Connection per organisation with xero config --help.
@@ -123,6 +128,7 @@ Use xero help exit-codes for error categories and process exit statuses.`,
 	root.InitDefaultVersionFlag()
 	root.CompletionOptions.DisableDefaultCmd = true
 	root.AddCommand(newConfig(o), newExitCodes(), newCompletion(), newAuth(o), newOrgs(o), newOrg(o), newAPI(o), newAccounts(o), newAccount(o), newTrackingCategories(o), newTrackingCategory(o), newReport(o))
+	root.AddCommand(newBankTransactions(o), newBankTransaction(o), newBankTransfers(o), newBankTransfer(o), newManualJournals(o), newManualJournal(o), newContacts(o), newContact(o))
 	return root, nil
 }
 

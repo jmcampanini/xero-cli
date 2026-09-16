@@ -1,6 +1,6 @@
 # xero
 
-`xero` reads organisation settings, accounts, tracking categories, and financial reports from the Xero Accounting API. Each Custom Connection is bound to a verified organisation ID, secrets stay in protected files, and tokens are never stored. The `api` command also accepts explicit write requests.
+`xero` reads organisation settings, accounts, tracking categories, financial reports, bank transactions, bank transfers, manual journals, contacts, and document attachments from the Xero Accounting API. Each Custom Connection is bound to a verified organisation ID, secrets stay in protected files, and tokens are never stored. The `api` command also accepts explicit write requests.
 
 Command help is the reference. Start with `xero --help`, `xero config --help`, and `xero help exit-codes`.
 
@@ -38,6 +38,10 @@ make build
 | `xero report bank-summary --month 2025-12 --csv` | Bank cash movements as CSV; context on stderr |
 | `xero tracking-categories list --all` | Active and archived categories |
 | `xero tracking-category show Property` | The named category and all options |
+| `xero bank-transactions list --account 'Example Bank' --month 2025-12` | Every saved transaction for the bank account and month |
+| `xero manual-journals list --year 2025 --status all` | Journals with exact debit totals and cash-basis treatment |
+| `xero contacts list --search Example` | Contact names, roles, statuses, and IDs |
+| `xero bank-transfers list --month 2025-12` | Transfers and both sides' reconciliation flags |
 | `xero api Organisation` | The raw Accounting API response |
 
 ## Required external programs

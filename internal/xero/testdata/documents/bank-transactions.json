@@ -1,0 +1,145 @@
+{
+  "BankTransactions": [
+    {
+      "BankTransactionID": "00000000-0000-0000-0000-000000000001",
+      "BankAccount": {
+        "AccountID": "00000000-0000-0000-0000-000000000002",
+        "Name": "Example 1"
+      },
+      "Type": "SPEND",
+      "Reference": "",
+      "IsReconciled": true,
+      "HasAttachments": false,
+      "Contact": {
+        "ContactID": "00000000-0000-0000-0000-000000000003",
+        "Name": "Example 2",
+        "Addresses": [],
+        "Phones": [],
+        "ContactGroups": [],
+        "ContactPersons": [],
+        "HasValidationErrors": false
+      },
+      "DateString": "2025-01-02T00:00:00",
+      "Date": "/Date(1735776000000+0000)/",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "Inclusive",
+      "LineItems": [
+        {
+          "Description": "Example 3",
+          "UnitAmount": 25.125,
+          "TaxType": "NONE",
+          "TaxAmount": 0.0,
+          "LineAmount": 25.125,
+          "AccountCode": "200",
+          "Tracking": [
+            {
+              "Name": "Region",
+              "Option": "North",
+              "TrackingCategoryID": "00000000-0000-0000-0000-000000000004",
+              "Options": []
+            }
+          ],
+          "Quantity": 1.0,
+          "LineItemID": "00000000-0000-0000-0000-000000000005",
+          "AccountID": "00000000-0000-0000-0000-000000000006"
+        },
+        {
+          "UnitAmount": 25.125,
+          "TaxType": "INPUT",
+          "TaxAmount": 0.0,
+          "LineAmount": 25.125,
+          "AccountCode": "200",
+          "Tracking": [
+            {
+              "Name": "Region",
+              "Option": "North",
+              "TrackingCategoryID": "00000000-0000-0000-0000-000000000004",
+              "Options": []
+            }
+          ],
+          "Quantity": 1.0,
+          "LineItemID": "00000000-0000-0000-0000-000000000007",
+          "AccountID": "00000000-0000-0000-0000-000000000008"
+        }
+      ],
+      "SubTotal": 50.25,
+      "TotalTax": 0.0,
+      "Total": 50.25,
+      "UpdatedDateUTC": "/Date(1735776000000+0000)/",
+      "CurrencyCode": "USD"
+    },
+    {
+      "BankTransactionID": "00000000-0000-0000-0000-000000000009",
+      "BankAccount": {
+        "AccountID": "00000000-0000-0000-0000-000000000010",
+        "Name": "Example 4"
+      },
+      "Type": "SPEND-TRANSFER",
+      "Reference": "Example 5",
+      "IsReconciled": false,
+      "HasAttachments": false,
+      "DateString": "2025-01-02T00:00:00",
+      "Date": "/Date(1735776000000+0000)/",
+      "Status": "AUTHORISED",
+      "LineAmountTypes": "NoTax",
+      "LineItems": [
+        {
+          "Description": "Example 6",
+          "UnitAmount": -25.125,
+          "TaxAmount": 0.0,
+          "LineAmount": -25.125,
+          "Tracking": [],
+          "Quantity": 1.0,
+          "LineItemID": "00000000-0000-0000-0000-000000000011",
+          "AccountID": "00000000-0000-0000-0000-000000000010"
+        }
+      ],
+      "Total": 25.125,
+      "UpdatedDateUTC": "/Date(1735776000000+0000)/",
+      "CurrencyCode": "USD"
+    },
+    {
+      "BankTransactionID": "00000000-0000-0000-0000-000000000012",
+      "BankAccount": {
+        "AccountID": "00000000-0000-0000-0000-000000000013",
+        "Name": "Example 7"
+      },
+      "Type": "RECEIVE",
+      "Reference": "",
+      "IsReconciled": false,
+      "HasAttachments": false,
+      "Contact": {
+        "ContactID": "00000000-0000-0000-0000-000000000014",
+        "Name": "Example 8",
+        "Addresses": [],
+        "Phones": [],
+        "ContactGroups": [],
+        "ContactPersons": [],
+        "HasValidationErrors": false
+      },
+      "DateString": "2025-01-02T00:00:00",
+      "Date": "/Date(1735776000000+0000)/",
+      "Status": "DELETED",
+      "LineAmountTypes": "Exclusive",
+      "LineItems": [
+        {
+          "Description": "Example 9",
+          "UnitAmount": 25.125,
+          "TaxType": "NONE",
+          "TaxAmount": 0.0,
+          "LineAmount": 25.125,
+          "AccountCode": "200",
+          "Tracking": [],
+          "Quantity": 1.0,
+          "LineItemID": "00000000-0000-0000-0000-000000000015",
+          "AccountID": "00000000-0000-0000-0000-000000000016"
+        }
+      ],
+      "SubTotal": 25.125,
+      "TotalTax": 0.0,
+      "Total": 25.125,
+      "UpdatedDateUTC": "/Date(1735776000000+0000)/",
+      "CurrencyCode": "USD"
+    }
+  ]
+}

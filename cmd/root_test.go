@@ -38,7 +38,39 @@ type fakeClient struct {
 	reportFn      func(string, url.Values) (xero.Report, error)
 	request       xero.Request
 	response      []byte
+	recordFn      func(string, string) (xero.Record, error)
+	recordsFn     func(string, xero.ListQuery) (xero.RecordList, error)
+	attachmentsFn func(string, string) ([]xero.Record, error)
+	attachmentFn  func(string, string, string) ([]byte, error)
 	status        xero.AuthStatus
+}
+
+func (f *fakeClient) Record(_ context.Context, resource, id string) (xero.Record, error) {
+	if f.recordFn != nil {
+		return f.recordFn(resource, id)
+	}
+	return nil, f.err
+}
+
+func (f *fakeClient) Records(_ context.Context, resource string, query xero.ListQuery) (xero.RecordList, error) {
+	if f.recordsFn != nil {
+		return f.recordsFn(resource, query)
+	}
+	return xero.RecordList{Complete: true}, f.err
+}
+
+func (f *fakeClient) Attachments(_ context.Context, resource, id string) ([]xero.Record, error) {
+	if f.attachmentsFn != nil {
+		return f.attachmentsFn(resource, id)
+	}
+	return []xero.Record{}, f.err
+}
+
+func (f *fakeClient) Attachment(_ context.Context, resource, id, name string) ([]byte, error) {
+	if f.attachmentFn != nil {
+		return f.attachmentFn(resource, id, name)
+	}
+	return nil, f.err
 }
 
 func (f *fakeClient) Report(_ context.Context, name string, query url.Values) (xero.Report, error) {
