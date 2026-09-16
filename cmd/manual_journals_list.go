@@ -13,6 +13,7 @@ func newManualJournalsList(o *options) *cobra.Command {
 	command := &cobra.Command{Use: "list", Short: "List manual journals for a period", Args: cobra.NoArgs,
 		Long: `List journals for --from/--to together, --month, or --year. Status defaults
 to posted; all includes draft, voided, deleted and archived journals.
+Records follow Xero's date order; order within a date is unspecified.
 DEBITS sums positive journal line amounts exactly. Cash-basis treatment
 comes from ShowOnCashBasisReports. --modified-since accepts RFC 3339 or
 YYYY-MM-DDTHH:MM:SS (UTC) and sends If-Modified-Since in UTC.

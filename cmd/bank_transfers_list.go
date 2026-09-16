@@ -7,6 +7,7 @@ func newBankTransfersList(o *options) *cobra.Command {
 	command := &cobra.Command{Use: "list", Short: "List transfers between bank accounts", Args: cobra.NoArgs,
 		Long: `List bank transfers for --from/--to together or --month. Each row shows
 both bank accounts, amount, reference and both reconciliation flags.
+Records order by date then ID.
 Xero does not paginate this endpoint. --page and --page-size are accepted
 and validated, then ignored with a note on stderr; complete stays true.
 

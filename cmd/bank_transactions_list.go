@@ -18,6 +18,7 @@ func newBankTransactionsList(o *options) *cobra.Command {
 --from/--to together, or --month. Resolve the account by code, GUID or exact
 name as in account show; it must be a bank account. GUIDs and names support
 Xero bank accounts without codes.
+Records follow Xero's date order; order within a date is unspecified.
 Types are spend, receive, transfer, or all (default). Deleted records are
 excluded unless --include-deleted, which marks them in human output.
 --contact requires a GUID; --reference is an exact match; --amount matches
@@ -72,7 +73,8 @@ reconciliation itself are not available through this command.
 				clauses = append(clauses, "Contact.ContactID==Guid("+strconv.Quote(contact)+")")
 			}
 			if command.Flags().Changed("reference") {
-				clauses = append(clauses, "Reference=="+strconv.Quote(reference))
+				// Xero doubles embedded quotes and treats backslashes literally.
+				clauses = append(clauses, `Reference=="`+strings.ReplaceAll(reference, `"`, `""`)+`"`)
 			}
 			if command.Flags().Changed("amount") {
 				clauses = append(clauses, "Total=="+amount)

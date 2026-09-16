@@ -99,7 +99,7 @@ func TestRecordsPaginationAndCompleteness(t *testing.T) {
 				c := testClient(t, map[string]http.HandlerFunc{"/api/" + resource: func(w http.ResponseWriter, r *http.Request) {
 					pages = append(pages, r.URL.Query().Get("page"))
 					page, _ := strconv.Atoi(r.URL.Query().Get("page"))
-					order := "Date," + idKey
+					order := "Date"
 					if resource == "Contacts" {
 						order = "Name," + idKey
 					}
@@ -208,6 +208,9 @@ func TestRecordsEmptyAndUnpaged(t *testing.T) {
 				if resource == "Contacts" {
 					_, _ = fmt.Fprint(w, `{"pagination":{"page":1,"pageSize":100,"pageCount":0,"itemCount":0},"Contacts":[]}`)
 				} else {
+					if r.URL.Query().Get("order") != "Date,BankTransferID" {
+						t.Errorf("bank transfer order = %q", r.URL.Query().Get("order"))
+					}
 					if r.URL.Query().Has("page") || r.URL.Query().Has("pageSize") {
 						t.Error("bank transfer pagination sent")
 					}

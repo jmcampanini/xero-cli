@@ -370,6 +370,11 @@ xero bank-transfer show ID
   instead of `debit`/`credit`, plus `quantity` (default 1) and `item`:
   `--line 'account=200 amount=1440 description="March sale" tracking=Region=North'`.
   Tax type defaults to the account's; `tax=NONE` is explicit.
+- Bank transactions and manual journals retain Xero's date order. Order
+  within a date is unspecified; explicit pages remain Xero's pages. Bank
+  transfers order by date then ID.
+- `--reference` matches literal text, including quotes and backslashes.
+  Xero filter strings double embedded quotes and preserve backslashes.
 - `list --contact --reference --amount` exist for the duplicate check
   before entry. Deleted records are hidden unless `--include-deleted`
   and then marked, so a replaced entry is never counted twice.

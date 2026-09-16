@@ -3,7 +3,7 @@ package cmd
 const documentListHelp = `Paged lists fetch every page by default (100 items per request).
 --page selects one page and prints page N of M (K items) on stderr.
 --page-size accepts 1 to 1000 only with --page. --where, where offered,
-adds a parenthesized expression with &&. Documents order by date then ID.
+adds a parenthesized expression with &&. Records retain Xero's ordering.
 Human stdout shows the organisation and a table. --json writes one compact
 object with org {name, id}, complete, and items. Explicit pages are partial.
 Source fields and native tracking names are preserved; money is a decimal

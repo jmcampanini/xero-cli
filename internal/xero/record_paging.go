@@ -27,7 +27,7 @@ type RecordList struct {
 	PageCount int
 }
 
-// Records retrieves the supported document collections with stable API ordering.
+// Records retrieves the supported document collections in Xero's returned order.
 // It never returns partial records alongside an error.
 func (c *Client) Records(ctx context.Context, resource string, options ListQuery) (RecordList, error) {
 	idKey, err := recordID(resource)
@@ -39,10 +39,13 @@ func (c *Client) Records(ctx context.Context, resource string, options ListQuery
 		query[key] = append([]string(nil), values...)
 	}
 	order := "Date"
-	if resource == "Contacts" {
-		order = "Name"
+	switch resource {
+	case "Contacts":
+		order = "Name," + idKey
+	case "BankTransfers":
+		order += "," + idKey
 	}
-	query.Set("order", order+","+idKey)
+	query.Set("order", order)
 	if resource == "BankTransactions" {
 		query.Set("unitdp", "4")
 	}
@@ -115,7 +118,7 @@ func (c *Client) Records(ctx context.Context, resource string, options ListQuery
 	if result.Complete && len(result.Items) != result.ItemCount {
 		return RecordList{}, apperr.New("api", "%s returned %d of %d items; retry the request", resource, len(result.Items), result.ItemCount)
 	}
-	// Keep Xero's GUID tie ordering so single pages and all-page reads agree.
-	// Sorting the combined set by textual GUID would move page boundaries.
+	// Bank transactions and journals ignore secondary ID ordering. Preserve
+	// their unspecified date ties rather than moving records across pages.
 	return result, nil
 }
