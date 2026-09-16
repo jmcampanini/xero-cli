@@ -52,6 +52,17 @@ func trackingLabel(items []xero.Record) string {
 // Records renders document collections only after every row has been prepared.
 func Records(w io.Writer, org xero.Identity, resource string, items []xero.Record, color string) error {
 	var header []string
+	switch resource {
+	case "BankTransactions":
+		header = []string{"DATE", "TYPE", "CONTACT", "REFERENCE", "TOTAL", "RECONCILED", "ID"}
+	case "BankTransfers":
+		header = []string{"DATE", "FROM", "TO", "AMOUNT", "REFERENCE", "RECONCILED(from/to)", "ID"}
+	case "ManualJournals":
+		header = []string{"DATE", "STATUS", "NARRATION", "DEBITS", "CASH-BASIS", "ID"}
+	case "Contacts":
+		header = []string{"NAME", "EMAIL", "CUSTOMER", "SUPPLIER", "STATUS", "ID"}
+	}
+
 	var rows [][]string
 	for _, item := range items {
 		switch resource {
@@ -73,16 +84,7 @@ func Records(w io.Writer, org xero.Identity, resource string, items []xero.Recor
 			rows = append(rows, []string{item.Text("Name"), item.Text("EmailAddress"), yesNo(item.Text("IsCustomer")), yesNo(item.Text("IsSupplier")), item.Text("ContactStatus"), item.Text("ContactID")})
 		}
 	}
-	switch resource {
-	case "BankTransactions":
-		header = []string{"DATE", "TYPE", "CONTACT", "REFERENCE", "TOTAL", "RECONCILED", "ID"}
-	case "BankTransfers":
-		header = []string{"DATE", "FROM", "TO", "AMOUNT", "REFERENCE", "RECONCILED(from/to)", "ID"}
-	case "ManualJournals":
-		header = []string{"DATE", "STATUS", "NARRATION", "DEBITS", "CASH-BASIS", "ID"}
-	case "Contacts":
-		header = []string{"NAME", "EMAIL", "CUSTOMER", "SUPPLIER", "STATUS", "ID"}
-	}
+
 	var buffer bytes.Buffer
 	fmt.Fprintf(&buffer, "Organisation: %s (%s)\n", cellSanitizer.Replace(org.Name), cellSanitizer.Replace(org.ID))
 	if err := Table(&buffer, header, rows, bufferedColor(w, color)); err != nil {
@@ -117,9 +119,11 @@ func Record(w io.Writer, resource string, record xero.Record, attachments, color
 		value := record.Text(key)
 		switch key {
 		case "Contact":
-			value = nameWithID(record.Object(key).Text("Name"), record.Object(key).Text("ContactID"))
+			contact := record.Object(key)
+			value = nameWithID(contact.Text("Name"), contact.Text("ContactID"))
 		case "BankAccount", "FromBankAccount", "ToBankAccount":
-			value = nameWithID(accountLabel(record.Object(key)), record.Object(key).Text("AccountID"))
+			account := record.Object(key)
+			value = nameWithID(accountLabel(account), account.Text("AccountID"))
 		case "HasAttachments":
 			value = yesNo(attachments)
 		case "IsReconciled", "FromIsReconciled", "ToIsReconciled", "ShowOnCashBasisReports", "IsCustomer", "IsSupplier":
@@ -134,31 +138,28 @@ func Record(w io.Writer, resource string, record xero.Record, attachments, color
 	if err := Table(&buffer, nil, rows, color); err != nil {
 		return err
 	}
-	if resource == "BankTransactions" || resource == "ManualJournals" {
-		key := "LineItems"
-		header := []string{"ACCOUNT", "DESCRIPTION", "QTY", "UNIT", "TAX TYPE", "TAX", "AMOUNT", "TRACKING"}
-		if resource == "ManualJournals" {
-			key = "JournalLines"
-			header = []string{"ACCOUNT", "DESCRIPTION", "DEBIT", "CREDIT", "TAX TYPE", "TAX", "TRACKING"}
+
+	var lineHeader []string
+	rows = nil
+	switch resource {
+	case "BankTransactions":
+		lineHeader = []string{"ACCOUNT", "DESCRIPTION", "QTY", "UNIT", "TAX TYPE", "TAX", "AMOUNT", "TRACKING"}
+		for _, line := range record.Records("LineItems") {
+			rows = append(rows, []string{lineAccount(line), line.Text("Description"), line.Text("Quantity"), line.Text("UnitAmount"), line.Text("TaxType"), line.Text("TaxAmount"), line.Text("LineAmount"), trackingLabel(line.Records("Tracking"))})
 		}
-		rows = nil
-		for _, line := range record.Records(key) {
-			account := line.Text("AccountCode")
-			if account == "" {
-				account = line.Text("AccountID")
+	case "ManualJournals":
+		lineHeader = []string{"ACCOUNT", "DESCRIPTION", "DEBIT", "CREDIT", "TAX TYPE", "TAX", "TRACKING"}
+		for _, line := range record.Records("JournalLines") {
+			debit, credit := line.Text("LineAmount"), ""
+			if strings.HasPrefix(debit, "-") {
+				credit, debit = strings.TrimPrefix(debit, "-"), ""
 			}
-			if resource == "BankTransactions" {
-				rows = append(rows, []string{account, line.Text("Description"), line.Text("Quantity"), line.Text("UnitAmount"), line.Text("TaxType"), line.Text("TaxAmount"), line.Text("LineAmount"), trackingLabel(line.Records("Tracking"))})
-			} else {
-				debit, credit := line.Text("LineAmount"), ""
-				if strings.HasPrefix(debit, "-") {
-					credit, debit = strings.TrimPrefix(debit, "-"), ""
-				}
-				rows = append(rows, []string{account, line.Text("Description"), debit, credit, line.Text("TaxType"), line.Text("TaxAmount"), trackingLabel(line.Records("Tracking"))})
-			}
+			rows = append(rows, []string{lineAccount(line), line.Text("Description"), debit, credit, line.Text("TaxType"), line.Text("TaxAmount"), trackingLabel(line.Records("Tracking"))})
 		}
+	}
+	if lineHeader != nil {
 		buffer.WriteByte('\n')
-		if err := Table(&buffer, header, rows, color); err != nil {
+		if err := Table(&buffer, lineHeader, rows, color); err != nil {
 			return err
 		}
 	}
@@ -169,6 +170,14 @@ func Record(w io.Writer, resource string, record xero.Record, attachments, color
 	}
 	_, err := w.Write(buffer.Bytes())
 	return err
+}
+
+// lineAccount returns the line's account code, or its account ID when the code is absent.
+func lineAccount(line xero.Record) string {
+	if code := line.Text("AccountCode"); code != "" {
+		return code
+	}
+	return line.Text("AccountID")
 }
 
 func contactDetails(w io.Writer, record xero.Record, color string) error {

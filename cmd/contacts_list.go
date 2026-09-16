@@ -8,7 +8,7 @@ import (
 )
 
 func newContactsList(o *options) *cobra.Command {
-	var listing listingOptions
+	listing := listingOptions{withWhere: true}
 	var search, status string
 	var customers, suppliers bool
 	command := &cobra.Command{Use: "list", Short: "Find contacts and their IDs", Args: cobra.NoArgs,
@@ -20,7 +20,7 @@ are requested because Xero's summaryOnly omits those roles and their filters.
 
 ` + documentListHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
-			query, clauses, err := listing.validate(command, false)
+			query, clauses, err := listing.validate(command)
 			if err != nil {
 				return err
 			}
@@ -48,7 +48,7 @@ are requested because Xero's summaryOnly omits those roles and their filters.
 			return o.records(command, api, "Contacts", query)
 		}),
 	}
-	listing.flags(command, false, false, true)
+	listing.flags(command)
 	command.Flags().StringVar(&search, "search", "", "Xero contact search text")
 	command.Flags().StringVar(&status, "status", "active", "active, archived or all")
 	command.Flags().BoolVar(&customers, "customers", false, "only customers")

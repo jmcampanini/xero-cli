@@ -3,7 +3,7 @@ package cmd
 import "github.com/spf13/cobra"
 
 func newBankTransfersList(o *options) *cobra.Command {
-	var listing listingOptions
+	listing := listingOptions{withPeriod: true}
 	command := &cobra.Command{Use: "list", Short: "List transfers between bank accounts", Args: cobra.NoArgs,
 		Long: `List bank transfers for --from/--to together or --month. Each row shows
 both bank accounts, amount, reference and both reconciliation flags.
@@ -12,7 +12,7 @@ and validated, then ignored with a note on stderr; complete stays true.
 
 ` + documentListHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
-			query, clauses, err := listing.validate(command, true)
+			query, clauses, err := listing.validate(command)
 			if err != nil {
 				return err
 			}
@@ -24,6 +24,6 @@ and validated, then ignored with a note on stderr; complete stays true.
 			return o.records(command, api, "BankTransfers", query)
 		}),
 	}
-	listing.flags(command, true, false, false)
+	listing.flags(command)
 	return command
 }

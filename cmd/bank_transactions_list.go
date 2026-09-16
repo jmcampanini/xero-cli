@@ -10,7 +10,7 @@ import (
 )
 
 func newBankTransactionsList(o *options) *cobra.Command {
-	var listing listingOptions
+	listing := listingOptions{withPeriod: true, withWhere: true}
 	var account, kind, contact, reference, amount string
 	var unreconciled, deleted bool
 	command := &cobra.Command{Use: "list", Short: "List bank transactions for an account and period", Args: cobra.NoArgs,
@@ -27,7 +27,7 @@ reconciliation itself are not available through this command.
 
 ` + documentListHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
-			query, clauses, err := listing.validate(command, true)
+			query, clauses, err := listing.validate(command)
 			if err != nil {
 				return err
 			}
@@ -84,7 +84,7 @@ reconciliation itself are not available through this command.
 			return o.records(command, api, "BankTransactions", query)
 		}),
 	}
-	listing.flags(command, true, false, true)
+	listing.flags(command)
 	command.Flags().StringVar(&account, "account", "", "required bank account code, GUID or exact name")
 	command.Flags().StringVar(&kind, "type", "all", "spend, receive, transfer or all")
 	command.Flags().StringVar(&contact, "contact", "", "exact contact GUID")

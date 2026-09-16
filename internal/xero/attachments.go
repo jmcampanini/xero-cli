@@ -15,19 +15,23 @@ func (c *Client) Attachments(ctx context.Context, resource, id string) ([]Record
 	}
 	status, _, body, err := c.Do(ctx, http.MethodGet, resource+"/"+url.PathEscape(id)+"/Attachments", nil, nil)
 	if err != nil {
-		if status == http.StatusUnauthorized || status == http.StatusForbidden {
-			c.tokenMu.Lock()
-			defer c.tokenMu.Unlock()
-			if c.token != nil {
-				scopes, _, claimsErr := tokenClaims(c.token.AccessToken)
-				if claimsErr == nil && !Capabilities(scopes)["attachments"] {
-					return nil, apperr.New("forbidden", "attachments require accounting.attachments.read or accounting.attachments; update the Custom Connection in the developer portal")
-				}
-			}
+		if (status == http.StatusUnauthorized || status == http.StatusForbidden) && c.lacksAttachmentScope() {
+			return nil, apperr.New("forbidden", "attachments require accounting.attachments.read or accounting.attachments; update the Custom Connection in the developer portal")
 		}
 		return nil, err
 	}
 	return decodeResource[Record](body, "Attachments")
+}
+
+// lacksAttachmentScope reports whether a decodable cached token omits attachment access.
+func (c *Client) lacksAttachmentScope() bool {
+	c.tokenMu.Lock()
+	defer c.tokenMu.Unlock()
+	if c.token == nil {
+		return false
+	}
+	scopes, _, err := tokenClaims(c.token.AccessToken)
+	return err == nil && !Capabilities(scopes)["attachments"]
 }
 
 // Attachment resolves the exact file name and requests bytes with its listed MIME type.
