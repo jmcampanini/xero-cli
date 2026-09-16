@@ -24,7 +24,7 @@ type Report struct {
 func (r Report) AtDate(date string) (Report, error) {
 	column := -1
 	for i, caption := range r.Columns {
-		for _, layout := range []string{"2 Jan 2006", "02 Jan 2006", "2006-01-02"} {
+		for _, layout := range []string{"2 Jan 2006", "02 Jan 2006", "2 Jan 06", "02 Jan 06", "2006-01-02"} {
 			parsed, err := time.Parse(layout, caption)
 			if err == nil && parsed.Format("2006-01-02") == date {
 				if column >= 0 && column != i {
@@ -50,10 +50,11 @@ func (r Report) AtDate(date string) (Report, error) {
 }
 
 // ReportRow is a report line with decimal strings exactly as returned by Xero.
+// Kind is "row", "summary" for Xero summary rows, or "heading" for a titled
+// section without rows of its own, which then has one blank value per column.
 type ReportRow struct {
 	AccountCode string   `json:"account_code"`
 	AccountID   string   `json:"account_id"`
-	AccountName string   `json:"-"`
 	Kind        string   `json:"kind"`
 	Label       string   `json:"label"`
 	Section     []string `json:"section"`
@@ -94,8 +95,8 @@ func (c *Client) hasReportScope(name string) bool {
 	defer c.tokenMu.Unlock()
 	scopes := c.options.Scopes
 	if c.token != nil {
-		if granted, ok := c.token.Extra("scope").(string); ok {
-			scopes = strings.Fields(granted)
+		if granted, _, err := tokenClaims(c.token.AccessToken); err == nil {
+			scopes = granted
 		}
 	}
 	for _, scope := range scopes {
@@ -137,6 +138,12 @@ func parseReport(body []byte) (Report, error) {
 func (r *Report) flatten(nodes []reportNode, section []string) error {
 	for _, node := range nodes {
 		if node.RowType == "Section" {
+			if len(node.Rows) == 0 {
+				if node.Title != "" {
+					r.Rows = append(r.Rows, ReportRow{Kind: "heading", Label: node.Title, Section: append([]string{}, section...), Values: make([]string, len(r.Columns))})
+				}
+				continue
+			}
 			path := append([]string{}, section...)
 			if node.Title != "" {
 				path = append(path, node.Title)
@@ -185,7 +192,6 @@ func (r *Report) ResolveAccounts(accounts []Account) {
 	for i := range r.Rows {
 		account := byID[r.Rows[i].AccountID]
 		r.Rows[i].AccountCode = account.Code
-		r.Rows[i].AccountName = account.Name
 	}
 }
 

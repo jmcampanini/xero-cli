@@ -3,7 +3,8 @@ package cmd
 const reportHelp = `Human stdout has organisation, period, currency and applicable basis or
 tracking context, then sectioned rows with account codes and decimal values.
 --json writes one compact object with context, columns and flattened rows;
-values are decimal strings. Bank Summary omits filters and by as well.
+values are decimal strings. Row kind is row, summary or heading; a heading
+is a titled Xero section without rows of its own and has blank values.
 Native API layouts can differ from Xero's current web layouts, including
 account placement, signs and section subtotals. Values are not rewritten.
 --csv writes section,label,account_code and value columns to stdout;

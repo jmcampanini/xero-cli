@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/url"
 	"regexp"
 	"strings"
@@ -86,6 +87,9 @@ a note for an absent row. Report access and the Reports role are required.
 				return render.JSON(command.OutOrStdout(), fields)
 			}
 			if err := o.object(command, account); err != nil {
+				return err
+			}
+			if _, err := fmt.Fprintln(command.OutOrStdout()); err != nil {
 				return err
 			}
 			rows := [][]string{{"balance", balance.Amount}, {"date", balance.Date}, {"basis", balance.Basis}, {"period", balance.Period}}

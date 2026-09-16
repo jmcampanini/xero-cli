@@ -2,6 +2,7 @@ package xero
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"net/url"
 	"os"
@@ -68,7 +69,8 @@ func TestReportFlatteningPreservesPathsAttributesAndBlanks(t *testing.T) {
 	}
 	report.ResolveAccounts([]Account{{AccountID: "a", Code: "200", Name: "Current chart name"}})
 	want := []ReportRow{
-		{AccountCode: "200", AccountID: "a", AccountName: "Current chart name", Kind: "row", Label: "Native label", Section: []string{"Assets", "Current"}, Values: []string{"12345678901234567890.1234", ""}},
+		{Kind: "heading", Label: "Empty", Section: []string{}, Values: []string{"", ""}},
+		{AccountCode: "200", AccountID: "a", Kind: "row", Label: "Native label", Section: []string{"Assets", "Current"}, Values: []string{"12345678901234567890.1234", ""}},
 		{Kind: "summary", Label: "Total", Section: []string{"Assets", "Current"}, Values: []string{"12345678901234567890.1234", "0.00"}},
 	}
 	if !reflect.DeepEqual(report.Rows, want) {
@@ -99,8 +101,12 @@ func TestReportEndpointAndScopeErrors(t *testing.T) {
 					}
 					w.WriteHeader(http.StatusForbidden)
 				},
+				"/token": func(w http.ResponseWriter, _ *http.Request) {
+					// The granted scope comes from the JWT, not from configuration.
+					_ = json.NewEncoder(w).Encode(map[string]any{"access_token": jwt([]string{scope}), "token_type": "Bearer", "expires_in": 1800})
+				},
 			})
-			c.options.Scopes = []string{scope}
+			c.options.Scopes = []string{"accounting.reports.read"}
 
 			_, err := c.Report(context.Background(), "ProfitAndLoss", url.Values{"fromDate": {"2025-01-01"}, "periods": {"11"}, "timeframe": {"MONTH"}})
 			if err == nil || apperr.From(err).Code != "forbidden" {
@@ -154,6 +160,10 @@ func TestBalanceSheetDateSelection(t *testing.T) {
 	report.Columns = []string{"31 Dec 2025", "31 Dec 2025"}
 	if _, err := report.AtDate("2025-12-31"); err == nil {
 		t.Error("accepted ambiguous date columns")
+	}
+	report.Columns = []string{"31 Dec 24", "31 Dec 25"}
+	if selected, err := report.AtDate("2025-12-31"); err != nil || !reflect.DeepEqual(selected.Columns, []string{"31 Dec 25"}) {
+		t.Errorf("two-digit year AtDate = %#v, %v", selected, err)
 	}
 }
 

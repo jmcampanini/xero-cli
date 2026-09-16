@@ -12,7 +12,9 @@ import (
 
 func TestReportTableSectionsPrecisionAndColor(t *testing.T) {
 	rows := []xero.ReportRow{
+		{Section: []string{}, Label: "Balance", Kind: "heading", Values: []string{"", ""}},
 		{Section: []string{"Assets", "Current"}, AccountCode: "100", Label: "Cash", Kind: "row", Values: []string{"12345678901234567890.1234", ""}},
+		{Section: []string{"Assets", "Current"}, AccountCode: "9", Label: "Petty cash", Kind: "row", Values: []string{"1.00", ""}},
 		{Section: []string{"Assets", "Current"}, Label: "Total current", Kind: "summary", Values: []string{"-1234.00", "0.00"}},
 	}
 	var out bytes.Buffer
@@ -20,7 +22,7 @@ func TestReportTableSectionsPrecisionAndColor(t *testing.T) {
 		t.Fatal(err)
 	}
 	text := out.String()
-	for _, want := range []string{"Assets\nCurrent\n", "100  Cash", "12,345,678,901,234,567,890.1234", "-1,234.00", "\x1b[1m  Total current"} {
+	for _, want := range []string{"\nBalance\nAssets\nCurrent\n", "  Code  Account", "  100   Cash", "  9     Petty cash", "12,345,678,901,234,567,890.1234", "-1,234.00", "\x1b[1m        Total current"} {
 		if !strings.Contains(text, want) {
 			t.Errorf("table %q missing %q", text, want)
 		}

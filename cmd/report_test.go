@@ -197,6 +197,14 @@ func TestReportTrackingAndBalanceSheetFanout(t *testing.T) {
 			t.Errorf("unknown tracking code=%d out=%q stderr=%q", code, out, stderr)
 		}
 	}
+	empty := &fakeClient{reportFn: func(string, url.Values) (xero.Report, error) {
+		t.Fatal("report called for unresolved tracking")
+		return xero.Report{}, nil
+	}}
+	code, out, stderr := invoke([]string{"--config", path, "report", "profit-and-loss", "--month", "2025-12", "--tracking", "Region=North"}, "", func(string, config.OrgConfig) client { return empty })
+	if code != 1 || out != "" || !strings.Contains(stderr, "no tracking categories exist") {
+		t.Errorf("empty categories code=%d out=%q stderr=%q", code, out, stderr)
+	}
 	for _, ambiguous := range [][]xero.TrackingCategory{
 		{{Name: "Region"}, {Name: "REGION"}},
 		{{Name: "Region", Options: []xero.TrackingOption{{Name: "North"}, {Name: "NORTH"}}}},

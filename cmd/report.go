@@ -19,7 +19,7 @@ Each command preserves Xero's report columns and decimal values. Human
 tables retain sections; --json produces flat rows and --csv exports a table.
 Report requests require report access and the Xero user's Reports role.
 
-` + readHelp,
+` + groupHelp,
 		RunE: func(command *cobra.Command, _ []string) error { return command.Help() },
 	}
 	command.AddCommand(newReportProfitAndLoss(o), newReportBalanceSheet(o), newReportTrialBalance(o), newReportBankSummary(o))
@@ -290,7 +290,7 @@ func (r *reportOptions) resolveTracking(ctx context.Context, api client, query u
 			}
 		}
 		if len(matches) != 1 {
-			return xero.TrackingCategory{}, apperr.New("invalid_argument", "option %q in %q must match exactly one option; available: %s", optionName, category.Name, strings.Join(names, ", "))
+			return xero.TrackingCategory{}, apperr.New("invalid_argument", "option %q in %q must match exactly one option; %s", optionName, category.Name, available("options", names))
 		}
 		if r.name == "BalanceSheet" {
 			slot := i + 1
@@ -334,9 +334,16 @@ func reportCategory(categories []xero.TrackingCategory, name string) (xero.Track
 		}
 	}
 	if len(matches) != 1 {
-		return xero.TrackingCategory{}, apperr.New("invalid_argument", "category %q must match exactly one category; available: %s", name, strings.Join(names, ", "))
+		return xero.TrackingCategory{}, apperr.New("invalid_argument", "category %q must match exactly one category; %s", name, available("tracking categories", names))
 	}
 	return matches[0], nil
+}
+
+func available(noun string, names []string) string {
+	if len(names) == 0 {
+		return "no " + noun + " exist"
+	}
+	return "available: " + strings.Join(names, ", ")
 }
 
 func (r *reportOptions) fetch(ctx context.Context, api client, query url.Values, category xero.TrackingCategory) (xero.Report, error) {

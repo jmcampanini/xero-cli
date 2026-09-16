@@ -11,7 +11,8 @@ count as cash movements. This report is not a profit and loss.
 
 The API has no accounting-basis option for Bank Summary, so basis is
 omitted from its context and JSON. Tracking filters, breakdowns and
-comparison periods are not supported by this command.
+comparison periods are not supported by this command, and its JSON has
+no filters or by fields.
 
 ` + reportHelp,
 		RunE: o.runReport(r),

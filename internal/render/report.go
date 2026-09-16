@@ -12,21 +12,24 @@ import (
 )
 
 // ReportTable renders native labels and values with section paths and bold totals.
+// Account codes share one left-aligned column; heading rows print as titles.
 func ReportTable(w io.Writer, columns []string, rows []xero.ReportRow, color string) error {
 	widths := make([]int, len(columns)+1)
 	widths[0] = utf8.RuneCountInString("  Code  Account")
 	for i, column := range columns {
 		widths[i+1] = utf8.RuneCountInString(cellSanitizer.Replace(column))
 	}
+	codeWidth := len("Code")
+	for _, row := range rows {
+		codeWidth = max(codeWidth, utf8.RuneCountInString(cellSanitizer.Replace(row.AccountCode)))
+	}
 	labels := make([]string, len(rows))
 	values := make([][]string, len(rows))
 	for i, row := range rows {
-		label := "  "
-		if row.AccountCode != "" {
-			label += row.AccountCode + "  "
+		labels[i] = fmt.Sprintf("  %-*s  %s", codeWidth, cellSanitizer.Replace(row.AccountCode), cellSanitizer.Replace(row.Label))
+		if row.Kind != "heading" {
+			widths[0] = max(widths[0], utf8.RuneCountInString(labels[i]))
 		}
-		labels[i] = label + cellSanitizer.Replace(row.Label)
-		widths[0] = max(widths[0], utf8.RuneCountInString(labels[i]))
 		if len(row.Values) != len(columns) {
 			return fmt.Errorf("report row %q has inconsistent columns", row.Label)
 		}
@@ -50,7 +53,7 @@ func ReportTable(w io.Writer, columns []string, rows []xero.ReportRow, color str
 		}
 		buf.WriteByte('\n')
 	}
-	writeLine("  Code  Account", columns, ColorEnabled(w, color))
+	writeLine(fmt.Sprintf("  %-*s  Account", codeWidth, "Code"), columns, ColorEnabled(w, color))
 	var section []string
 	for i, row := range rows {
 		common := 0
@@ -61,6 +64,10 @@ func ReportTable(w io.Writer, columns []string, rows []xero.ReportRow, color str
 			buf.WriteString(cellSanitizer.Replace(title) + "\n")
 		}
 		section = row.Section
+		if row.Kind == "heading" {
+			buf.WriteString(cellSanitizer.Replace(row.Label) + "\n")
+			continue
+		}
 		writeLine(labels[i], values[i], row.Kind == "summary" && ColorEnabled(w, color))
 	}
 	_, err := io.WriteString(w, buf.String())
