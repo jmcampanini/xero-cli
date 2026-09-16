@@ -14,14 +14,15 @@ import (
 // ReportTable renders native labels and values with section paths and bold totals.
 // Account codes share one left-aligned column; heading rows print as titles.
 func ReportTable(w io.Writer, columns []string, rows []xero.ReportRow, color string) error {
-	widths := make([]int, len(columns)+1)
-	widths[0] = utf8.RuneCountInString("  Code  Account")
-	for i, column := range columns {
-		widths[i+1] = utf8.RuneCountInString(cellSanitizer.Replace(column))
-	}
 	codeWidth := len("Code")
 	for _, row := range rows {
 		codeWidth = max(codeWidth, utf8.RuneCountInString(cellSanitizer.Replace(row.AccountCode)))
+	}
+	header := fmt.Sprintf("  %-*s  Account", codeWidth, "Code")
+	widths := make([]int, len(columns)+1)
+	widths[0] = utf8.RuneCountInString(header)
+	for i, column := range columns {
+		widths[i+1] = utf8.RuneCountInString(cellSanitizer.Replace(column))
 	}
 	labels := make([]string, len(rows))
 	values := make([][]string, len(rows))
@@ -53,7 +54,8 @@ func ReportTable(w io.Writer, columns []string, rows []xero.ReportRow, color str
 		}
 		buf.WriteByte('\n')
 	}
-	writeLine(fmt.Sprintf("  %-*s  Account", codeWidth, "Code"), columns, ColorEnabled(w, color))
+	bold := ColorEnabled(w, color)
+	writeLine(header, columns, bold)
 	var section []string
 	for i, row := range rows {
 		common := 0
@@ -68,7 +70,7 @@ func ReportTable(w io.Writer, columns []string, rows []xero.ReportRow, color str
 			buf.WriteString(cellSanitizer.Replace(row.Label) + "\n")
 			continue
 		}
-		writeLine(labels[i], values[i], row.Kind == "summary" && ColorEnabled(w, color))
+		writeLine(labels[i], values[i], bold && row.Kind == "summary")
 	}
 	_, err := io.WriteString(w, buf.String())
 	return err

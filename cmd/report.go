@@ -365,7 +365,8 @@ func (r *reportOptions) fetch(ctx context.Context, api client, query url.Values,
 		if err != nil {
 			return xero.Report{}, err
 		}
-		reports, columns = append(reports, report), append(columns, option.Name)
+		reports = append(reports, report)
+		columns = append(columns, option.Name)
 	}
 	query.Del("trackingOptionID1")
 	total, err := api.Report(ctx, r.name, query)

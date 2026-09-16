@@ -61,13 +61,10 @@ func (o *options) report(command *cobra.Command, output reportOutput, title stri
 			return err
 		}
 	} else {
-		color := o.color
-		if color == "auto" {
-			// Preserve terminal detection while assembling output before writing it.
-			color = "never"
-			if render.ColorEnabled(command.OutOrStdout(), o.color) {
-				color = "always"
-			}
+		// Resolve color against stdout now; the table is assembled in a buffer.
+		color := "never"
+		if render.ColorEnabled(command.OutOrStdout(), o.color) {
+			color = "always"
 		}
 		fmt.Fprintln(&table, context+"\n")
 		if err := render.ReportTable(&table, output.Columns, output.Rows, color); err != nil {

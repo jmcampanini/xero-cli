@@ -27,7 +27,7 @@ func (r Report) AtDate(date string) (Report, error) {
 		for _, layout := range []string{"2 Jan 2006", "02 Jan 2006", "2 Jan 06", "02 Jan 06", "2006-01-02"} {
 			parsed, err := time.Parse(layout, caption)
 			if err == nil && parsed.Format("2006-01-02") == date {
-				if column >= 0 && column != i {
+				if column >= 0 {
 					return Report{}, apperr.New("api", "balance sheet repeats date column %q", date)
 				}
 				column = i
