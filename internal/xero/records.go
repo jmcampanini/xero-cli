@@ -106,7 +106,7 @@ func normalizeMoney(record Record) error {
 			continue
 		}
 		switch key {
-		case "Amount", "SubTotal", "TotalTax", "Total", "UnitAmount", "LineAmount", "TaxAmount", "DiscountAmount", "BankAccountBalance", "AmountDue", "AmountPaid", "AmountCredited", "Outstanding", "Overdue":
+		case "Amount", "SubTotal", "TotalTax", "Total", "UnitAmount", "LineAmount", "TaxAmount", "DiscountAmount", "BankAccountBalance", "AmountDue", "AmountPaid", "AmountCredited", "Outstanding", "Overdue", "DebitTotal", "CreditTotal":
 			value := record.Text(key)
 			if !ValidDecimal(value) {
 				return apperr.New("api", "Xero returned an invalid decimal for %s", key)

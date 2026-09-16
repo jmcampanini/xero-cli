@@ -88,8 +88,11 @@ func (c *Client) Records(ctx context.Context, resource string, options ListQuery
 			return RecordList{}, err
 		}
 		p := envelope.Pagination
-		if p == nil || p.Page != page || p.PageCount < 0 || p.ItemCount < 0 || p.PageSize != size {
-			return RecordList{}, apperr.New("api", "%s returned invalid pagination; completeness cannot be verified", resource)
+		if p == nil || p.Page != page || p.PageCount < 0 || p.ItemCount < 0 {
+			return RecordList{}, apperr.New("api", "%s returned invalid pagination for page %d; completeness cannot be verified", resource, page)
+		}
+		if p.PageSize != size {
+			return RecordList{}, apperr.New("api", "%s returned pageSize %d for a requested %d; completeness cannot be verified", resource, p.PageSize, size)
 		}
 		if result.Page == 0 {
 			result.Page, result.PageCount, result.ItemCount = page, p.PageCount, p.ItemCount

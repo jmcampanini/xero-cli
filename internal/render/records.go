@@ -192,6 +192,14 @@ func contactDetails(w io.Writer, record xero.Record, color string) error {
 	if err := Table(w, []string{"ADDRESS", "DETAILS"}, rows, color); err != nil {
 		return err
 	}
+	rows = nil
+	for _, side := range []struct{ label, key string }{{"Receivable", "AccountsReceivable"}, {"Payable", "AccountsPayable"}} {
+		balance := record.Object("Balances").Object(side.key)
+		rows = append(rows, []string{side.label, balance.Text("Outstanding"), balance.Text("Overdue")})
+	}
+	if err := Table(w, []string{"BALANCE", "OUTSTANDING", "OVERDUE"}, rows, color); err != nil {
+		return err
+	}
 	if _, err := fmt.Fprintln(w, "\nDefaults applied by Xero to new transactions for this contact:"); err != nil {
 		return err
 	}

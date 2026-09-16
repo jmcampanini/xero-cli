@@ -41,6 +41,9 @@ func TestRecordedDocumentsPreserveFields(t *testing.T) {
 			for i := range items {
 				assertRecordFields(t, original[i], items[i])
 			}
+			if test.resource == "ManualJournals" && (items[0]["DebitTotal"][0] != '"' || items[0]["CreditTotal"][0] != '"') {
+				t.Errorf("journal totals are not decimal strings: %s %s", items[0]["DebitTotal"], items[0]["CreditTotal"])
+			}
 		})
 	}
 }
@@ -149,11 +152,14 @@ func TestRecordsPaginationAndCompleteness(t *testing.T) {
 }
 
 func TestRecordsRejectUnverifiableCollection(t *testing.T) {
-	for _, fault := range []string{"missing pagination", "changed count", "changed pages", "duplicate ID", "missing ID", "short collection", "HTTP failure", "invalid money"} {
+	for _, fault := range []string{"missing pagination", "changed count", "changed pages", "duplicate ID", "missing ID", "short collection", "HTTP failure", "invalid money", "wrong size"} {
 		t.Run(fault, func(t *testing.T) {
 			c := testClient(t, map[string]http.HandlerFunc{"/api/Contacts": func(w http.ResponseWriter, r *http.Request) {
 				page, _ := strconv.Atoi(r.URL.Query().Get("page"))
-				pages, count, id := 2, 2, strconv.Itoa(page)
+				pages, count, size, id := 2, 2, 100, strconv.Itoa(page)
+				if fault == "wrong size" {
+					size = 50
+				}
 				if fault == "missing pagination" {
 					_, _ = fmt.Fprint(w, `{"Contacts":[]}`)
 					return
@@ -182,11 +188,14 @@ func TestRecordsRejectUnverifiableCollection(t *testing.T) {
 						return
 					}
 				}
-				_, _ = fmt.Fprintf(w, `{"pagination":{"page":%d,"pageSize":100,"pageCount":%d,"itemCount":%d},"Contacts":[{"ContactID":%q}]}`, page, pages, count, id)
+				_, _ = fmt.Fprintf(w, `{"pagination":{"page":%d,"pageSize":%d,"pageCount":%d,"itemCount":%d},"Contacts":[{"ContactID":%q}]}`, page, size, pages, count, id)
 			}})
 			got, err := c.Records(context.Background(), "Contacts", ListQuery{})
 			if err == nil || len(got.Items) != 0 || got.Complete {
 				t.Errorf("list %+v, error %v", got, err)
+			}
+			if fault == "wrong size" && !strings.Contains(err.Error(), "pageSize 50 for a requested 100") {
+				t.Errorf("size error = %v", err)
 			}
 		})
 	}

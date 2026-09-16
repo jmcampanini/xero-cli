@@ -57,7 +57,7 @@ reconciliation itself are not available through this command.
 				return err
 			}
 			if bank.Type != "BANK" {
-				return apperr.New("invalid_argument", "account %q must identify exactly one BANK account", account)
+				return apperr.New("invalid_argument", "account %q is %s, not a BANK account", account, bank.Type)
 			}
 			clauses = append(clauses, "BankAccount.AccountID==Guid("+strconv.Quote(bank.AccountID)+")")
 			if !deleted {
