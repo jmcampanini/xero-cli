@@ -19,7 +19,9 @@ Xero validates the token. Tokens and secrets are never printed or stored.
 
 An unset organisation_id is allowed here so you can copy the discovered ID
 into config. A mismatch is a failure. Missing accounts or tracking scopes
-fail this check; missing scopes for later commands are informational.
+fail this check; missing scopes for other commands are informational.
+Bank transactions, transfers, journals, contacts and attachments each have
+their own availability entry. Read scopes enable the corresponding reads.
 Granular report access means at least one report, not every report.
 
 Human status blocks go to stdout. --json writes an array with name,

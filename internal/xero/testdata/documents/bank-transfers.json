@@ -1,0 +1,56 @@
+{
+  "BankTransfers": [
+    {
+      "BankTransferID": "00000000-0000-0000-0000-000000000017",
+      "CreatedDateUTCString": "2025-01-02T00:00:00",
+      "CreatedDateUTC": "/Date(1735776000000+0000)/",
+      "DateString": "2025-01-02T00:00:00",
+      "Date": "/Date(1735776000000+0000)/",
+      "FromBankAccount": {
+        "AccountID": "00000000-0000-0000-0000-000000000002",
+        "Name": "Example 1"
+      },
+      "ToBankAccount": {
+        "AccountID": "00000000-0000-0000-0000-000000000018",
+        "Name": "Example 10"
+      },
+      "FromTracking": [],
+      "ToTracking": [],
+      "Amount": 25.125,
+      "FromBankTransactionID": "00000000-0000-0000-0000-000000000019",
+      "ToBankTransactionID": "00000000-0000-0000-0000-000000000020",
+      "FromIsReconciled": true,
+      "ToIsReconciled": true,
+      "CurrencyRate": 1.0,
+      "Reference": "Example 11",
+      "HasAttachments": false,
+      "Status": "AUTHORISED"
+    },
+    {
+      "BankTransferID": "00000000-0000-0000-0000-000000000021",
+      "CreatedDateUTCString": "2025-01-02T00:00:00",
+      "CreatedDateUTC": "/Date(1735776000000+0000)/",
+      "DateString": "2025-01-02T00:00:00",
+      "Date": "/Date(1735776000000+0000)/",
+      "FromBankAccount": {
+        "AccountID": "00000000-0000-0000-0000-000000000002",
+        "Name": "Example 1"
+      },
+      "ToBankAccount": {
+        "AccountID": "00000000-0000-0000-0000-000000000018",
+        "Name": "Example 10"
+      },
+      "FromTracking": [],
+      "ToTracking": [],
+      "Amount": 25.125,
+      "FromBankTransactionID": "00000000-0000-0000-0000-000000000022",
+      "ToBankTransactionID": "00000000-0000-0000-0000-000000000023",
+      "FromIsReconciled": true,
+      "ToIsReconciled": true,
+      "CurrencyRate": 1.0,
+      "Reference": "Example 11",
+      "HasAttachments": false,
+      "Status": "AUTHORISED"
+    }
+  ]
+}

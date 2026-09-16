@@ -370,6 +370,11 @@ xero bank-transfer show ID
   instead of `debit`/`credit`, plus `quantity` (default 1) and `item`:
   `--line 'account=200 amount=1440 description="March sale" tracking=Region=North'`.
   Tax type defaults to the account's; `tax=NONE` is explicit.
+- Bank transactions and manual journals retain Xero's date order. Order
+  within a date is unspecified; explicit pages remain Xero's pages. Bank
+  transfers order by date then ID.
+- `--reference` matches literal text, including quotes and backslashes.
+  Xero filter strings double embedded quotes and preserve backslashes.
 - `list --contact --reference --amount` exist for the duplicate check
   before entry. Deleted records are hidden unless `--include-deleted`
   and then marked, so a replaced entry is never counted twice.
@@ -454,11 +459,19 @@ new transaction.
 - `--json` writes one compact value on one line. Entity commands emit the
   Xero object for that resource with `/Date(ms)/` values normalised to
   ISO 8601 dates (accounting dates stay `YYYY-MM-DD`; UTC timestamps stay
-  UTC), tracking rendered with category and option names alongside IDs,
-  and the `pagination` block replaced by `complete`. Lists are
+  UTC), and the `pagination` block replaced by `complete`. Tracking keeps
+  Xero's original field names and every returned field, including unknown
+  fields. Do not rename tracking fields or add normalized aliases. Line
+  tracking retains `Name`, `Option`, `TrackingCategoryID`, and
+  `TrackingOptionID` when returned; contact defaults retain
+  `TrackingCategoryName` and `TrackingOptionName`. Human output renders
+  line tracking as `Category=Option`. Lists are
   `{"org":..., "complete":..., "items":[...]}`. Reports and
   `account transactions` emit tool-owned flattened shapes with the same
-  context header. `api` emits the raw body.
+  context header. Source tracking objects within account-transaction rows
+  also retain Xero's fields. CLI-owned filter and grouping metadata keeps
+  its documented shape; it describes requested context, not a source
+  tracking object. `api` emits the raw body.
 - Mutations echo the affected entity and print on stderr the
   organisation name and ID, the record ID, and the idempotency key used.
 - `--dry-run` prints the request body and target organisation and exits
@@ -492,7 +505,8 @@ new transaction.
 7. **Secrets** live in a file the TOML names per organisation. No tokens
    are stored; one is fetched per run.
 8. **Idempotency keys** are generated and printed on every write.
-9. **JSON shape.** Native Xero objects with normalised dates and named
-   tracking for entities; tool-owned flat shapes for reports and account
-   transactions.
+9. **JSON shape.** Native Xero objects with normalised dates and original
+   tracking fields for entities; tool-owned flat shapes for reports and
+   account transactions. Source tracking objects retain Xero's field names
+   without aliases, including within account-transaction rows.
 10. **The ledger feed is last.** No command depends on it.
