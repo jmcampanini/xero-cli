@@ -8,6 +8,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/jmcampanini/xero-cli/internal/apperr"
 )
 
 var xeroDate = regexp.MustCompile(`^/Date\((-?\d+)(?:[+-]\d{4})?\)/$`)
@@ -78,4 +80,13 @@ func normalizeDate(key, text string) (string, bool) {
 		return date.UTC().Format(time.RFC3339Nano), true
 	}
 	return date.UTC().Format("2006-01-02"), true
+}
+
+// ParseCalendarDate validates an explicit YYYY-MM-DD date without timezone shifts.
+func ParseCalendarDate(value string) (time.Time, error) {
+	date, err := time.Parse("2006-01-02", value)
+	if err != nil || date.Format("2006-01-02") != value || date.Year() < 1 {
+		return time.Time{}, apperr.New("invalid_argument", "invalid date %q; expected YYYY-MM-DD", value)
+	}
+	return date, nil
 }

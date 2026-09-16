@@ -1,0 +1,183 @@
+{
+  "Id": "00000000-0000-0000-0000-000000000047",
+  "Status": "OK",
+  "ProviderName": "Example connection",
+  "DateTimeUTC": "/Date(1767225600000)/",
+  "Reports": [
+    {
+      "ReportID": "BankSummary",
+      "ReportName": "Bank Summary",
+      "ReportType": "BankSummary",
+      "ReportTitles": [
+        "Bank Summary",
+        "Example Holdings Ltd",
+        "From 1 December 2025 to 31 December 2025"
+      ],
+      "ReportDate": "14 September 2026",
+      "UpdatedDateUTC": "/Date(1767225600000)/",
+      "Fields": [],
+      "Rows": [
+        {
+          "RowType": "Header",
+          "Cells": [
+            {
+              "Value": "Bank Accounts"
+            },
+            {
+              "Value": "Opening Balance"
+            },
+            {
+              "Value": "Cash Received"
+            },
+            {
+              "Value": "Cash Spent"
+            },
+            {
+              "Value": "Closing Balance"
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 023",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "accountID"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2310.30"
+                },
+                {
+                  "Value": "2004.12",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2004.12",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2310.30"
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 011",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "accountID"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1069.57"
+                },
+                {
+                  "Value": "2327.31",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2344.32",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1052.56"
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 012",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "accountID"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1103.59"
+                },
+                {
+                  "Value": "100.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2276.28",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1086.58"
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total"
+                },
+                {
+                  "Value": "2361.33"
+                },
+                {
+                  "Value": "2378.34"
+                },
+                {
+                  "Value": "2395.35"
+                },
+                {
+                  "Value": "2412.36"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

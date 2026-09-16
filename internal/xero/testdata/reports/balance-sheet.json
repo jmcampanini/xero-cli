@@ -1,0 +1,1000 @@
+{
+  "Id": "00000000-0000-0000-0000-000000000010",
+  "Status": "OK",
+  "ProviderName": "Example connection",
+  "DateTimeUTC": "/Date(1767225600000)/",
+  "Reports": [
+    {
+      "ReportID": "BalanceSheet",
+      "ReportName": "Balance Sheet",
+      "ReportType": "BalanceSheet",
+      "ReportTitles": [
+        "Balance Sheet",
+        "Example Holdings Ltd",
+        "As at 31 December 2025"
+      ],
+      "ReportDate": "14 September 2026",
+      "UpdatedDateUTC": "/Date(1767225600000)/",
+      "Fields": [],
+      "Rows": [
+        {
+          "RowType": "Header",
+          "Cells": [
+            {
+              "Value": ""
+            },
+            {
+              "Value": "31 Dec 2025"
+            },
+            {
+              "Value": "30 Nov 2025"
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Assets",
+          "Rows": []
+        },
+        {
+          "RowType": "Section",
+          "Title": "Cash and Cash Equivalents",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 011",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1052.56",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1069.57",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 012",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1086.58",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1103.59",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Cash and Cash Equivalents"
+                },
+                {
+                  "Value": "1120.60"
+                },
+                {
+                  "Value": "1137.61"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Current Assets",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 013",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000013",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1154.62",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000013",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1154.62",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000013",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 014",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000014",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1171.63",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000014",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1188.64",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000014",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Current Assets"
+                },
+                {
+                  "Value": "1205.65"
+                },
+                {
+                  "Value": "1222.66"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Property, Plant and Equipment",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 015",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000015",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1239.67",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000015",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1239.67",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000015",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 016",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000016",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1256.68",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000016",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1256.68",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000016",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 017",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000017",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1273.69",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000017",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1273.69",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000017",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 018",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000018",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1290.70",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000018",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1290.70",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000018",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 019",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000019",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1307.71",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000019",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1307.71",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000019",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 020",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000020",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1324.72",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000020",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1324.72",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000020",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 021",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000021",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1341.73",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000021",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1341.73",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000021",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 022",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000022",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1358.74",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000022",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1358.74",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000022",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Property, Plant and Equipment"
+                },
+                {
+                  "Value": "1375.75"
+                },
+                {
+                  "Value": "1375.75"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Assets"
+                },
+                {
+                  "Value": "1392.76"
+                },
+                {
+                  "Value": "1409.77"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Liabilities and Equity",
+          "Rows": []
+        },
+        {
+          "RowType": "Section",
+          "Title": "Liabilities",
+          "Rows": []
+        },
+        {
+          "RowType": "Section",
+          "Title": "Current Liabilities",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 023",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1426.78",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1426.78",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 024",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000024",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1443.79",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000024",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1443.79",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000024",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 025",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000025",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1460.80",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000025",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1460.80",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000025",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Current Liabilities"
+                },
+                {
+                  "Value": "1477.81"
+                },
+                {
+                  "Value": "1477.81"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Non-Current Liabilities",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 026",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000026",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1494.82",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000026",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1494.82",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000026",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 027",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000027",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1511.83",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000027",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1528.84",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000027",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Non-Current Liabilities"
+                },
+                {
+                  "Value": "1545.85"
+                },
+                {
+                  "Value": "1562.86"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Liabilities"
+                },
+                {
+                  "Value": "1579.87"
+                },
+                {
+                  "Value": "1596.88"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Equity",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 028",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000028",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1613.89",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000028",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1613.89",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000028",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 029",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000029",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1630.90",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000029",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1630.90",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000029",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 030",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000030",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1647.91",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000030",
+                      "Id": "account"
+                    },
+                    {
+                      "Value": "1/1/2025",
+                      "Id": "fromDate"
+                    },
+                    {
+                      "Value": "12/31/2025",
+                      "Id": "toDate"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1664.92",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000030",
+                      "Id": "account"
+                    },
+                    {
+                      "Value": "1/1/2025",
+                      "Id": "fromDate"
+                    },
+                    {
+                      "Value": "11/30/2025",
+                      "Id": "toDate"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 031",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000031",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1681.93",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000031",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1681.93",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000031",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 032",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000032",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1698.94",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000032",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1698.94",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000032",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 033",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000033",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1715.95",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000033",
+                      "Id": "account"
+                    },
+                    {
+                      "Value": "",
+                      "Id": "fromDate"
+                    },
+                    {
+                      "Value": "12/31/2025",
+                      "Id": "toDate"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1715.95",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000033",
+                      "Id": "account"
+                    },
+                    {
+                      "Value": "",
+                      "Id": "fromDate"
+                    },
+                    {
+                      "Value": "11/30/2025",
+                      "Id": "toDate"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Equity"
+                },
+                {
+                  "Value": "1732.96"
+                },
+                {
+                  "Value": "1749.97"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total Liabilities and Equity"
+                },
+                {
+                  "Value": "1392.76"
+                },
+                {
+                  "Value": "1409.77"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

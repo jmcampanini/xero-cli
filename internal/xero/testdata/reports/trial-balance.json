@@ -1,0 +1,2181 @@
+{
+  "Id": "00000000-0000-0000-0000-000000000034",
+  "Status": "OK",
+  "ProviderName": "Example connection",
+  "DateTimeUTC": "/Date(1767225600000)/",
+  "Reports": [
+    {
+      "ReportID": "TrialBalance",
+      "ReportName": "Trial Balance",
+      "ReportType": "TrialBalance",
+      "ReportTitles": [
+        "Trial Balance",
+        "Example Holdings Ltd",
+        "As at 31 December 2025"
+      ],
+      "ReportDate": "14 September 2026",
+      "UpdatedDateUTC": "/Date(1767225600000)/",
+      "Fields": [],
+      "Rows": [
+        {
+          "RowType": "Header",
+          "Cells": [
+            {
+              "Value": "Account"
+            },
+            {
+              "Value": "Debit"
+            },
+            {
+              "Value": "Credit"
+            },
+            {
+              "Value": "YTD Debit"
+            },
+            {
+              "Value": "YTD Credit"
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Revenue",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 035",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000035",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000035",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000035",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1766.98",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000035",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000035",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 036",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000036",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000036",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000036",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000036",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1783.99",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000036",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 037",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000037",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000037",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000037",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000037",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1800.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000037",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 002",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "100.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1817.01",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000002",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Expenses",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 038",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000038",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000038",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000038",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1834.02",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000038",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000038",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 039",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000039",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000039",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000039",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1851.03",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000039",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000039",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 003",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "117.01",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1868.04",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000003",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 040",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000040",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000040",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000040",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1885.05",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000040",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000040",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 041",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000041",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000041",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000041",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1902.06",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000041",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000041",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 042",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000042",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000042",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000042",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1919.07",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000042",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000042",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 004",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "134.02",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1936.08",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000004",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 005",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "151.03",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1953.09",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000005",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 006",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "168.04",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1970.10",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000006",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 043",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000043",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000043",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000043",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1987.11",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000043",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000043",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 008",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2004.12",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2021.13",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000008",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 007",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "185.05",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2038.14",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000007",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 044",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000044",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000044",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000044",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2055.15",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000044",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000044",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 045",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000045",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000045",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000045",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2072.16",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000045",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000045",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 046",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000046",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000046",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000046",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2089.17",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000046",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000046",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Assets",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 023",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1426.78",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000023",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 011",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2106.18",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1052.56",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000011",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 012",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2123.19",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1086.58",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000012",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 013",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000013",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000013",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000013",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1154.62",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000013",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000013",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 014",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000014",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2140.20",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000014",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000014",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1171.63",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000014",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000014",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 015",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000015",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000015",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000015",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000015",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2157.21",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000015",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 016",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000016",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000016",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000016",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1256.68",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000016",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000016",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 017",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000017",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000017",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000017",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1273.69",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000017",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000017",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 018",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000018",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000018",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000018",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1290.70",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000018",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000018",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 019",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000019",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000019",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000019",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000019",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2174.22",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000019",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 020",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000020",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000020",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000020",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1324.72",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000020",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000020",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 021",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000021",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000021",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000021",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1341.73",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000021",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000021",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 022",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000022",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000022",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000022",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1358.74",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000022",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000022",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Liabilities",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 024",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000024",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000024",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000024",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000024",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1443.79",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000024",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 025",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000025",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000025",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000025",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000025",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1460.80",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000025",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 026",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000026",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000026",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000026",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000026",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1494.82",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000026",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 027",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000027",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2191.23",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000027",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000027",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2208.24",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000027",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000027",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "Equity",
+          "Rows": [
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 028",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000028",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000028",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000028",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000028",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1613.89",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000028",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 029",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000029",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000029",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000029",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2225.25",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000029",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000029",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 031",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000031",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000031",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000031",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000031",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "1681.93",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000031",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 032",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000032",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000032",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000032",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2242.26",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000032",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000032",
+                      "Id": "account"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "RowType": "Row",
+              "Cells": [
+                {
+                  "Value": "Account 033",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000033",
+                      "Id": "account"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000033",
+                      "Id": "account"
+                    },
+                    {
+                      "Value": "",
+                      "Id": "fromDate"
+                    },
+                    {
+                      "Value": "12/31/2024",
+                      "Id": "toDate"
+                    }
+                  ]
+                },
+                {
+                  "Value": "0.00",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000033",
+                      "Id": "account"
+                    },
+                    {
+                      "Value": "",
+                      "Id": "fromDate"
+                    },
+                    {
+                      "Value": "12/31/2024",
+                      "Id": "toDate"
+                    }
+                  ]
+                },
+                {
+                  "Value": "2259.27",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000033",
+                      "Id": "account"
+                    },
+                    {
+                      "Value": "",
+                      "Id": "fromDate"
+                    },
+                    {
+                      "Value": "12/31/2024",
+                      "Id": "toDate"
+                    }
+                  ]
+                },
+                {
+                  "Value": "",
+                  "Attributes": [
+                    {
+                      "Value": "00000000-0000-0000-0000-000000000033",
+                      "Id": "account"
+                    },
+                    {
+                      "Value": "",
+                      "Id": "fromDate"
+                    },
+                    {
+                      "Value": "12/31/2024",
+                      "Id": "toDate"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "RowType": "Section",
+          "Title": "",
+          "Rows": [
+            {
+              "RowType": "SummaryRow",
+              "Cells": [
+                {
+                  "Value": "Total"
+                },
+                {
+                  "Value": "2276.28"
+                },
+                {
+                  "Value": "2276.28"
+                },
+                {
+                  "Value": "2293.29"
+                },
+                {
+                  "Value": "2293.29"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
