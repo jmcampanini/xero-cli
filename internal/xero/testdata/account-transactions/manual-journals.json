@@ -1,0 +1,6 @@
+[
+ {"ManualJournalID":"posted","Date":"2025-07-03","Status":"POSTED","ShowOnCashBasisReports":true,"Narration":"Cash adjustment","LineAmountTypes":"Exclusive","JournalLines":[{"AccountID":"expense","LineAmount":20.00,"Description":"First"},{"AccountCode":"429","LineAmount":-3.00,"Description":"Second"}]},
+ {"ManualJournalID":"accrual","Date":"2025-07-04","Status":"POSTED","ShowOnCashBasisReports":false,"Narration":"Accrual adjustment","LineAmountTypes":"NoTax","JournalLines":[{"AccountID":"expense","LineAmount":700.00}]},
+ {"ManualJournalID":"draft","Date":"2025-07-04","Status":"DRAFT","ShowOnCashBasisReports":true,"LineAmountTypes":"NoTax","JournalLines":[{"AccountID":"expense","LineAmount":800.00}]},
+ {"ManualJournalID":"voided","Date":"2025-07-05","Status":"VOIDED","ShowOnCashBasisReports":true,"LineAmountTypes":"NoTax","JournalLines":[{"AccountID":"expense","LineAmount":900.00}]}
+]

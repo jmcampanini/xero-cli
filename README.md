@@ -32,6 +32,8 @@ make build
 | `xero accounts list --bank` | Active bank accounts |
 | `xero account show 200` | Account details for code 200, when configured |
 | `xero account show 200 --date 2025-12-31` | Account details and its trial-balance amount |
+| `xero account transactions 429 --month 2025-12` | Supported cash movements and reconstructed balances, with omitted sources disclosed |
+| `xero account transactions 429 --month 2025-12 --tracking Region=North --csv` | Matching cash movements as CSV, without account balances |
 | `xero report profit-and-loss --month 2025-12 --basis cash` | Native cash-basis profit and loss |
 | `xero report balance-sheet --date 2025-12-31 --by Property` | Active tracking options and Total, when configured |
 | `xero report trial-balance --date 2025-12-31 --json` | Debit and credit columns as decimal strings |

@@ -189,16 +189,24 @@ xero account transactions CODE (--from DATE --to DATE | --month YYYY-MM)
   trial balance. Without it, no report call is made, and an explicit
   `--basis` is a usage error. Balances use exact YTD debit/credit
   subtraction, with financial-year-to-date labels for income and expenses.
-- `account transactions` is assembled client-side (see `DOMAIN.md`). For a
-  bank account it unions bank transactions, payments, transfers,
-  prepayments, and overpayments on that account. For any other account it
-  scans invoices, credit notes, bank transactions, and manual journals in
-  the range and keeps lines coded to the account. Help states that
-  system-generated lines (FX, tax, payroll) are absent. Rows: date,
-  source type, source ID, contact or narration, description, debit,
-  credit, tracking, and a running balance seeded from the trial balance
-  at the start date. Deleted records are excluded unless
-  `--include-deleted`, and then marked.
+- `account transactions` is cash-only and supports the organisation's base
+  currency. It combines bank transactions and deduplicated bank transfers
+  for bank accounts, or matching bank-transaction and cash-enabled posted
+  manual-journal lines for other accounts. Invoice/bill payments and refunds,
+  prepayment/overpayment allocations and refunds, and system-generated lines
+  are excluded and always disclosed; JSON has `complete:false`.
+- Unfiltered output has a cash trial-balance opening, class-signed running
+  balances, and a reconstructed closing balance. Income/expense balances are
+  financial-year-to-date, zero at the fiscal-year start, and require a range
+  within one financial year. For ranges ending today or earlier, compare
+  against the closing cash trial balance and show the unexplained difference.
+- `--tracking` shows matching rows and net movement only, with no balance
+  fields or trial-balance requests. Bank rows retain whole-document amounts.
+  This mode and balance-sheet accounts permit ranges crossing financial years.
+- Rows include date, source, contact or narration, description, reference,
+  debit, credit, tracking and status, plus balance when unfiltered. CSV splits
+  source type, subtype and full ID into separate columns. Deleted/voided rows
+  appear only with `--include-deleted`, marked and excluded from calculations.
 
 
 ### Tracking categories and options

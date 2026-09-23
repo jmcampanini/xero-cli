@@ -55,8 +55,12 @@ with every field a bookkeeper checks.
 
 ### 4 - Account transactions
 
-`account transactions` assembled from slice 3's reads, with the running
-balance, `--csv`, and the documented gap. The most expensive read.
+Cash-only, base-currency `account transactions` assembled from slice 3's
+bank transactions, transfers, and cash-enabled manual journals. Unfiltered
+output has running balances and a closing cash trial-balance comparison;
+tracking filters show movements only. CSV and JSON disclose omitted payment,
+refund, allocation, and system-generated activity. Issue #5 defines the
+approved limits and acceptance evidence.
 
 
 ## Round 3 - Controlled bookkeeping

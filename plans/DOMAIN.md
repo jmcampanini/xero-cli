@@ -182,7 +182,13 @@ fidelity:
 4. Balances only: trial balance at a date, or profit and loss with tracking
    for per-option totals.
 
-Option 2 plus 3 is the design, with the gap documented in command help.
+Issue #5 narrows the first implementation to cash-only, base-currency bank
+transactions, transfers and cash-enabled manual journals. It excludes invoice
+and bill payment reconstruction, refunds, and prepayment/overpayment
+allocations. BankTransactions records for prepayments and overpayments remain
+visible where returned, but their later allocations/refunds are not rebuilt.
+Every output discloses incomplete coverage, including for bank accounts.
+Tracking filters show period movements rather than reconstructed balances.
 It is the most expensive read command in the tool.
 
 

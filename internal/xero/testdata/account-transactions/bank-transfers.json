@@ -1,0 +1,4 @@
+[
+ {"Status":"AUTHORISED","BankTransferID":"duplicate","Date":"2025-07-04","Amount":50.00,"FromBankAccount":{"AccountID":"other","Name":"Other Bank"},"ToBankAccount":{"AccountID":"bank","Name":"Example Bank"},"ToBankTransactionID":"mirror"},
+ {"Status":"AUTHORISED","BankTransferID":"out","Date":"2025-07-05","Amount":25.00,"FromBankAccount":{"AccountID":"bank","Name":"Example Bank"},"ToBankAccount":{"AccountID":"other","Name":"Other Bank"},"FromBankTransactionID":"unlisted","FromTracking":[{"Name":"Region","Option":"North"}]}
+]

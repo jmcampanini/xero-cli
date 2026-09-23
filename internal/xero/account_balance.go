@@ -18,19 +18,11 @@ type AccountBalance struct {
 
 // BalanceForAccount uses YTD columns, never the trial balance's period movements.
 func (r Report) BalanceForAccount(account Account, date, basis string) (AccountBalance, error) {
-	balance := AccountBalance{Amount: "0.00", Basis: basis, Date: date, Period: "cumulative"}
-	debitFirst := false
-	switch account.Class {
-	case "ASSET":
-		debitFirst = true
-	case "EXPENSE":
-		debitFirst, balance.Period = true, "financial_year_to_date"
-	case "REVENUE":
-		balance.Period = "financial_year_to_date"
-	case "LIABILITY", "EQUITY":
-	default:
-		return AccountBalance{}, apperr.New("api", "unsupported account class %q for balance", account.Class)
+	period, debitFirst, err := accountBalanceConvention(account.Class)
+	if err != nil {
+		return AccountBalance{}, err
 	}
+	balance := AccountBalance{Amount: "0.00", Basis: basis, Date: date, Period: period}
 	debit, credit := -1, -1
 	for i, column := range r.Columns {
 		switch strings.ToLower(strings.Join(strings.Fields(column), " ")) {
@@ -66,6 +58,21 @@ func (r Report) BalanceForAccount(account Account, date, basis string) (AccountB
 		balance.Note = "account has no trial balance row; balance is 0.00"
 	}
 	return balance, nil
+}
+
+func accountBalanceConvention(class string) (period string, debitPositive bool, err error) {
+	switch class {
+	case "ASSET":
+		return "cumulative", true, nil
+	case "EXPENSE":
+		return "financial_year_to_date", true, nil
+	case "REVENUE":
+		return "financial_year_to_date", false, nil
+	case "LIABILITY", "EQUITY":
+		return "cumulative", false, nil
+	default:
+		return "", false, apperr.New("api", "unsupported account class %q for balance", class)
+	}
 }
 
 func subtractDecimal(left, right string) (string, error) {

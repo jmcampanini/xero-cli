@@ -42,10 +42,7 @@ type reportOptions struct {
 	year           string
 }
 
-type reportTracking struct {
-	Category string `json:"category"`
-	Option   string `json:"option"`
-}
+type reportTracking = xero.TrackingFilter
 
 type reportFilters struct {
 	Tracking []reportTracking `json:"tracking"`
@@ -276,37 +273,25 @@ func (r *reportOptions) resolveTracking(ctx context.Context, api client, query u
 		return xero.TrackingCategory{}, err
 	}
 	for i, filter := range r.tracking {
-		name, optionName, _ := strings.Cut(filter, "=")
-		category, err := reportCategory(categories, name)
+		category, option, err := resolveTrackingSelection(categories, filter)
 		if err != nil {
 			return xero.TrackingCategory{}, err
-		}
-		var matches []xero.TrackingOption
-		var names []string
-		for _, option := range category.Options {
-			names = append(names, option.Name)
-			if strings.EqualFold(option.Name, optionName) {
-				matches = append(matches, option)
-			}
-		}
-		if len(matches) != 1 {
-			return xero.TrackingCategory{}, apperr.New("invalid_argument", "option %q in %q must match exactly one option; %s", optionName, category.Name, available("options", names))
 		}
 		if r.name == "BalanceSheet" {
 			slot := i + 1
 			if r.by != "" {
 				slot = 2
 			}
-			query.Set("trackingOptionID"+strconv.Itoa(slot), matches[0].TrackingOptionID)
+			query.Set("trackingOptionID"+strconv.Itoa(slot), option.TrackingOptionID)
 		} else {
 			suffix := ""
 			if i > 0 || r.by != "" {
 				suffix = "2"
 			}
 			query.Set("trackingCategoryID"+suffix, category.TrackingCategoryID)
-			query.Set("trackingOptionID"+suffix, matches[0].TrackingOptionID)
+			query.Set("trackingOptionID"+suffix, option.TrackingOptionID)
 		}
-		output.Filters.Tracking = append(output.Filters.Tracking, reportTracking{Category: category.Name, Option: matches[0].Name})
+		output.Filters.Tracking = append(output.Filters.Tracking, reportTracking{Category: category.Name, Option: option.Name})
 	}
 	if r.by == "" {
 		return xero.TrackingCategory{}, nil
@@ -322,6 +307,26 @@ func (r *reportOptions) resolveTracking(ctx context.Context, api client, query u
 		query.Set("trackingCategoryID", category.TrackingCategoryID)
 	}
 	return category, nil
+}
+
+func resolveTrackingSelection(categories []xero.TrackingCategory, filter string) (xero.TrackingCategory, xero.TrackingOption, error) {
+	name, optionName, _ := strings.Cut(filter, "=")
+	category, err := reportCategory(categories, name)
+	if err != nil {
+		return xero.TrackingCategory{}, xero.TrackingOption{}, err
+	}
+	var matches []xero.TrackingOption
+	var names []string
+	for _, option := range category.Options {
+		names = append(names, option.Name)
+		if strings.EqualFold(option.Name, optionName) {
+			matches = append(matches, option)
+		}
+	}
+	if len(matches) != 1 {
+		return xero.TrackingCategory{}, xero.TrackingOption{}, apperr.New("invalid_argument", "option %q in %q must match exactly one option; %s", optionName, category.Name, available("options", names))
+	}
+	return category, matches[0], nil
 }
 
 func reportCategory(categories []xero.TrackingCategory, name string) (xero.TrackingCategory, error) {
