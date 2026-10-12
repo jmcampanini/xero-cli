@@ -14,10 +14,12 @@ brew install --HEAD jmcampanini/xero-cli/xero
 brew upgrade --fetch-HEAD jmcampanini/xero-cli/xero
 ```
 
-To build from source with Go 1.27.1:
+To build from source, install [mise](https://mise.jdx.dev) (`brew install mise` on macOS); it supplies the pinned Go toolchain from `mise.toml`:
 
 ```sh
-make build
+mise trust
+mise install
+mise run build
 ./build/xero --version
 ```
 
