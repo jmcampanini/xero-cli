@@ -1,36 +1,82 @@
-`xero` is a Go CLI for Xero Custom Connections. Milestone contracts live in the corresponding GitHub issue; `plans/` records the broader command design.
-
-- Use the Go toolchain `mise.toml` pins and module `github.com/jmcampanini/xero-cli`; the binary is `xero`.
-- This repository uses mise for tool versions and task execution. Run tasks with `mise run <task>`; do not call `go`, `golangci-lint`, or similar tools directly. `mise tasks` lists every task.
-- On macOS, install prerequisites with `brew install git mise`, then run `mise trust` and `mise install` in the repository.
-- Run `mise run check` before proposing a commit. It verifies formatting, module tidiness, lint, race tests, the production build, version identity, and reachable vulnerabilities without rewriting source.
-- Use `mise run fmt` and `mise run tidy` for write-mode maintenance. Keep every public task's `description` accurate so `mise tasks` documents the command surface.
-- Keep root `main.go` as the only process-exit owner. Construct a fresh Cobra root for each execution, with no package-level command state.
-- Put one Cobra command per file under `cmd/`, including groups and topics. Use `cmd/<group>_<verb>.go` for leaves and keep shared help and output in `helptext.go` and `output.go`.
-- Keep configuration types, defaults, validation, and all user-config struct tags in `internal/config`; coded errors in `internal/apperr`; API behavior in `internal/xero`; terminal rendering in `internal/render`. Do not import Cobra in application packages.
-- Use Cobra and pflag, go-config-loader, and oauth2 client credentials. `x/term` owns terminal detection and `x/time/rate` owns the request limiter. State the reason for any additional direct dependency in the PR.
-- `mise.toml` pins Go, golangci-lint, and govulncheck; `mise.lock` records their versions and available checksums. Bump a tool with `mise upgrade --bump <tool>`, run `mise lock` and `mise run check`, and commit both files. Do not declare analysis tools through `go.mod` `tool` directives.
-- Keep command construction and flag parsing free of configuration discovery, filesystem work, and network requests. Load configuration inside `RunE`, after argument and usage validation.
-- Use `RunE` for every application command. Return failures to the process boundary; do not print an error and return success.
-- Give every non-root command an explicit built-in positional grammar. Pair fixed operand sets with arity and `OnlyValidArgs`. Give groups `NoArgs` and a `RunE` that prints help and exits 0.
-- Set root `SilenceUsage`, `SilenceErrors`, and `DisableSuggestions` to true. Initialize help and version flags during construction. Retain Cobra's built-in help behavior, including success for unknown help topics.
+- Milestone contracts live in the corresponding GitHub issue.
+- `plans/` records the broader command design.
+- Run tasks with `mise run <task>`; do not call `go`, `golangci-lint`, or similar tools directly.
+- Run `mise run check` before proposing a commit.
+- Use `mise run fmt` and `mise run tidy` for write-mode maintenance.
+- Keep every public task's `description` accurate so `mise tasks` documents the command surface.
+- Keep root `main.go` as the only process-exit owner.
+- Construct a fresh Cobra root for each execution, with no package-level command state.
+- Put one Cobra command per file under `cmd/`, including groups and topics.
+- Use `cmd/<group>_<verb>.go` for leaves.
+- Keep shared help and output in `helptext.go` and `output.go`.
+- Keep package responsibilities as follows:
+  - Configuration types, defaults, validation, and all user-config struct tags in `internal/config`.
+  - Coded errors in `internal/apperr`.
+  - API behavior in `internal/xero`.
+  - Terminal rendering in `internal/render`.
+- Do not import Cobra in application packages.
+- Use Cobra and pflag, go-config-loader, and oauth2 client credentials.
+- `x/term` owns terminal detection.
+- `x/time/rate` owns the request limiter.
+- State the reason for any additional direct dependency in the PR.
+- Bump a tool with `mise upgrade --bump <tool>`, run `mise lock` and `mise run check`, and commit `mise.toml` and `mise.lock`.
+- Do not declare analysis tools through `go.mod` `tool` directives.
+- Keep command construction and flag parsing free of configuration discovery, filesystem work, and network requests.
+- Load configuration inside `RunE`, after argument and usage validation.
+- Use `RunE` for every application command.
+- Return failures to the process boundary; do not print an error and return success.
+- Give every non-root command an explicit built-in positional grammar.
+- Pair fixed operand sets with arity and `OnlyValidArgs`.
+- Give groups `NoArgs` and a `RunE` that prints help and exits 0.
+- Set root `SilenceUsage`, `SilenceErrors`, and `DisableSuggestions` to true.
+- Initialize help and version flags during construction.
+- Retain Cobra's built-in help behavior, including success for unknown help topics.
 - Treat command help as the canonical user-facing documentation and README as the landing page. Do not add a `docs/` directory.
-- Write `Long`, examples, and shared help fragments as raw literals opening on the field line, with continuation text at column zero and lines near 78 columns. Explain streams, JSON, prompts, filesystem effects, and applicable Xero limitations.
+- Write `Long`, examples, and shared help fragments as raw literals opening on the field line, with continuation text at column zero and lines near 78 columns.
+- Explain streams, JSON, prompts, filesystem effects, and applicable Xero limitations.
 - Preserve the three strict command guard tests for positional grammar, wrapped long help, and identical exit-code topic entry points.
-- Write payloads to stdout and diagnostics to stderr. Ordinary application errors leave stdout empty. `auth status` prints all diagnostic blocks before failure; `api` preserves its raw-body contract.
-- Use exit 0 for success, 1 for coded application errors, and 2 for usage errors. Keep `exit-codes` accurate. Uncoded application failures become `internal`; usage errors remain human-readable.
-- Emit exactly one compact JSON value plus a newline in resource JSON mode, with no terminal control sequences. Keep config as redirectable TOML and raw API responses unchanged when redirected.
-- Require a value for `--color auto|always|never`; color only human stdout. In auto mode, honor terminal detection, `TERM=dumb`, and nonempty `NO_COLOR`.
+- Write payloads to stdout and diagnostics to stderr.
+- Ordinary application errors leave stdout empty.
+- `auth status` prints all diagnostic blocks before failure.
+- `api` preserves its raw-body contract.
+- Use these exit codes:
+  - 0 for success.
+  - 1 for coded application errors.
+  - 2 for usage errors.
+- Keep `exit-codes` accurate.
+- Uncoded application failures become `internal`.
+- Usage errors remain human-readable.
+- Emit exactly one compact JSON value plus a newline in resource JSON mode, with no terminal control sequences.
+- Keep config as redirectable TOML and raw API responses unchanged when redirected.
+- Require a value for `--color auto|always|never`.
+- Color only human stdout.
+- In auto mode, honor terminal detection, `TERM=dumb`, and nonempty `NO_COLOR`.
 - Never prompt or read stdin except `api --input -`.
-- Load defaults, a discovered or required explicit TOML file, environment, then flags through go-config-loader. Keep the single empty `defaults()` in `internal/config`; validate after loading and resolve secret paths from field provenance.
-- Keep client secrets outside Git and output. Read only nonempty regular secret files without group or other permission bits. Never persist tokens.
-- Verify the configured organisation before every process's first accounting call. An unset ID is allowed only for `auth status`; a mismatch must stop accounting access.
-- Keep authentication, headers, bounded retries, the shared process request budget, paging, error mapping, and date parsing in the client. Add resource files as commands require them.
-- Preserve every source field in resource JSON. Render accounting dates as UTC calendar dates and timestamps as RFC 3339 UTC. Represent money as decimal strings whenever monetary commands are added.
-- Keep unit tests offline. Use httptest and anonymized recorded fixtures for the client; inject a fake client through the root factory for command behavior. Cover startup side effects separately.
-- Verify milestones against real organisations and the Xero web UI. Put redacted evidence in the PR. Use temporary config and secret copies for fault checks, preserving the working configuration.
-- Keep one milestone per branch. Run `mise run check` for every PR, explain changes, verification, and deviations, and omit agent attribution trailers.
-- Maintain HEAD-only Homebrew installation and upgrade instructions until versioned releases exist. Build with `-trimpath -buildvcs=false` and commit-derived version identity.
-- Pin Actions to full commit SHAs, use read-only permissions and `ubuntu-latest`, and have CI install tools with `jdx/mise-action` and run `mise run check` with a working-tree guard. Keep weekly dependency updates and vulnerability scans on Friday at 16:00 America/New_York.
-- Run Dependency Review on pull requests and keep CodeQL default setup, dependency graph, alerts, security updates, secret scanning, push protection, and private vulnerability reporting enabled.
-- Require `check` and `dependency-review` in the `main` ruleset only after the workflows are merged and have passed. Bind both statuses to GitHub Actions and require an up-to-date branch. Keep squash-only PR merges, linear history, no bypass actors, and branch deletion/force-push protection. Obtain explicit authorization before merging a PR.
+- Load defaults, a discovered or required explicit TOML file, environment, then flags through go-config-loader.
+- Keep the single empty `defaults()` in `internal/config`.
+- Validate configuration after loading.
+- Resolve secret paths from field provenance.
+- Keep client secrets outside Git and output.
+- Read only nonempty regular secret files without group or other permission bits.
+- Never persist tokens.
+- Verify the configured organisation before every process's first accounting call.
+- An unset organisation ID is allowed only for `auth status`.
+- An organisation ID mismatch must stop accounting access.
+- Keep authentication, headers, bounded retries, the shared process request budget, paging, error mapping, and date parsing in the client.
+- Add resource files as commands require them.
+- Preserve every source field in resource JSON.
+- Render accounting dates as UTC calendar dates and timestamps as RFC 3339 UTC.
+- Represent money as decimal strings whenever monetary commands are added.
+- Keep unit tests offline.
+- Use httptest and anonymized recorded fixtures for the client.
+- Inject a fake client through the root factory for command behavior.
+- Cover startup side effects separately.
+- Verify milestones against real organisations and the Xero web UI.
+- Put redacted evidence in the PR.
+- Use temporary config and secret copies for fault checks, preserving the working configuration.
+- Keep one milestone per branch.
+- Run `mise run check` for every PR.
+- Explain changes, verification, and deviations in every PR.
+- Omit agent attribution trailers.
+- Maintain HEAD-only Homebrew installation and upgrade instructions until versioned releases exist.
+- Obtain explicit authorization before merging a PR.
