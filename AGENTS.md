@@ -2,13 +2,14 @@
 
 - Use the Go toolchain `mise.toml` pins and module `github.com/jmcampanini/xero-cli`; the binary is `xero`.
 - This repository uses mise for tool versions and task execution. Run tasks with `mise run <task>`; do not call `go`, `golangci-lint`, or similar tools directly. `mise tasks` lists every task.
+- On macOS, install prerequisites with `brew install git mise`, then run `mise trust` and `mise install` in the repository.
 - Run `mise run check` before proposing a commit. It verifies formatting, module tidiness, lint, race tests, the production build, version identity, and reachable vulnerabilities without rewriting source.
 - Use `mise run fmt` and `mise run tidy` for write-mode maintenance. Keep every public task's `description` accurate so `mise tasks` documents the command surface.
 - Keep root `main.go` as the only process-exit owner. Construct a fresh Cobra root for each execution, with no package-level command state.
 - Put one Cobra command per file under `cmd/`, including groups and topics. Use `cmd/<group>_<verb>.go` for leaves and keep shared help and output in `helptext.go` and `output.go`.
 - Keep configuration types, defaults, validation, and all user-config struct tags in `internal/config`; coded errors in `internal/apperr`; API behavior in `internal/xero`; terminal rendering in `internal/render`. Do not import Cobra in application packages.
 - Use Cobra and pflag, go-config-loader, and oauth2 client credentials. `x/term` owns terminal detection and `x/time/rate` owns the request limiter. State the reason for any additional direct dependency in the PR.
-- `mise.toml` pins Go, golangci-lint, and govulncheck; `mise.lock` records their checksums. Bump a tool with `mise upgrade --bump <tool>`, run `mise lock` and `mise run check`, and commit both files. Do not declare analysis tools through `go.mod` `tool` directives.
+- `mise.toml` pins Go, golangci-lint, and govulncheck; `mise.lock` records their versions and available checksums. Bump a tool with `mise upgrade --bump <tool>`, run `mise lock` and `mise run check`, and commit both files. Do not declare analysis tools through `go.mod` `tool` directives.
 - Keep command construction and flag parsing free of configuration discovery, filesystem work, and network requests. Load configuration inside `RunE`, after argument and usage validation.
 - Use `RunE` for every application command. Return failures to the process boundary; do not print an error and return success.
 - Give every non-root command an explicit built-in positional grammar. Pair fixed operand sets with arity and `OnlyValidArgs`. Give groups `NoArgs` and a `RunE` that prints help and exits 0.

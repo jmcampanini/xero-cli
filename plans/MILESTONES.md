@@ -16,7 +16,7 @@ Slices 1 to 4 work with read-only scopes.
 ### 1 - Access, chart, and tracking
 
 Repository files (root `main.go`, `cmd/`, `config`, the `exit-codes`
-help topic, guard tests, `make check`, the check workflow, a Homebrew
+help topic, guard tests, `mise run check`, the check workflow, a Homebrew
 formula, agent instructions), plus `auth status`, `orgs`, `org show`,
 `xero api`, `accounts list`, `account show`, `tracking-categories list`,
 and `tracking-category show`. Client credentials from the TOML-named

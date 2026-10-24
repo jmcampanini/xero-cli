@@ -1,6 +1,6 @@
 module github.com/jmcampanini/xero-cli
 
-go 1.27.2
+go 1.27.3
 
 require (
 	github.com/jmcampanini/go-config-loader v0.2.0
