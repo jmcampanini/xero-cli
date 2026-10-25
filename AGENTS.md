@@ -5,14 +5,19 @@
 - Use `mise run fmt` and `mise run tidy` for write-mode maintenance.
 - Keep every public task's `description` accurate so `mise tasks` documents the command surface.
 - Keep root `main.go` as the only process-exit owner.
+- Keep the entrypoint to `os.Exit(cli.Execute())` and inject `internal/cli.Version` at build time.
 - Construct a fresh Cobra root for each execution, with no package-level command state.
-- Put one Cobra command per file under `cmd/`, including groups and topics.
-- Use `cmd/<group>_<verb>.go` for leaves.
-- Keep shared help and output in `helptext.go` and `output.go`.
+- Put one Cobra command per file under `internal/cli/`, including groups and topics.
+- Use `internal/cli/<group>_<verb>.go` for leaves.
+- Keep root construction and its shared options in `internal/cli/root.go`.
+- Keep command-only helpers in that command's file or a companion with the same filename prefix; apply the same rule to group-only helpers.
+- Name shared Cobra helpers for what they provide. Keep shared help and output in `helptext.go` and `output.go`; keep group-only presentation with its group.
+- Keep unpublished packages under `internal/` and shared Cobra-free capabilities outside `internal/cli`.
 - Keep package responsibilities as follows:
   - Configuration types, defaults, validation, and all user-config struct tags in `internal/config`.
-  - Coded errors in `internal/apperr`.
+  - Coded errors and usage/application error classification types in `internal/apperr`.
   - API behavior in `internal/xero`.
+  - Report selection, retrieval orchestration, and output metadata in `internal/reporting`.
   - Terminal rendering in `internal/render`.
 - Do not import Cobra in application packages.
 - Use Cobra and pflag, go-config-loader, and oauth2 client credentials.
