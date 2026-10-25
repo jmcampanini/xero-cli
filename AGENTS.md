@@ -24,6 +24,7 @@
 - `x/time/rate` owns the request limiter.
 - State the reason for any additional direct dependency in the PR.
 - Bump a tool with `mise upgrade --bump <tool>`, run `mise lock` and `mise run check`, and commit `mise.toml`, `mise.lock`, and `.mise/locks/`.
+- When bumping Go, keep the `go` directive in `go.mod` equal to the tool pin.
 - Do not declare analysis tools through `go.mod` `tool` directives.
 - Keep command construction and flag parsing free of configuration discovery, filesystem work, and network requests.
 - Load configuration inside `RunE`, after argument and usage validation.
