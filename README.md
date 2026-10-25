@@ -15,7 +15,8 @@ brew upgrade --fetch-HEAD jmcampanini/xero-cli/xero
 
 To build from source on macOS, install Git and [mise](https://mise.jdx.dev),
 clone the repository, and let mise supply the pinned tools from `mise.toml`.
-The last step copies the binary onto `PATH`.
+The last step copies the binary into `~/.local/bin`; add that directory to
+`PATH` if your shell does not already include it.
 
 ```sh
 brew install git mise
@@ -24,7 +25,8 @@ cd xero-cli
 mise trust
 mise install
 mise run build
-install ./build/xero "$(brew --prefix)/bin/xero"
+install -d ~/.local/bin
+install ./build/xero ~/.local/bin/xero
 ```
 
 
@@ -40,7 +42,7 @@ Start with `xero orgs` and `xero auth status` to confirm which organisation is s
 | `xero account transactions 429 --month 2025-12 --tracking Region=North --csv` | Matching cash movements as CSV, without account balances |
 | `xero report profit-and-loss --month 2025-12 --basis cash` | Native cash-basis profit and loss |
 | `xero report trial-balance --date 2025-12-31 --json` | Debit and credit columns as decimal strings |
-| `xero bank-transactions list --account 'Example Bank' --month 2025-12` | Every saved transaction for the bank account and month |
+| `xero bank-transactions list --account 'Example Bank' --month 2025-12` | Saved transactions for the bank account and month, excluding deleted records |
 | `xero contacts list --search Example` | Contact names, roles, statuses, and IDs |
 | `xero api Organisation` | The raw Accounting API response |
 
