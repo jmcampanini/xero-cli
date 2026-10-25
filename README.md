@@ -1,8 +1,6 @@
 # xero
 
-`xero` reads organisation settings, accounts, tracking categories, financial reports, bank transactions, bank transfers, manual journals, contacts, and document attachments from the Xero Accounting API. Each Custom Connection is bound to a verified organisation ID, secrets stay in protected files, and tokens are never stored. The `api` command also accepts explicit write requests.
-
-Command help is the reference. Start with `xero --help`, `xero config --help`, and `xero help exit-codes`.
+`xero` reads organisation settings, accounts, tracking categories, financial reports, bank transactions, bank transfers, manual journals, contacts, and document attachments from the Xero Accounting API. Each Custom Connection is bound to a verified organisation ID, secrets stay in protected files, tokens are never stored, and the CLI never prompts. The `api` command also accepts explicit write requests.
 
 
 ## Install
@@ -16,59 +14,48 @@ brew upgrade --fetch-HEAD jmcampanini/xero-cli/xero
 ```
 
 To build from source on macOS, install Git and [mise](https://mise.jdx.dev),
-then run the following mise commands in the repository. mise supplies the
-pinned tools from `mise.toml`.
+clone the repository, and let mise supply the pinned tools from `mise.toml`.
+The last step copies the binary onto `PATH`.
 
 ```sh
 brew install git mise
+git clone https://github.com/jmcampanini/xero-cli
+cd xero-cli
 mise trust
 mise install
 mise run build
-./build/xero --version
+install ./build/xero "$(brew --prefix)/bin/xero"
 ```
-
-Run `mise run check` to verify formatting, module tidiness, lint, Markdown
-lint, race tests, the production build, version identity, and reachable
-vulnerabilities.
-`mise tasks` lists the available tasks. Use `mise run fmt` and `mise run tidy`
-to apply formatting and module updates.
-
-To bump a pinned tool, run `mise upgrade --bump <tool>`, then `mise lock` and
-`mise run check`. Commit `mise.toml`, `mise.lock`, and `.mise/locks/` together.
-When bumping Go, also keep the `go` directive in `go.mod` equal to the tool pin.
 
 
 ## Representative commands
 
+Start with `xero orgs` and `xero auth status` to confirm which organisation is selected and that its credentials work, then read that organisation's accounts, reports, and listings.
+
 | Command | Result |
 | --- | --- |
-| `xero config --provenance` | Effective TOML and the source of each value |
 | `xero orgs` | Configured organisations and the current selection |
 | `xero auth status` | Credential, identity, scope, and access diagnostics |
-| `xero org show` | The selected organisation's settings |
-| `xero accounts list --bank` | Active bank accounts |
-| `xero account show 200` | Account details for code 200, when configured |
-| `xero account show 200 --date 2025-12-31` | Account details and its trial-balance amount |
-| `xero account transactions 429 --month 2025-12` | Supported cash movements and reconstructed balances, with omitted sources disclosed |
+| `xero account show 200 --date 2025-12-31` | Account details for code 200 and its trial-balance amount |
 | `xero account transactions 429 --month 2025-12 --tracking Region=North --csv` | Matching cash movements as CSV, without account balances |
 | `xero report profit-and-loss --month 2025-12 --basis cash` | Native cash-basis profit and loss |
-| `xero report balance-sheet --date 2025-12-31 --by Property` | Active tracking options and Total, when configured |
 | `xero report trial-balance --date 2025-12-31 --json` | Debit and credit columns as decimal strings |
-| `xero report bank-summary --month 2025-12 --csv` | Bank cash movements as CSV; context on stderr |
-| `xero tracking-categories list --all` | Active and archived categories |
-| `xero tracking-category show Property` | The named category and all options |
 | `xero bank-transactions list --account 'Example Bank' --month 2025-12` | Every saved transaction for the bank account and month |
-| `xero manual-journals list --year 2025 --status all` | Journals with exact debit totals and cash-basis treatment |
 | `xero contacts list --search Example` | Contact names, roles, statuses, and IDs |
-| `xero bank-transfers list --month 2025-12` | Transfers and both sides' reconciliation flags |
 | `xero api Organisation` | The raw Accounting API response |
 
-
-## Required external programs
-
-None. The installed CLI does not run external programs or prompt.
+`xero --help`, each command's `--help`, and `xero help exit-codes` are the canonical reference.
 
 
 ## Configuration
 
-The CLI discovers `$XDG_CONFIG_HOME/xero/config.toml`, falling back to `~/.config/xero/config.toml`. `--config PATH` replaces discovery and requires an existing file. Each organisation names a Custom Connection client ID, an organisation ID, and a secret file with no group or other permission bits. See `xero config --help` for the TOML shape, precedence, path resolution, and identity discovery.
+The CLI discovers `$XDG_CONFIG_HOME/xero/config.toml`, falling back to `~/.config/xero/config.toml`. See `xero config --help` for the TOML shape, precedence, path resolution, and identity discovery.
+
+```toml
+default_org = "acme"
+
+[orgs.acme]
+client_id = "00000000000000000000000000000000"
+secret_file = "~/.config/xero/secrets/acme"
+organisation_id = "00000000-0000-0000-0000-000000000000"
+```
