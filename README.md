@@ -27,14 +27,15 @@ mise run build
 ./build/xero --version
 ```
 
-Run `mise run check` to verify formatting, module tidiness, lint, race tests,
-the production build, version identity, and reachable vulnerabilities.
+Run `mise run check` to verify formatting, module tidiness, lint, Markdown
+lint, race tests, the production build, version identity, and reachable
+vulnerabilities.
 `mise tasks` lists the available tasks. Use `mise run fmt` and `mise run tidy`
 to apply formatting and module updates.
 
 To bump a pinned tool, run `mise upgrade --bump <tool>`, then `mise lock` and
-`mise run check`. Commit `mise.toml` and `mise.lock` together. When bumping Go,
-also keep the `go` directive in `go.mod` equal to the tool pin.
+`mise run check`. Commit `mise.toml`, `mise.lock`, and `.mise/locks/` together.
+When bumping Go, also keep the `go` directive in `go.mod` equal to the tool pin.
 
 
 ## Representative commands
