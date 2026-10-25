@@ -9,7 +9,7 @@ class Xero < Formula
   def install
     identity = Utils.safe_popen_read("git", "describe", "--tags", "--dirty", "--always").strip
     odie "Cannot determine build identity" if identity.empty?
-    ldflags = "-X github.com/jmcampanini/xero-cli/cmd.Version=#{identity}"
+    ldflags = "-X github.com/jmcampanini/xero-cli/internal/cli.Version=#{identity}"
     system "go", "build", "-buildvcs=false", *std_go_args(ldflags:)
     generate_completions_from_executable(bin/"xero", "completion")
   end

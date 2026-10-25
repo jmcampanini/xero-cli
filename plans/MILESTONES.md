@@ -15,7 +15,7 @@ Slices 1 to 4 work with read-only scopes.
 
 ### 1 - Access, chart, and tracking
 
-Repository files (root `main.go`, `cmd/`, `config`, the `exit-codes`
+Repository files (root `main.go`, `internal/cli/`, `config`, the `exit-codes`
 help topic, guard tests, `mise run check`, the check workflow, a Homebrew
 formula, agent instructions), plus `auth status`, `orgs`, `org show`,
 `xero api`, `accounts list`, `account show`, `tracking-categories list`,
