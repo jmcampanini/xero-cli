@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func (r *reportOptions) validate(command *cobra.Command, jsonOutput bool, now time.Time) (url.Values, error) {
+func (r *queryOptions) validate(command *cobra.Command, jsonOutput bool, now time.Time) (url.Values, error) {
 	if r.csv && jsonOutput {
 		return nil, apperr.Usage("--csv and --json cannot be combined")
 	}
@@ -53,7 +53,7 @@ func (r *reportOptions) validate(command *cobra.Command, jsonOutput bool, now ti
 	return query, nil
 }
 
-func (r *reportOptions) validateComparisons(command *cobra.Command) error {
+func (r *queryOptions) validateComparisons(command *cobra.Command) error {
 	flags := command.Flags()
 	if flags.Changed("periods") != flags.Changed("timeframe") {
 		return apperr.Usage("--periods and --timeframe must be given together")

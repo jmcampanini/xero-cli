@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/jmcampanini/xero-cli/internal/config"
-	"github.com/jmcampanini/xero-cli/internal/reporting"
 	"github.com/jmcampanini/xero-cli/internal/xero"
 	"github.com/spf13/cobra"
 )
@@ -74,7 +73,7 @@ func TestReportRangeExpansionAndLocalToday(t *testing.T) {
 		{"month", "2025-02", "2025-02-01", "2025-02-28"},
 		{"year", "2024", "2024-01-01", "2024-12-31"},
 	} {
-		r := reportOptions{name: "ProfitAndLoss", basis: "accrual"}
+		r := queryOptions{name: "ProfitAndLoss", basis: "accrual"}
 		command := &cobra.Command{}
 		command.Flags().StringVar(&r.month, "month", "", "")
 		command.Flags().StringVar(&r.year, "year", "", "")
@@ -86,7 +85,7 @@ func TestReportRangeExpansionAndLocalToday(t *testing.T) {
 			t.Errorf("%s=%s query=%v error=%v", test.flag, test.value, query, err)
 		}
 	}
-	r := reportOptions{name: "TrialBalance", basis: "accrual"}
+	r := queryOptions{name: "TrialBalance", basis: "accrual"}
 	command := &cobra.Command{}
 	command.Flags().StringVar(&r.date, "date", "", "")
 	local := time.Date(2025, 12, 31, 23, 30, 0, 0, time.FixedZone("local", -8*60*60))
@@ -122,7 +121,7 @@ func TestReportNativeQueryAndOutputModes(t *testing.T) {
 					t.Errorf("human=%q stderr=%q", out, stderr)
 				}
 			case "json":
-				var decoded reporting.Output
+				var decoded reportOutput
 				if err := json.Unmarshal([]byte(out), &decoded); err != nil {
 					t.Fatal(err)
 				}
@@ -176,7 +175,7 @@ func TestReportTrackingAndBalanceSheetFanout(t *testing.T) {
 			if code != 0 {
 				t.Fatalf("code=%d stderr=%s", code, stderr)
 			}
-			var result reporting.Output
+			var result reportOutput
 			if err := json.Unmarshal([]byte(out), &result); err != nil {
 				t.Fatal(err)
 			}

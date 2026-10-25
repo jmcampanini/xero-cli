@@ -3,7 +3,7 @@ package cli
 import "github.com/spf13/cobra"
 
 func newReportProfitAndLoss(o *options) *cobra.Command {
-	r := &reportOptions{name: "ProfitAndLoss"}
+	r := &queryOptions{name: "ProfitAndLoss"}
 	command := &cobra.Command{Use: "profit-and-loss", Short: "Read profit and loss for an exact range", Args: cobra.NoArgs,
 		Long: `Read profit and loss for --from/--to, --month YYYY-MM or --year YYYY.
 Choose exactly one range. --basis defaults to accrual; cash sends

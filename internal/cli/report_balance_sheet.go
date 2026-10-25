@@ -3,7 +3,7 @@ package cli
 import "github.com/spf13/cobra"
 
 func newReportBalanceSheet(o *options) *cobra.Command {
-	r := &reportOptions{name: "BalanceSheet"}
+	r := &queryOptions{name: "BalanceSheet"}
 	command := &cobra.Command{Use: "balance-sheet", Short: "Read balances at a date", Args: cobra.NoArgs,
 		Long: `Read the balance sheet at --date YYYY-MM-DD, defaulting to today's local
 calendar date. --basis defaults to accrual; cash sends paymentsOnly=true.

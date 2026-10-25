@@ -17,7 +17,7 @@ type listingOptions struct {
 	modifiedSince string
 	page          int
 	pageSize      int
-	period        reportOptions
+	period        queryOptions
 	where         string
 	withPeriod    bool
 	withWhere     bool

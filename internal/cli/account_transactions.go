@@ -10,7 +10,7 @@ import (
 )
 
 func newAccountTransactions(o *options) *cobra.Command {
-	var period reportOptions
+	var period queryOptions
 	var deleted, csv bool
 	command := &cobra.Command{Use: "transactions CODE", Short: "Show supported cash movements on an account", Args: cobra.ExactArgs(1),
 		Long: `Assemble cash-basis movements for an account resolved by code, GUID or exact

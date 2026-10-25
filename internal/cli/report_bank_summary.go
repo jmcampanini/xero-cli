@@ -3,7 +3,7 @@ package cli
 import "github.com/spf13/cobra"
 
 func newReportBankSummary(o *options) *cobra.Command {
-	r := &reportOptions{name: "BankSummary"}
+	r := &queryOptions{name: "BankSummary"}
 	command := &cobra.Command{Use: "bank-summary", Short: "Read bank cash movements for a range", Args: cobra.NoArgs,
 		Long: `Read bank opening balances, cash received, cash spent and closing balances
 for --from/--to or --month YYYY-MM. Choose exactly one range. Transfers

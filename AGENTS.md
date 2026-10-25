@@ -17,7 +17,6 @@
   - Configuration types, defaults, validation, and all user-config struct tags in `internal/config`.
   - Coded errors and usage/application error classification types in `internal/apperr`.
   - API behavior in `internal/xero`.
-  - Report selection, retrieval orchestration, and output metadata in `internal/reporting`.
   - Terminal rendering in `internal/render`.
 - Do not import Cobra in application packages.
 - Use Cobra and pflag, go-config-loader, and oauth2 client credentials.

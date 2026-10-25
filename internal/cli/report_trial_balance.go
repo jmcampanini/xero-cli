@@ -3,7 +3,7 @@ package cli
 import "github.com/spf13/cobra"
 
 func newReportTrialBalance(o *options) *cobra.Command {
-	r := &reportOptions{name: "TrialBalance"}
+	r := &queryOptions{name: "TrialBalance"}
 	command := &cobra.Command{Use: "trial-balance", Short: "Read debit and credit balances at a date", Args: cobra.NoArgs,
 		Long: `Read the trial balance at --date YYYY-MM-DD, defaulting to today's local
 calendar date. --basis defaults to accrual; cash sends paymentsOnly=true.

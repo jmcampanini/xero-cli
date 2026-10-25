@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type reportOptions struct {
+type queryOptions struct {
 	basis          string
 	by             string
 	csv            bool
@@ -25,7 +25,7 @@ type reportOptions struct {
 	year           string
 }
 
-func (r *reportOptions) expandRange(command *cobra.Command) error {
+func (r *queryOptions) expandRange(command *cobra.Command) error {
 	flags := command.Flags()
 	if flags.Changed("from") != flags.Changed("to") {
 		return apperr.Usage("--from and --to must be given together")
@@ -67,7 +67,7 @@ func (r *reportOptions) expandRange(command *cobra.Command) error {
 	return nil
 }
 
-func (r *reportOptions) validateTracking(command *cobra.Command) error {
+func (r *queryOptions) validateTracking(command *cobra.Command) error {
 	if r.by != "" && len(r.tracking) > 1 {
 		return apperr.Usage("--by allows at most one --tracking filter on the other category")
 	}

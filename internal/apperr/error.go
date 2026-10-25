@@ -1,4 +1,5 @@
-// Package apperr defines the CLI's stable application error codes.
+// Package apperr defines the CLI's stable application error codes and the
+// usage and application error classifications that decide process exit.
 package apperr
 
 import (

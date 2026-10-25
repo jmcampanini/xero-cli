@@ -7,11 +7,34 @@ import (
 	"strings"
 
 	"github.com/jmcampanini/xero-cli/internal/render"
-	"github.com/jmcampanini/xero-cli/internal/reporting"
+	"github.com/jmcampanini/xero-cli/internal/xero"
 	"github.com/spf13/cobra"
 )
 
-func (o *options) report(command *cobra.Command, output reporting.Output, title string, csvOutput bool) error {
+type reportFilters struct {
+	Tracking []xero.TrackingFilter `json:"tracking"`
+}
+
+type reportBy struct {
+	Category string `json:"category"`
+	Note     string `json:"note,omitempty"`
+}
+
+type reportOutput struct {
+	Basis    string           `json:"basis,omitempty"`
+	By       *reportBy        `json:"by"`
+	Columns  []string         `json:"columns"`
+	Currency string           `json:"currency"`
+	Date     string           `json:"date,omitempty"`
+	Filters  *reportFilters   `json:"filters"`
+	From     string           `json:"from,omitempty"`
+	Org      xero.Identity    `json:"org"`
+	Report   string           `json:"report"`
+	Rows     []xero.ReportRow `json:"rows"`
+	To       string           `json:"to,omitempty"`
+}
+
+func (o *options) report(command *cobra.Command, output reportOutput, title string, csvOutput bool) error {
 	if o.json {
 		if output.Report == "BankSummary" {
 			raw, err := json.Marshal(output)
