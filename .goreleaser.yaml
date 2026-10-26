@@ -1,0 +1,80 @@
+version: 2
+
+project_name: xero
+
+builds:
+  - id: xero
+    main: .
+    binary: xero
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -trimpath
+      - -buildvcs=false
+    ldflags:
+      - -s -w -X github.com/jmcampanini/xero-cli/internal/cli.Version=v{{ .Version }}
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+  - id: default
+    formats:
+      - tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+  algorithm: sha256
+
+changelog:
+  use: github-native
+
+release:
+  github:
+    owner: jmcampanini
+    name: xero-cli
+  draft: false
+  prerelease: auto
+
+homebrew_casks:
+  - name: xero
+    homepage: https://github.com/jmcampanini/xero-cli
+    description: Read Xero accounting data from the terminal
+    binaries:
+      - xero
+    generate_completions_from_executable:
+      executable: xero
+      args:
+        - completion
+      shells:
+        - bash
+        - zsh
+        - fish
+    directory: Casks
+    commit_msg_template: "Update xero to {{ .Tag }}"
+    commit_author:
+      name: github-actions[bot]
+      email: 41898282+github-actions[bot]@users.noreply.github.com
+    skip_upload: auto
+    repository:
+      owner: jmcampanini
+      name: homebrew-tap
+      branch: main
+      git:
+        url: ssh://git@github.com/jmcampanini/homebrew-tap.git
+        private_key: "{{ envOrDefault \"HOMEBREW_TAP_DEPLOY_KEY\" \"\" }}"
+    hooks:
+      pre:
+        # Homebrew runs completion generation before postflight. Clear quarantine first because the binary is not notarized.
+        install_steps: |
+          on_macos do
+            run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{ .StagedPath }}/xero"]
+          end
