@@ -328,11 +328,12 @@ func TestOfflineOrgsMarksSelection(t *testing.T) {
 }
 
 func TestStartupCreatesNoFilesOrRequests(t *testing.T) {
-	buildDir := t.TempDir()
-	binary := filepath.Join(buildDir, "xero")
-	build := exec.Command("go", "build", "-o", binary, "../..")
-	if output, err := build.CombinedOutput(); err != nil {
-		t.Fatalf("build startup binary: %v\n%s", err, output)
+	binary := os.Getenv("XERO_E2E_BINARY")
+	if binary == "" {
+		t.Fatal("XERO_E2E_BINARY is unset; run `mise run test` so the build task supplies the binary")
+	}
+	if _, err := os.Stat(binary); err != nil {
+		t.Fatalf("XERO_E2E_BINARY=%q is not a built binary: %v; run `mise run test` so the build task supplies the binary", binary, err)
 	}
 	var calls atomic.Int32
 	proxy := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { calls.Add(1); w.WriteHeader(502) }))

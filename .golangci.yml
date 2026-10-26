@@ -16,12 +16,6 @@ linters:
         - organisation
         - organisations
         - authorised
-    revive:
-      rules:
-        - name: exported
-          disabled: true
-        - name: package-comments
-          disabled: true
 
 formatters:
   enable:
