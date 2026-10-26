@@ -463,7 +463,7 @@ new transaction.
 
 ## Output contract
 
-- Human output on stdout, diagnostics on stderr as `Error: <message>`.
+- Human output on stdout, diagnostics on stderr as `xero: <message>`.
 - `--json` writes one compact value on one line. Entity commands emit the
   Xero object for that resource with `/Date(ms)/` values normalised to
   ISO 8601 dates (accounting dates stay `YYYY-MM-DD`; UTC timestamps stay

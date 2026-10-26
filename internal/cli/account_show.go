@@ -95,6 +95,6 @@ a note for an absent row. Report access and the Reports role are required.
 		}),
 	}
 	command.Flags().StringVar(&date, "date", "", "add the balance at YYYY-MM-DD")
-	command.Flags().StringVar(&basis, "basis", "accrual", "balance accounting basis: cash, accrual; requires --date")
+	command.Flags().StringVar(&basis, "basis", "accrual", "cash or accrual basis for --date")
 	return command
 }

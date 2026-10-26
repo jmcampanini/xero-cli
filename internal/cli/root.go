@@ -57,7 +57,7 @@ func execute(ctx context.Context, args []string, in io.Reader, out, errOut io.Wr
 	settings := &options{factory: factory}
 	root, err := newRoot(settings)
 	if err != nil {
-		_, _ = fmt.Fprintf(errOut, "Error: %s\n", err)
+		_, _ = fmt.Fprintf(errOut, "xero: %s\n", err)
 		return 1
 	}
 	root.SetArgs(args)
@@ -71,7 +71,7 @@ func execute(ctx context.Context, args []string, in io.Reader, out, errOut io.Wr
 	var usageErr *apperr.UsageError
 	var appErr *apperr.ApplicationError
 	if errors.As(err, &usageErr) || !errors.As(err, &appErr) {
-		_, _ = fmt.Fprintf(errOut, "Error: %s\n", strings.Join(strings.Fields(err.Error()), " "))
+		_, _ = fmt.Fprintf(errOut, "xero: %s\n", strings.Join(strings.Fields(err.Error()), " "))
 		return 2
 	}
 	coded := apperr.From(appErr.Err)
@@ -79,7 +79,7 @@ func execute(ctx context.Context, args []string, in io.Reader, out, errOut io.Wr
 	if settings.json {
 		_ = render.JSON(errOut, map[string]any{"error": coded})
 	} else {
-		_, _ = fmt.Fprintf(errOut, "Error: %s\n", coded.Message)
+		_, _ = fmt.Fprintf(errOut, "xero: %s\n", coded.Message)
 	}
 	var rawErr *apiError
 	if errors.As(appErr.Err, &rawErr) && len(rawErr.body) > 0 {
@@ -102,17 +102,45 @@ func newRoot(o *options) (*cobra.Command, error) {
 		Long: `Read Xero settings, accounts, tracking, reports, transactions and contacts.
 Inspect saved document lines and download bank transaction or journal files.
 Use api to call Accounting API endpoints without a dedicated command.
+The installed CLI requires no external programs.
 
 Configure a Custom Connection per organisation with xero config --help.
 Tokens stay in memory; every run verifies the selected organisation.
 Nothing prompts. Dedicated resource commands only read data; api can write.
-The installed CLI requires no external programs.
 
 Payloads go to stdout and diagnostics to stderr. --json writes compact JSON
 for resource commands; config writes TOML and api retains the raw response.
-Use xero help exit-codes for error categories and process exit statuses.`,
+--color auto colors only human stdout on a terminal and is off when TERM is
+dumb or NO_COLOR is nonempty; always and never override that detection.
+JSON, CSV and TOML output is never colored. Use xero help exit-codes for
+error categories and exit statuses.
+
+Common tasks:
+  Check credentials and access:      xero auth status
+  Show an account with its balance:  xero account show 200 --date 2025-12-31
+  Read a balance sheet:              xero report balance-sheet --date 2025-12-31
+  Find a contact:                    xero contacts list --search Example
+
+Command groups:
+  auth                 Connection diagnostics:  xero auth --help
+  org                  Selected organisation:   xero org --help
+  accounts             Chart of accounts list:  xero accounts --help
+  account              One account, movements:  xero account --help
+  tracking-categories  Tracking category list:  xero tracking-categories --help
+  tracking-category    One category, options:   xero tracking-category --help
+  report               Financial reports:       xero report --help
+  bank-transactions    Bank transaction list:   xero bank-transactions --help
+  bank-transaction     One transaction, files:  xero bank-transaction --help
+  bank-transfers       Bank transfer list:      xero bank-transfers --help
+  bank-transfer        One bank transfer:       xero bank-transfer --help
+  manual-journals      Manual journal list:     xero manual-journals --help
+  manual-journal       One journal, files:      xero manual-journal --help
+  contacts             Contact list, search:    xero contacts --help
+  contact              One contact:             xero contact --help`,
 		RunE: func(command *cobra.Command, _ []string) error { return command.Help() },
 	}
+	// Cobra's default trailer exceeds 80 columns for the longest group paths.
+	root.SetUsageTemplate(strings.Replace(root.UsageTemplate(), "for more information about a command.", "for details about a command.", 1))
 	root.PersistentFlags().BoolVar(&o.json, "json", false, "write machine-readable JSON")
 	root.PersistentFlags().StringVar(&o.color, "color", "auto", "human output color: auto, always, never")
 	root.PersistentFlags().StringVar(&o.configPath, "config", "", "required TOML configuration file")

@@ -17,6 +17,7 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
+	"unicode/utf8"
 
 	"github.com/jmcampanini/xero-cli/internal/apperr"
 	"github.com/jmcampanini/xero-cli/internal/config"
@@ -144,40 +145,70 @@ func TestEveryApplicationCommandDeclaresPositionalGrammar(t *testing.T) {
 		if command != root && command.Args == nil {
 			t.Errorf("%s has no positional grammar", command.CommandPath())
 		}
-		if command.HasSubCommands() && command.RunE == nil {
+		if (command.HasSubCommands() || isHelpTopic(command)) && !command.Runnable() {
 			t.Errorf("%s is not runnable", command.CommandPath())
 		}
 	})
 }
 
-func TestEveryApplicationCommandHasWrappedLongHelp(t *testing.T) {
+func TestEveryApplicationCommandRendersCompleteHelp(t *testing.T) {
 	root, err := newRoot(&options{})
 	if err != nil {
 		t.Fatal(err)
 	}
+	topics := 0
 	walkCommands(root, func(command *cobra.Command) {
+		if command.Short == "" {
+			t.Errorf("%s has no Short", command.CommandPath())
+		}
 		if command.Long == "" {
 			t.Errorf("%s has no Long", command.CommandPath())
 		}
-		for _, text := range []string{command.Long, command.Example} {
-			for _, line := range strings.Split(text, "\n") {
-				if len(line) > 80 {
-					t.Errorf("%s: %d columns: %s", command.CommandPath(), len(line), line)
-				}
+		args := strings.Fields(command.CommandPath())[1:]
+		code, help, errOut := invoke(append(append([]string{}, args...), "--help"), "", nil)
+		if code != 0 || errOut != "" {
+			t.Fatalf("%s --help = %d, stderr %q", command.CommandPath(), code, errOut)
+		}
+		for _, line := range strings.Split(help, "\n") {
+			if width := utf8.RuneCountInString(line); width > 80 {
+				t.Errorf("%s: %d columns: %s", command.CommandPath(), width, line)
 			}
 		}
+		if !isHelpTopic(command) {
+			return
+		}
+		topics++
+		code, direct, errOut := invoke(args, "", nil)
+		otherCode, viaHelp, otherErr := invoke(append([]string{"help"}, args...), "", nil)
+		if code != 0 || otherCode != 0 || errOut != "" || otherErr != "" || direct != help || viaHelp != help {
+			t.Errorf("%s differs from its help: %d/%d stderr %q/%q", command.CommandPath(), code, otherCode, errOut, otherErr)
+		}
 	})
+	if topics == 0 {
+		t.Fatal("no help topic is annotated")
+	}
+	_, exitCodes, _ := invoke([]string{"exit-codes"}, "", nil)
+	for _, row := range []string{"  0  Success", "  1  Application error", "  2  Usage error"} {
+		if !strings.Contains(exitCodes, row) {
+			t.Errorf("exit-codes lacks %q", row)
+		}
+	}
 }
 
-func TestExitCodesTopicPrintsSameHelpFromBothEntryPoints(t *testing.T) {
-	code, direct, errOut := invoke([]string{"exit-codes"}, "", nil)
-	otherCode, help, otherErr := invoke([]string{"help", "exit-codes"}, "", nil)
-	if code != 0 || otherCode != 0 || errOut != "" || otherErr != "" || direct != help {
-		t.Fatalf("topic differs: %d/%d stderr %q/%q", code, otherCode, errOut, otherErr)
-	}
-	for _, row := range []string{"  0  Success", "  1  Application error", "  2  Usage error"} {
-		if !strings.Contains(direct, row) {
-			t.Errorf("topic lacks %q", row)
+func TestFailuresPrintOnePrefixedLine(t *testing.T) {
+	path := commandConfig(t)
+	fake := &fakeClient{err: apperr.New("forbidden", "missing scope")}
+	for _, tc := range []struct {
+		args []string
+		code int
+	}{
+		{[]string{"unknown-command"}, 2},
+		{[]string{"--config", path, "accounts", "list"}, 1},
+	} {
+		code, out, errOut := invoke(tc.args, "", func(string, config.OrgConfig) client { return fake })
+		lines := strings.Split(strings.TrimSuffix(errOut, "\n"), "\n")
+		if code != tc.code || out != "" || len(lines) != 1 || !strings.HasPrefix(lines[0], "xero: ") || strings.Contains(errOut, "Error:") {
+			t.Errorf("%v = %d, stdout %q, stderr %q", tc.args, code, out, errOut)
 		}
 	}
 }

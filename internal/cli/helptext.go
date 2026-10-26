@@ -1,5 +1,16 @@
 package cli
 
+import "github.com/spf13/cobra"
+
+// helpTopicAnnotation marks an application-owned command that does no work and
+// prints the same text directly or through help, so tests find topics without
+// a list of names.
+const helpTopicAnnotation = "help-topic"
+
+func isHelpTopic(command *cobra.Command) bool {
+	return command.Annotations[helpTopicAnnotation] == "true"
+}
+
 const documentListHelp = `Paged lists fetch every page by default (100 items per request).
 --page selects one page and prints page N of M (K items) on stderr.
 --page-size accepts 1 to 1000 only with --page. --where, where offered,
@@ -27,6 +38,7 @@ Nothing prompts, reads stdin or writes files.`
 const attachmentHelp = `Download the exact attachment FILENAME on the document identified by GUID.
 The file's MIME type comes from its attachment listing. --output defaults
 to FILENAME in the working directory; an existing path is never overwritten.
+If writing or closing fails, the command removes the new output file.
 Use --output PATH for another destination or --output - for exact bytes on
 stdout, without a trailing newline. --json is not supported for downloads.
 File downloads leave stdout empty. Errors go to stderr. Requires attachment
@@ -35,7 +47,13 @@ read access. Nothing prompts or reads stdin.`
 // Shared fragments compose command long descriptions so repeated contracts cannot drift.
 const readHelp = `This command never writes accounting records or stores tokens. It verifies
 the configured organisation before calling the Accounting API. Errors go to
-stderr; successful payloads go to stdout. Nothing prompts.`
+stderr; successful payloads go to stdout. Nothing prompts.
+
+` + credentialFileHelp
+
+const credentialFileHelp = `Authentication reads the configured secret_file of each accessed org.
+Relative paths resolve against the config file's directory; ~/ is the home
+directory. See xero config --help for secret file requirements.`
 
 const groupHelp = `With no subcommand, print help and exit successfully. Unexpected operands
 are usage errors. Help reads no configuration and makes no requests.

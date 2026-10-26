@@ -32,4 +32,6 @@ output uses color or thousands separators. Errors go to stderr.
 Reports need settings access to resolve account codes and base currency,
 and report access with the Xero user's Reports role. Requests verify the
 configured organisation and share the process's rate limit. Nothing prompts,
-reads stdin or writes files. Redirect stdout to save JSON or CSV.`
+reads stdin or writes files. Redirect stdout to save JSON or CSV.
+
+` + credentialFileHelp
