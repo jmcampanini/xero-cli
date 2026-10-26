@@ -39,8 +39,10 @@ scopes key exists only for connections that require an explicit request.
 An empty list omits scope from the token request.
 
 API commands use --org, XERO_ORG or default_org, or the sole configured org.
-With multiple orgs and no selection they fail before any request. Run
-auth status NAME to discover the organisation_id before setting it here.
+With multiple orgs and no selection they fail before any request. Commands
+that call the Accounting API require organisation_id and fail when the
+connection's tenant does not match it; auth status and orgs run without it.
+Run auth status NAME to discover the organisation_id before setting it here.
 
 A commented Effective block follows the body and names the organisation
 API commands would use as effective_org. When none resolves, the value is

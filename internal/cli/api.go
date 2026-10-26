@@ -47,7 +47,7 @@ passthrough does not add dry runs or idempotency keys.
 xero api Accounts --param 'where=Type=="BANK"'`,
 		RunE: o.run(func(command *cobra.Command, args []string) error {
 			if method != "GET" && method != "POST" && method != "PUT" && method != "DELETE" {
-				return apperr.Usage("--method must be GET, POST, PUT or DELETE")
+				return apperr.Usage("--method must be GET, POST, PUT or DELETE, not %q", method)
 			}
 			if all && method != "GET" {
 				return apperr.Usage("--all requires --method GET")

@@ -21,7 +21,7 @@ Human columns are CODE, NAME, TYPE, TAX, STATUS and bank CURRENCY.
 ` + listHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
 			if status != "active" && status != "archived" && status != "all" {
-				return apperr.Usage("--status must be active, archived or all")
+				return apperr.Usage("--status must be active, archived or all, not %q", status)
 			}
 			if bank && accountType != "" && !strings.EqualFold(accountType, "BANK") {
 				return apperr.Usage("--bank conflicts with --type %s", accountType)

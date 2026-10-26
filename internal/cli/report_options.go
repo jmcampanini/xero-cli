@@ -16,7 +16,7 @@ func (r *queryOptions) validate(command *cobra.Command, jsonOutput bool, now tim
 		return nil, apperr.Usage("--csv and --json cannot be combined")
 	}
 	if r.name != "BankSummary" && r.basis != "cash" && r.basis != "accrual" {
-		return nil, apperr.Usage("--basis must be cash or accrual")
+		return nil, apperr.Usage("--basis must be cash or accrual, not %q", r.basis)
 	}
 	query := make(url.Values)
 	if r.basis == "cash" {
@@ -65,7 +65,7 @@ func (r *queryOptions) validateComparisons(command *cobra.Command) error {
 		return apperr.Usage("--periods must be between 1 and 11")
 	}
 	if r.timeframe != "month" && r.timeframe != "quarter" && r.timeframe != "year" {
-		return apperr.Usage("--timeframe must be month, quarter or year")
+		return apperr.Usage("--timeframe must be month, quarter or year, not %q", r.timeframe)
 	}
 	if flags.Changed("by") {
 		return apperr.Usage("--by and --periods cannot be combined")

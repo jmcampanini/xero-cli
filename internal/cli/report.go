@@ -6,7 +6,7 @@ import (
 
 func newReport(o *options) *cobra.Command {
 	command := &cobra.Command{Use: "report", Short: "Read financial reports", Args: cobra.NoArgs,
-		Long: `Read profit and loss, balance sheet, trial balance and bank summary reports.
+		Long: `Read Xero's native financial reports with the column layout Xero returns.
 Each command preserves Xero's report columns and decimal values. Human
 tables retain sections; --json produces flat rows and --csv exports a table.
 Report requests require report access and the Xero user's Reports role.

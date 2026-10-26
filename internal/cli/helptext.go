@@ -1,22 +1,17 @@
 package cli
 
-import "github.com/spf13/cobra"
-
 // helpTopicAnnotation marks an application-owned command that does no work and
 // prints the same text directly or through help, so tests find topics without
 // a list of names.
 const helpTopicAnnotation = "help-topic"
 
-func isHelpTopic(command *cobra.Command) bool {
-	return command.Annotations[helpTopicAnnotation] == "true"
-}
-
-const documentListHelp = `Paged lists fetch every page by default (100 items per request).
+const pagingHelp = `Paged lists fetch every page by default (100 items per request).
 --page selects one page and prints page N of M (K items) on stderr.
---page-size accepts 1 to 1000 only with --page. --where, where offered,
-adds a parenthesized expression with &&. Records retain Xero's ordering.
-Human stdout shows the organisation and a table. --json writes one compact
-object with org {name, id}, complete, and items. Explicit pages are partial.
+--page-size accepts 1 to 1000 only with --page. Explicit pages are partial.`
+
+const documentListHelp = `--where, where offered, adds a parenthesized expression with &&. Records
+retain Xero's ordering. Human stdout shows the organisation and a table.
+--json writes one compact object with org {name, id}, complete, and items.
 Source fields and native tracking names are preserved; money is a decimal
 string. Accounting dates stay YYYY-MM-DD and timestamps are RFC 3339 UTC.
 Nothing prompts, reads stdin or writes files.`
@@ -51,13 +46,12 @@ stderr; successful payloads go to stdout. Nothing prompts.
 
 ` + credentialFileHelp
 
-const credentialFileHelp = `Authentication reads the configured secret_file of each accessed org.
-Relative paths resolve against the config file's directory; ~/ is the home
-directory. See xero config --help for secret file requirements.`
+const credentialFileHelp = `Authentication reads the configured secret_file of each accessed org; see
+xero config --help for its path resolution and permission requirements.`
 
-const groupHelp = `With no subcommand, print help and exit successfully. Unexpected operands
-are usage errors. Help reads no configuration and makes no requests.
---json does not change help output.`
+const groupHelp = `With no subcommand, print help to stdout and exit successfully. Unexpected
+operands are usage errors on stderr. Help reads no configuration, makes no
+requests and never prompts. --json does not change help output.`
 
 const listHelp = `--json writes one compact object with org {name, id}, complete: true and
 items containing native Xero objects with dates normalized. Human output

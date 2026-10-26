@@ -33,7 +33,7 @@ a note for an absent row. Report access and the Reports role are required.
 ` + readHelp,
 		RunE: o.run(func(command *cobra.Command, args []string) error {
 			if basis != "cash" && basis != "accrual" {
-				return apperr.Usage("--basis must be cash or accrual")
+				return apperr.Usage("--basis must be cash or accrual, not %q", basis)
 			}
 			if command.Flags().Changed("basis") && !command.Flags().Changed("date") {
 				return apperr.Usage("--basis requires --date")

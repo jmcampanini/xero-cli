@@ -10,7 +10,7 @@ func newCompletion() *cobra.Command {
 		Long: `Write a completion script for bash, zsh, fish or powershell to stdout.
 Redirect it to the appropriate shell completion directory. Errors go to
 stderr. --json does not change the script format. This command never reads
-configuration, creates files or contacts Xero.`,
+configuration, creates files, prompts or contacts Xero.`,
 		RunE: func(command *cobra.Command, args []string) error {
 			var err error
 			switch args[0] {

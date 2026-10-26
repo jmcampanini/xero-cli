@@ -142,7 +142,8 @@ Command groups:
 	// Cobra's default trailer exceeds 80 columns for the longest group paths.
 	root.SetUsageTemplate(strings.Replace(root.UsageTemplate(), "for more information about a command.", "for details about a command.", 1))
 	root.PersistentFlags().BoolVar(&o.json, "json", false, "write machine-readable JSON")
-	root.PersistentFlags().StringVar(&o.color, "color", "auto", "human output color: auto, always, never")
+	o.color = "auto"
+	root.PersistentFlags().Var(colorFlag{&o.color}, "color", "human output color: auto, always, never")
 	root.PersistentFlags().StringVar(&o.configPath, "config", "", "required TOML configuration file")
 	if err := pflagloader.Register[config.Config](root.PersistentFlags()); err != nil {
 		return nil, err
@@ -157,9 +158,6 @@ Command groups:
 
 func (o *options) run(fn func(*cobra.Command, []string) error) func(*cobra.Command, []string) error {
 	return func(command *cobra.Command, args []string) error {
-		if o.color != "auto" && o.color != "always" && o.color != "never" {
-			return apperr.Usage("--color must be auto, always or never")
-		}
 		err := fn(command, args)
 		if err == nil {
 			return nil
@@ -170,6 +168,21 @@ func (o *options) run(fn func(*cobra.Command, []string) error) func(*cobra.Comma
 		}
 		return &apperr.ApplicationError{Err: err}
 	}
+}
+
+// colorFlag rejects any --color value other than auto, always or never while
+// the flag is parsed, so every command, help topics included, names a bad value.
+type colorFlag struct{ value *string }
+
+func (f colorFlag) String() string { return *f.value }
+func (f colorFlag) Type() string   { return "string" }
+
+func (f colorFlag) Set(value string) error {
+	if value != "auto" && value != "always" && value != "never" {
+		return errors.New("must be auto, always or never")
+	}
+	*f.value = value
+	return nil
 }
 
 func (o *options) load(command *cobra.Command) (config.Config, error) {

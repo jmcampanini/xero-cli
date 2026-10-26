@@ -145,8 +145,8 @@ func TestEveryApplicationCommandDeclaresPositionalGrammar(t *testing.T) {
 		if command != root && command.Args == nil {
 			t.Errorf("%s has no positional grammar", command.CommandPath())
 		}
-		if (command.HasSubCommands() || isHelpTopic(command)) && !command.Runnable() {
-			t.Errorf("%s is not runnable", command.CommandPath())
+		if (command.HasSubCommands() || isHelpTopic(command)) && command.RunE == nil {
+			t.Errorf("%s is not runnable through RunE", command.CommandPath())
 		}
 	})
 }
@@ -187,9 +187,12 @@ func TestEveryApplicationCommandRendersCompleteHelp(t *testing.T) {
 	if topics == 0 {
 		t.Fatal("no help topic is annotated")
 	}
-	_, exitCodes, _ := invoke([]string{"exit-codes"}, "", nil)
+}
+
+func TestExitCodesTopicListsEveryStatus(t *testing.T) {
+	_, out, _ := invoke([]string{"exit-codes"}, "", nil)
 	for _, row := range []string{"  0  Success", "  1  Application error", "  2  Usage error"} {
-		if !strings.Contains(exitCodes, row) {
+		if !strings.Contains(out, row) {
 			t.Errorf("exit-codes lacks %q", row)
 		}
 	}
@@ -199,18 +202,25 @@ func TestFailuresPrintOnePrefixedLine(t *testing.T) {
 	path := commandConfig(t)
 	fake := &fakeClient{err: apperr.New("forbidden", "missing scope")}
 	for _, tc := range []struct {
-		args []string
-		code int
+		args  []string
+		code  int
+		named string
 	}{
-		{[]string{"unknown-command"}, 2},
-		{[]string{"--config", path, "accounts", "list"}, 1},
+		{[]string{"unknown-command"}, 2, `"unknown-command"`},
+		{[]string{"--color", "bogus", "exit-codes"}, 2, `"bogus"`},
+		{[]string{"--config", path, "accounts", "list", "--status", "stale"}, 2, `"stale"`},
+		{[]string{"--config", path, "accounts", "list"}, 1, "missing scope"},
 	} {
 		code, out, errOut := invoke(tc.args, "", func(string, config.OrgConfig) client { return fake })
 		lines := strings.Split(strings.TrimSuffix(errOut, "\n"), "\n")
-		if code != tc.code || out != "" || len(lines) != 1 || !strings.HasPrefix(lines[0], "xero: ") || strings.Contains(errOut, "Error:") {
+		if code != tc.code || out != "" || len(lines) != 1 || !strings.HasPrefix(lines[0], "xero: ") || strings.Contains(errOut, "Error:") || !strings.Contains(errOut, tc.named) {
 			t.Errorf("%v = %d, stdout %q, stderr %q", tc.args, code, out, errOut)
 		}
 	}
+}
+
+func isHelpTopic(command *cobra.Command) bool {
+	return command.Annotations[helpTopicAnnotation] == "true"
 }
 
 func TestResourceCommandOutputs(t *testing.T) {
