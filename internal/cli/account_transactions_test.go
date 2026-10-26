@@ -44,7 +44,7 @@ func TestAccountTransactionsCommandTrackingAndOutput(t *testing.T) {
 	if err := json.Unmarshal([]byte(`{"BankTransactionID":"source","Date":"2025-07-02","Status":"AUTHORISED","Type":"SPEND","CurrencyCode":"USD","LineAmountTypes":"NoTax","LineItems":[{"AccountID":"expense","Description":"Paper","LineAmount":"12.50","Tracking":[{"Name":"Region","Option":"North","Extra":42}]}]}`), &record); err != nil {
 		t.Fatal(err)
 	}
-	fake.recordsFn = func(resource string, q xero.ListQuery) (xero.RecordList, error) {
+	fake.recordsFn = func(resource string, _ xero.ListQuery) (xero.RecordList, error) {
 		result := xero.RecordList{Complete: true}
 		if resource == "BankTransactions" {
 			result.Items = []xero.Record{record}
