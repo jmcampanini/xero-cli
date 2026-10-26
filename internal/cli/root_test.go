@@ -285,6 +285,36 @@ func TestUsageConflictsPrecedeConfigAndNoOrgPrecedesFactory(t *testing.T) {
 	}
 }
 
+func TestConfigReportEndsWithEffectiveBlock(t *testing.T) {
+	selected := commandConfig(t)
+	unselected := filepath.Join(t.TempDir(), "config.toml")
+	if err := os.WriteFile(unselected, []byte(`[orgs.acme]
+client_id = "00000000000000000000000000000000"
+secret_file = "unread-secret"
+[orgs.beta]
+client_id = "11111111111111111111111111111111"
+secret_file = "unread-secret"
+`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	for _, tc := range []struct{ name, path, want string }{
+		{"selected", selected, "# effective_org = \"acme\"\n"},
+		{"unselected", unselected, "# effective_org = \"\" # no organisation selected"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			code, out, errOut := invoke([]string{"--config", tc.path, "config"}, "", func(string, config.OrgConfig) client { t.Error("config constructed a client"); return nil })
+
+			if code != 0 || errOut != "" {
+				t.Fatalf("config = %d, stderr %q", code, errOut)
+			}
+			_, block, found := strings.Cut(out, "\n\n# Effective\n")
+			if !strings.HasPrefix(out, "default_org = ") || !found || !strings.HasPrefix(block, tc.want) {
+				t.Errorf("config report = %q, want body then Effective block starting %q", out, tc.want)
+			}
+		})
+	}
+}
+
 func TestAPIPassthroughAndErrorStreams(t *testing.T) {
 	path := commandConfig(t)
 	fake := &fakeClient{response: []byte("{ \"untouched\": 1 }\n")}

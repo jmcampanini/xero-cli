@@ -41,8 +41,16 @@ An empty list omits scope from the token request.
 API commands use --org, XERO_ORG or default_org, or the sole configured org.
 With multiple orgs and no selection they fail before any request. Run
 auth status NAME to discover the organisation_id before setting it here.
-This report preserves default_org as configured; it does not persist a
-derived selection, so redirecting it cannot silently choose an organisation.`,
+
+A commented Effective block follows the body and names the organisation
+API commands would use as effective_org. When none resolves, the value is
+"" with the reason beside it, and this command still succeeds. Comments are
+ignored on reload, so the report preserves default_org as configured; it
+does not persist a derived selection, and redirecting it cannot silently
+choose an organisation. --provenance leaves the Effective block unannotated.
+
+# Effective
+# effective_org = "acme"`,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
 			if o.json {
 				return apperr.Usage("--json is not supported by config; TOML is its machine format")
