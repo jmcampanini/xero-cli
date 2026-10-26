@@ -29,9 +29,6 @@ install -d ~/.local/bin
 install ./build/xero ~/.local/bin/xero
 ```
 
-To upgrade, run `git pull`, rebuild with `mise install && mise run build`, and
-run `install ./build/xero ~/.local/bin/xero` again to replace the copied binary.
-
 
 ## Representative commands
 
