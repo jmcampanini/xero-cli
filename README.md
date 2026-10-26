@@ -16,9 +16,9 @@ brew install --cask jmcampanini/tap/xero
 brew upgrade --cask jmcampanini/tap/xero
 ```
 
-Alternatively, download the matching `xero_<version>_<os>_<arch>.tar.gz` from the [releases page](https://github.com/jmcampanini/xero-cli/releases), extract it, and copy `xero` onto your `PATH`. Use `darwin` for macOS or `linux` for Linux, with `amd64` or `arm64` for the architecture. To upgrade, download the new archive and replace the binary. Releases include a SHA-256 checksums file and GitHub build provenance attestations. If macOS quarantines a browser download, remove the attribute with `xattr -d com.apple.quarantine xero` before running it.
+Alternatively, download your platform's archive from the [releases page](https://github.com/jmcampanini/xero-cli/releases), extract it, and copy `xero` onto your `PATH`; to upgrade, replace the binary with the new release. Releases include SHA-256 checksums and GitHub build provenance attestations. If macOS quarantines a browser download, run `xattr -d com.apple.quarantine xero` before running it.
 
-The existing HEAD formula remains available as an alternative and includes shell completions. Keep using its fully qualified name to install or upgrade from the latest source:
+The existing HEAD formula remains available for installation and upgrades from the latest source:
 
 ```sh
 brew tap jmcampanini/xero-cli https://github.com/jmcampanini/xero-cli

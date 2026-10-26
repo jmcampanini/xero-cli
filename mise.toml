@@ -87,7 +87,7 @@ run = [
 [tasks.release]
 description = "Build and publish the checked-out tag from the release workflow only."
 run = '''
-if [ "${GITHUB_ACTIONS:-}" != "true" ] || [ "${GITHUB_WORKFLOW:-}" != "release" ] || [ "${GITHUB_EVENT_NAME:-}" != "push" ] || [ "${GITHUB_REF_TYPE:-}" != "tag" ]; then
+if [ "${GITHUB_ACTIONS:-}" != "true" ] || [ "${GITHUB_WORKFLOW:-}" != "release" ] || [ "${GITHUB_REF_TYPE:-}" != "tag" ]; then
   echo "release publishes artifacts and runs only from the tag-triggered release workflow; use 'mise run release-snapshot' locally"
   exit 1
 fi
