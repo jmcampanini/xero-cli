@@ -197,18 +197,33 @@ func ReadSecret(path string) (string, error) {
 	return secret, nil
 }
 
-// TOML renders redirectable configuration, optionally annotating each value's source.
+// TOML renders redirectable configuration followed by a commented Effective block,
+// optionally annotating each configured value's source.
 func TOML(cfg Config, report configloader.LoadReport, provenance bool) ([]byte, error) {
 	encoded, err := configreporter.New(cfg, report).TOML()
 	if err != nil {
 		return nil, fmt.Errorf("render config: %w", err)
 	}
 	// Child tables declare their parent implicitly; retain the documented shape.
-	encoded = []byte(strings.ReplaceAll(string(encoded), "[orgs]\n", ""))
-	if !provenance {
-		return encoded, nil
+	body := strings.ReplaceAll(string(encoded), "[orgs]\n", "")
+	if provenance {
+		body = annotate(body, report)
 	}
-	lines := strings.Split(string(encoded), "\n")
+	return []byte(body + effectiveBlock(cfg)), nil
+}
+
+// effectiveBlock reports derived values as comments so the report reloads unchanged.
+func effectiveBlock(cfg Config) string {
+	name, err := cfg.Effective()
+	line := "# effective_org = " + strconv.Quote(name)
+	if err != nil {
+		line += " # " + err.Error()
+	}
+	return "\n# Effective\n" + line + "\n"
+}
+
+func annotate(body string, report configloader.LoadReport) string {
+	lines := strings.Split(body, "\n")
 	table := ""
 	fields := map[string]string{"client_id": "clientid", "secret_file": "secretfile", "organisation_id": "organisationid", "scopes": "scopes"}
 	for i, line := range lines {
@@ -236,5 +251,5 @@ func TOML(cfg Config, report configloader.LoadReport, provenance bool) ([]byte, 
 		}
 		lines[i] += " # " + source
 	}
-	return []byte(strings.Join(lines, "\n")), nil
+	return strings.Join(lines, "\n")
 }

@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -96,6 +97,65 @@ func TestLoadPrecedenceAndRoundTrip(t *testing.T) {
 				}
 				if provenance && tc.flag != "" && !strings.Contains(string(body), "# flag: --org") {
 					t.Errorf("missing flag provenance: %s", body)
+				}
+				if !strings.HasSuffix(string(body), "\n\n# Effective\n# effective_org = "+strconv.Quote(tc.want)+"\n") {
+					t.Errorf("provenance=%v report does not end with the Effective block for %q:\n%s", provenance, tc.want, body)
+				}
+			}
+		})
+	}
+}
+
+func TestTOMLEffectiveBlockWithoutDefaultOrg(t *testing.T) {
+	t.Setenv("HOME", t.TempDir())
+	t.Setenv("XDG_CONFIG_HOME", t.TempDir())
+	t.Setenv("XERO_ORG", "")
+	if err := os.Unsetenv("XERO_ORG"); err != nil {
+		t.Fatal(err)
+	}
+	acme := "[orgs.acme]\nclient_id = \"00000000000000000000000000000000\"\nsecret_file = \"secrets/acme\"\n"
+	beta := "[orgs.beta]\nclient_id = \"11111111111111111111111111111111\"\nsecret_file = \"secrets/beta\"\n"
+	for _, tc := range []struct{ name, file, effective string }{
+		{"sole org derived", acme, "acme"},
+		{"two orgs unselected", acme + beta, ""},
+		{"no orgs", "", ""},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "config.toml")
+			if err := os.WriteFile(path, []byte(tc.file), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			cfg, report, err := Load(configFlags(t, "--config", path), path)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			for _, provenance := range []bool{false, true} {
+				body, err := TOML(cfg, report, provenance)
+				if err != nil {
+					t.Fatal(err)
+				}
+
+				_, block, found := strings.Cut(string(body), "\n\n# Effective\n")
+				line, _, _ := strings.Cut(block, "\n")
+				value, reason, _ := strings.Cut(line, " # ")
+				wantReason := tc.effective == ""
+				if !found || value != "# effective_org = "+strconv.Quote(tc.effective) || (reason != "") != wantReason || strings.Contains(block, "# Effective") {
+					t.Errorf("provenance=%v report = %q, want one Effective block with effective_org %q and reason=%v", provenance, body, tc.effective, wantReason)
+				}
+				if !strings.HasPrefix(string(body), `default_org = ""`) {
+					t.Errorf("provenance=%v report persisted a derived default_org:\n%s", provenance, body)
+				}
+				roundtrip := filepath.Join(t.TempDir(), "config.toml")
+				if err := os.WriteFile(roundtrip, body, 0o600); err != nil {
+					t.Fatal(err)
+				}
+				loaded, _, err := Load(configFlags(t, "--config", roundtrip), roundtrip)
+				if err != nil {
+					t.Fatalf("reload provenance=%v report: %v\n%s", provenance, err, body)
+				}
+				if !reflect.DeepEqual(loaded, cfg) {
+					t.Errorf("round-trip = %#v, want %#v", loaded, cfg)
 				}
 			}
 		})
