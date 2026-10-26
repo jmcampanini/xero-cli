@@ -5,7 +5,20 @@
 
 ## Install
 
-Distribution is currently from HEAD only.
+Until the first versioned release is published, install from HEAD or build from source. The release workflow will provide prebuilt binaries for Linux and macOS on amd64 and arm64; no first-release version has been selected.
+
+After the first stable release, install and upgrade with [mise](https://mise.jdx.dev) or the shared Homebrew tap:
+
+```sh
+mise use -g github:jmcampanini/xero-cli
+mise upgrade github:jmcampanini/xero-cli
+brew install --cask jmcampanini/tap/xero
+brew upgrade --cask jmcampanini/tap/xero
+```
+
+Alternatively, download your platform's archive from the [releases page](https://github.com/jmcampanini/xero-cli/releases), extract it, and copy `xero` onto your `PATH`; to upgrade, replace the binary with the new release. Releases include SHA-256 checksums and GitHub build provenance attestations. If macOS quarantines a browser download, run `xattr -d com.apple.quarantine xero` before running it.
+
+The existing HEAD formula remains available for installation and upgrades from the latest source:
 
 ```sh
 brew tap jmcampanini/xero-cli https://github.com/jmcampanini/xero-cli
@@ -13,13 +26,11 @@ brew install --HEAD jmcampanini/xero-cli/xero
 brew upgrade --fetch-HEAD jmcampanini/xero-cli/xero
 ```
 
-To build from source on macOS, install Git and [mise](https://mise.jdx.dev),
-clone the repository, and let mise supply the pinned tools from `mise.toml`.
-The last step copies the binary into `~/.local/bin`; add that directory to
-`PATH` if your shell does not already include it.
+Both Homebrew packages install the `xero` executable and bash, zsh, and fish completions. When switching from the HEAD formula to the release cask, first run `brew uninstall jmcampanini/xero-cli/xero` to avoid an executable conflict.
+
+To build from source, install Git and [mise](https://mise.jdx.dev) (`brew install git mise` on macOS), clone the repository, and let mise supply the pinned tools. The last step copies the binary into `~/.local/bin`; add that directory to `PATH` if your shell does not already include it.
 
 ```sh
-brew install git mise
 git clone https://github.com/jmcampanini/xero-cli
 cd xero-cli
 mise trust
