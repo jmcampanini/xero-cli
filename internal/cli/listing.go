@@ -27,7 +27,7 @@ type listingOptions struct {
 func (l *listingOptions) flags(command *cobra.Command) {
 	flags := command.Flags()
 	flags.IntVar(&l.page, "page", 0, "fetch only this page (1 or greater)")
-	flags.IntVar(&l.pageSize, "page-size", 100, "items per page (1 to 1000; requires --page)")
+	flags.IntVar(&l.pageSize, "page-size", 100, "items per page (1 to 1000)")
 	if l.withWhere {
 		flags.StringVar(&l.where, "where", "", "additional Xero filter expression")
 	}

@@ -20,14 +20,14 @@ DEBITS sums positive journal line amounts exactly. Cash-basis treatment
 comes from ShowOnCashBasisReports. --modified-since accepts RFC 3339 or
 YYYY-MM-DDTHH:MM:SS (UTC) and sends If-Modified-Since in UTC.
 
-` + documentListHelp + "\n\n" + readHelp,
+` + pagingHelp + "\n" + documentListHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
 			query, clauses, err := listing.validate(command)
 			if err != nil {
 				return err
 			}
 			if status != "all" && status != "draft" && status != "posted" && status != "voided" {
-				return apperr.Usage("--status must be draft, posted, voided or all")
+				return apperr.Usage("--status must be draft, posted, voided or all, not %q", status)
 			}
 			if status != "all" {
 				clauses = append(clauses, "Status=="+strconv.Quote(strings.ToUpper(status)))

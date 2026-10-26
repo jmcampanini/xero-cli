@@ -36,10 +36,10 @@
 - Set root `SilenceUsage`, `SilenceErrors`, and `DisableSuggestions` to true.
 - Initialize help and version flags during construction.
 - Retain Cobra's built-in help behavior, including success for unknown help topics.
-- Treat command help as the canonical user-facing documentation and README as the landing page. Do not add a `docs/` directory.
+- Treat command help as the canonical user-facing documentation and README as the landing page; keep both consistent with observable behavior. Do not add a `docs/` directory.
 - Write `Long`, examples, and shared help fragments as raw literals opening on the field line, with continuation text at column zero and lines near 78 columns.
 - Explain streams, JSON, prompts, filesystem effects, and applicable Xero limitations.
-- Preserve the three strict command guard tests for positional grammar, wrapped long help, and identical exit-code topic entry points.
+- Preserve the two strict command guard tests: positional grammar with runnable groups and help topics, and rendered help with short help, long help, 80-column lines, and identical help topic entry points.
 - Write payloads to stdout and diagnostics to stderr.
 - Ordinary application errors leave stdout empty.
 - `auth status` prints all diagnostic blocks before failure.

@@ -13,7 +13,7 @@ With multiple orgs and no selection, no row is marked.
 
 --json writes an array of {name, organisation_id, effective}. Human output
 is a table on stdout; errors go to stderr. This command never reads secrets,
-contacts Xero, stores tokens or requires an effective organisation.`,
+prompts, contacts Xero, stores tokens or requires an effective organisation.`,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
 			cfg, err := o.load(command)
 			if err != nil {

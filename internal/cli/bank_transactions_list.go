@@ -26,7 +26,7 @@ the total as a decimal. Combine these filters to check for duplicates.
 --unreconciled filters saved transactions. Bank statement lines and bank
 reconciliation itself are not available through this command.
 
-` + documentListHelp + "\n\n" + readHelp,
+` + pagingHelp + "\n" + documentListHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
 			query, clauses, err := listing.validate(command)
 			if err != nil {
@@ -36,7 +36,7 @@ reconciliation itself are not available through this command.
 				return apperr.Usage("--account is required")
 			}
 			if kind != "all" && kind != "spend" && kind != "receive" && kind != "transfer" {
-				return apperr.Usage("--type must be spend, receive, transfer or all")
+				return apperr.Usage("--type must be spend, receive, transfer or all, not %q", kind)
 			}
 			if command.Flags().Changed("contact") {
 				if err := xero.RequireGUID(contact); err != nil {

@@ -40,12 +40,14 @@ response body. No response body is written to stdout on failure.
 Organisation selection, identity verification, token renewal, rate limits
 and error mapping match the dedicated commands. Nothing prompts or stores
 tokens. POST, PUT and DELETE can change Xero data immediately; this raw
-passthrough does not add dry runs or idempotency keys.`,
+passthrough does not add dry runs or idempotency keys.
+
+` + credentialFileHelp,
 		Example: `xero api Organisation
 xero api Accounts --param 'where=Type=="BANK"'`,
 		RunE: o.run(func(command *cobra.Command, args []string) error {
 			if method != "GET" && method != "POST" && method != "PUT" && method != "DELETE" {
-				return apperr.Usage("--method must be GET, POST, PUT or DELETE")
+				return apperr.Usage("--method must be GET, POST, PUT or DELETE, not %q", method)
 			}
 			if all && method != "GET" {
 				return apperr.Usage("--all requires --method GET")

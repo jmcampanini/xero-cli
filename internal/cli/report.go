@@ -6,7 +6,7 @@ import (
 
 func newReport(o *options) *cobra.Command {
 	command := &cobra.Command{Use: "report", Short: "Read financial reports", Args: cobra.NoArgs,
-		Long: `Read profit and loss, balance sheet, trial balance and bank summary reports.
+		Long: `Read Xero's native financial reports with the column layout Xero returns.
 Each command preserves Xero's report columns and decimal values. Human
 tables retain sections; --json produces flat rows and --csv exports a table.
 Report requests require report access and the Xero user's Reports role.
@@ -32,4 +32,6 @@ output uses color or thousands separators. Errors go to stderr.
 Reports need settings access to resolve account codes and base currency,
 and report access with the Xero user's Reports role. Requests verify the
 configured organisation and share the process's rate limit. Nothing prompts,
-reads stdin or writes files. Redirect stdout to save JSON or CSV.`
+reads stdin or writes files. Redirect stdout to save JSON or CSV.
+
+` + credentialFileHelp

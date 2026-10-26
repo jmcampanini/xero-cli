@@ -20,14 +20,14 @@ active; archived includes only archived contacts; all includes both.
 --customers and --suppliers together require both roles. Full paged records
 are requested because Xero's summaryOnly omits those roles and their filters.
 
-` + documentListHelp + "\n\n" + readHelp,
+` + pagingHelp + "\n" + documentListHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
 			query, clauses, err := listing.validate(command)
 			if err != nil {
 				return err
 			}
 			if status != "active" && status != "archived" && status != "all" {
-				return apperr.Usage("--status must be active, archived or all")
+				return apperr.Usage("--status must be active, archived or all, not %q", status)
 			}
 			query.Values.Set("includeArchived", strconv.FormatBool(status != "active"))
 			if command.Flags().Changed("search") {
