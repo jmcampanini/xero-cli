@@ -115,10 +115,10 @@ func TestTOMLEffectiveBlockWithoutDefaultOrg(t *testing.T) {
 	}
 	acme := "[orgs.acme]\nclient_id = \"00000000000000000000000000000000\"\nsecret_file = \"secrets/acme\"\n"
 	beta := "[orgs.beta]\nclient_id = \"11111111111111111111111111111111\"\nsecret_file = \"secrets/beta\"\n"
-	for _, tc := range []struct{ name, file, want string }{
-		{"sole org derived", acme, "# effective_org = \"acme\"\n"},
-		{"two orgs unselected", acme + beta, "# effective_org = \"\" # no organisation selected"},
-		{"no orgs", "", "# effective_org = \"\" # no organisation selected"},
+	for _, tc := range []struct{ name, file, effective string }{
+		{"sole org derived", acme, "acme"},
+		{"two orgs unselected", acme + beta, ""},
+		{"no orgs", "", ""},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			path := filepath.Join(t.TempDir(), "config.toml")
@@ -137,8 +137,11 @@ func TestTOMLEffectiveBlockWithoutDefaultOrg(t *testing.T) {
 				}
 
 				_, block, found := strings.Cut(string(body), "\n\n# Effective\n")
-				if !found || !strings.HasPrefix(block, tc.want) || strings.Contains(block, "# Effective") {
-					t.Errorf("provenance=%v report = %q, want one Effective block starting %q", provenance, body, tc.want)
+				line, _, _ := strings.Cut(block, "\n")
+				value, reason, _ := strings.Cut(line, " # ")
+				wantReason := tc.effective == ""
+				if !found || value != "# effective_org = "+strconv.Quote(tc.effective) || (reason != "") != wantReason || strings.Contains(block, "# Effective") {
+					t.Errorf("provenance=%v report = %q, want one Effective block with effective_org %q and reason=%v", provenance, body, tc.effective, wantReason)
 				}
 				if !strings.HasPrefix(string(body), `default_org = ""`) {
 					t.Errorf("provenance=%v report persisted a derived default_org:\n%s", provenance, body)

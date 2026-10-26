@@ -222,7 +222,6 @@ func effectiveBlock(cfg Config) string {
 	return "\n# Effective\n" + line + "\n"
 }
 
-// annotate appends each configured value's source to its line.
 func annotate(body string, report configloader.LoadReport) string {
 	lines := strings.Split(body, "\n")
 	table := ""

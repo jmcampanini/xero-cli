@@ -285,10 +285,13 @@ func TestUsageConflictsPrecedeConfigAndNoOrgPrecedesFactory(t *testing.T) {
 	}
 }
 
-func TestConfigReportEndsWithEffectiveBlock(t *testing.T) {
-	selected := commandConfig(t)
-	unselected := filepath.Join(t.TempDir(), "config.toml")
-	if err := os.WriteFile(unselected, []byte(`[orgs.acme]
+func TestConfigSucceedsWithoutSelection(t *testing.T) {
+	t.Setenv("XERO_ORG", "")
+	if err := os.Unsetenv("XERO_ORG"); err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "config.toml")
+	if err := os.WriteFile(path, []byte(`[orgs.acme]
 client_id = "00000000000000000000000000000000"
 secret_file = "unread-secret"
 [orgs.beta]
@@ -297,21 +300,17 @@ secret_file = "unread-secret"
 `), 0o600); err != nil {
 		t.Fatal(err)
 	}
-	for _, tc := range []struct{ name, path, want string }{
-		{"selected", selected, "# effective_org = \"acme\"\n"},
-		{"unselected", unselected, "# effective_org = \"\" # no organisation selected"},
-	} {
-		t.Run(tc.name, func(t *testing.T) {
-			code, out, errOut := invoke([]string{"--config", tc.path, "config"}, "", func(string, config.OrgConfig) client { t.Error("config constructed a client"); return nil })
 
-			if code != 0 || errOut != "" {
-				t.Fatalf("config = %d, stderr %q", code, errOut)
-			}
-			_, block, found := strings.Cut(out, "\n\n# Effective\n")
-			if !strings.HasPrefix(out, "default_org = ") || !found || !strings.HasPrefix(block, tc.want) {
-				t.Errorf("config report = %q, want body then Effective block starting %q", out, tc.want)
-			}
-		})
+	code, out, errOut := invoke([]string{"--config", path, "config"}, "", func(string, config.OrgConfig) client { t.Error("config constructed a client"); return nil })
+
+	if code != 0 || errOut != "" {
+		t.Fatalf("config = %d, stderr %q", code, errOut)
+	}
+	_, block, found := strings.Cut(out, "\n\n# Effective\n")
+	line, _, _ := strings.Cut(block, "\n")
+	value, reason, _ := strings.Cut(line, " # ")
+	if !strings.HasPrefix(out, `default_org = ""`) || !found || value != `# effective_org = ""` || reason == "" {
+		t.Errorf("config report = %q, want unselected body then an Effective block with an empty effective_org and a reason", out)
 	}
 }
 

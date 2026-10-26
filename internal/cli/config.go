@@ -44,10 +44,10 @@ auth status NAME to discover the organisation_id before setting it here.
 
 A commented Effective block follows the body and names the organisation
 API commands would use as effective_org. When none resolves, the value is
-"" with the reason beside it, and this command still succeeds. Comments are
-ignored on reload, so the report preserves default_org as configured; it
-does not persist a derived selection, and redirecting it cannot silently
-choose an organisation. --provenance leaves the Effective block unannotated.
+"" with the reason beside it, and this command still succeeds. The body
+keeps default_org as loaded and reload ignores comments, so redirecting the
+report cannot silently choose an organisation. --provenance leaves the
+Effective block unannotated.
 
 # Effective
 # effective_org = "acme"`,
