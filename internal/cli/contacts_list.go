@@ -10,6 +10,7 @@ import (
 )
 
 func newContactsList(o *options) *cobra.Command {
+	var output collectionOptions
 	listing := listingOptions{withWhere: true}
 	var search, status string
 	var customers, suppliers bool
@@ -19,9 +20,13 @@ first and last name, email and contact number search. Status defaults to
 active; archived includes only archived contacts; all includes both.
 --customers and --suppliers together require both roles. Full paged records
 are requested because Xero's summaryOnly omits those roles and their filters.
+Machine records use the Xero Accounting API Contacts resource schema.
 
 ` + pagingHelp + "\n" + documentListHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
+			if err := output.validate(command, o.json); err != nil {
+				return err
+			}
 			query, clauses, err := listing.validate(command)
 			if err != nil {
 				return err
@@ -47,10 +52,11 @@ are requested because Xero's summaryOnly omits those roles and their filters.
 			if err != nil {
 				return err
 			}
-			return o.records(command, api, "Contacts", query)
+			return o.records(command, &output, api, "Contacts", query)
 		}),
 	}
 	listing.flags(command)
+	output.flags(command)
 	command.Flags().StringVar(&search, "search", "", "Xero contact search text")
 	command.Flags().StringVar(&status, "status", "active", "active, archived or all")
 	command.Flags().BoolVar(&customers, "customers", false, "only customers")

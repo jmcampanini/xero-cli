@@ -14,7 +14,9 @@ retain Xero's ordering. Human stdout shows the organisation and a table.
 --json writes one compact object with org {name, id}, complete, and items.
 Source fields and native tracking names are preserved; money is a decimal
 string. Accounting dates stay YYYY-MM-DD and timestamps are RFC 3339 UTC.
-Nothing prompts, reads stdin or writes files.`
+Nothing prompts or reads stdin.
+
+` + collectionHelp
 
 const documentShowHelp = `ID must be a GUID, validated before configuration or network access.
 Human stdout shows saved fields and line details, with tracking names as
@@ -28,7 +30,10 @@ Nothing prompts, reads stdin or writes files.`
 const attachmentsHelp = `List attachment IDs, names, MIME types and byte lengths for this GUID.
 --json writes org {name, id}, complete: true and native attachment items.
 Payloads go to stdout; errors go to stderr. Requires attachment read access.
-Nothing prompts, reads stdin or writes files.`
+Records use the Xero Accounting API Attachments resource schema.
+Nothing prompts or reads stdin.
+
+` + collectionHelp
 
 const attachmentHelp = `Download the exact attachment FILENAME on the document identified by GUID.
 The file's MIME type comes from its attachment listing. --output defaults
@@ -42,7 +47,8 @@ read access. Nothing prompts or reads stdin.`
 // Shared fragments compose command long descriptions so repeated contracts cannot drift.
 const readHelp = `This command never writes accounting records or stores tokens. It verifies
 the configured organisation before calling the Accounting API. Errors go to
-stderr; successful payloads go to stdout. Nothing prompts.
+stderr; payloads go to stdout unless an output file is selected.
+Nothing prompts.
 
 ` + credentialFileHelp
 
@@ -55,4 +61,21 @@ requests and never prompts. --json does not change help output.`
 
 const listHelp = `--json writes one compact object with org {name, id}, complete: true and
 items containing native Xero objects with dates normalized. Human output
-shows the organisation and a table. These resources are not paginated.`
+shows the organisation and a table. These resources are not paginated.
+
+` + collectionHelp
+
+const collectionHelp = `Choose only one of --json, --jsonl or --csv. --jsonl writes one native
+record object per line. CSV columns are the union of returned top-level
+field names in alphabetical order. Strings keep their content; null or
+missing values are empty cells; objects and arrays are compact JSON cells.
+--no-header omits the CSV header. Column sets can vary between collections;
+check them before appending CSV. Empty JSONL and CSV results write nothing;
+JSON retains its envelope. Human output stays the default, even in pipes.
+
+All reads and encoding finish before any machine payload is written.
+--output-file PATH requires a machine format and leaves stdout empty.
+It writes and closes a private .xero-output-* file beside PATH, then
+publishes it atomically. An existing PATH requires --overwrite. Failures
+leave PATH unchanged; temporary files are removed. Omit --output-file for
+stdout; a PATH of - names an ordinary file. Diagnostics stay on stderr.`

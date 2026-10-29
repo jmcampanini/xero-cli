@@ -9,15 +9,16 @@ import (
 func newConfig(o *options) *cobra.Command {
 	var provenance bool
 	command := &cobra.Command{Use: "config", Short: "Print effective TOML configuration", Args: cobra.NoArgs,
-		Long: `Print effective configuration as TOML, suitable for redirection into a file.
+		Long: `Print effective configuration to stdout as TOML, suitable for redirection.
 --provenance appends source comments to values. --json is a usage error;
 TOML is this command's machine format. Errors go to stderr.
 
 Precedence is defaults, config file, XERO_ORG, then --org. The discovered
 file is $XDG_CONFIG_HOME/xero/config.toml, or ~/.config/xero/config.toml.
 A missing discovered file is allowed. --config replaces discovery and must
-exist. A relative XDG_CONFIG_HOME currently resolves against the working
-directory. No config files, secrets or tokens are created by this command.
+exist. Unset, empty or relative XDG_CONFIG_HOME uses ~/.config. This command
+never prompts or reads stdin and works without a terminal. No config files,
+secrets or tokens are created by this command.
 
 default_org = "acme"
 

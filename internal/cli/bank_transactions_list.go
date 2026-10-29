@@ -10,6 +10,7 @@ import (
 )
 
 func newBankTransactionsList(o *options) *cobra.Command {
+	var output collectionOptions
 	listing := listingOptions{withPeriod: true, withWhere: true}
 	var account, kind, contact, reference, amount string
 	var unreconciled, deleted bool
@@ -25,9 +26,13 @@ excluded unless --include-deleted, which marks them in human output.
 the total as a decimal. Combine these filters to check for duplicates.
 --unreconciled filters saved transactions. Bank statement lines and bank
 reconciliation itself are not available through this command.
+Machine records use the Xero Accounting API BankTransactions schema.
 
 ` + pagingHelp + "\n" + documentListHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
+			if err := output.validate(command, o.json); err != nil {
+				return err
+			}
 			query, clauses, err := listing.validate(command)
 			if err != nil {
 				return err
@@ -83,10 +88,11 @@ reconciliation itself are not available through this command.
 				clauses = append(clauses, "IsReconciled==false")
 			}
 			xero.ApplyFilter(&query, clauses, listing.where)
-			return o.records(command, api, "BankTransactions", query)
+			return o.records(command, &output, api, "BankTransactions", query)
 		}),
 	}
 	listing.flags(command)
+	output.flags(command)
 	command.Flags().StringVar(&account, "account", "", "required bank account code, GUID or exact name")
 	command.Flags().StringVar(&kind, "type", "all", "spend, receive, transfer or all")
 	command.Flags().StringVar(&contact, "contact", "", "exact contact GUID")

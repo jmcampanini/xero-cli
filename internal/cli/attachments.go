@@ -10,7 +10,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func (o *options) showAttachments(command *cobra.Command, resource, id string) error {
+func (o *options) showAttachments(command *cobra.Command, output *collectionOptions, resource, id string) error {
+	if err := output.validate(command, o.json); err != nil {
+		return err
+	}
 	if err := xero.RequireGUID(id); err != nil {
 		return err
 	}
@@ -26,7 +29,7 @@ func (o *options) showAttachments(command *cobra.Command, resource, id string) e
 	for _, item := range items {
 		rows = append(rows, []string{item.Text("FileName"), item.Text("MimeType"), item.Text("ContentLength"), item.Text("AttachmentID")})
 	}
-	return o.list(command, api.Identity(), items, []string{"FILENAME", "MIME TYPE", "BYTES", "ID"}, rows)
+	return o.list(command, output, api.Identity(), items, []string{"FILENAME", "MIME TYPE", "BYTES", "ID"}, rows)
 }
 
 func (o *options) downloadAttachment(command *cobra.Command, resource, id, name, output string) error {

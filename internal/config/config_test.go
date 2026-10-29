@@ -170,10 +170,64 @@ func TestDiscoveryAndMissingExplicitConfig(t *testing.T) {
 	if err != nil || len(cfg.Orgs) != 0 {
 		t.Fatalf("optional discovery = %#v, %v", cfg, err)
 	}
-	missing := filepath.Join(t.TempDir(), "missing.toml")
-	_, _, err = Load(configFlags(t, "--config", missing), missing)
-	if err == nil || apperr.From(err).Code != "invalid_argument" {
-		t.Fatalf("explicit missing file = %v", err)
+	for _, path := range []string{"", filepath.Join(t.TempDir(), "missing.toml")} {
+		_, _, err = Load(configFlags(t, "--config", path), path)
+		if err == nil || apperr.From(err).Code != "invalid_argument" {
+			t.Errorf("Load with explicit config %q = %v, want invalid_argument", path, err)
+		}
+	}
+}
+
+func TestDiscoveryUsesAbsoluteXDGOrHome(t *testing.T) {
+	work := t.TempDir()
+	home := t.TempDir()
+	xdg := t.TempDir()
+	t.Chdir(work)
+	t.Setenv("HOME", home)
+	t.Setenv("XERO_ORG", "")
+	homePath := filepath.Join(home, ".config", "xero", "config.toml")
+	xdgPath := filepath.Join(xdg, "xero", "config.toml")
+	for _, path := range []string{homePath, xdgPath} {
+		if err := os.MkdirAll(filepath.Dir(path), 0o700); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, nil, 0o600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	decoy := filepath.Join(work, "relative", "xero", "config.toml")
+	if err := os.MkdirAll(filepath.Dir(decoy), 0o700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(decoy, []byte("unexpected = true\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+
+	for _, tc := range []struct {
+		name, value, want string
+	}{
+		{"unset", "", homePath},
+		{"empty", "", homePath},
+		{"relative", "relative", homePath},
+		{"absolute", xdg, xdgPath},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Setenv("XDG_CONFIG_HOME", tc.value)
+			if tc.name == "unset" {
+				if err := os.Unsetenv("XDG_CONFIG_HOME"); err != nil {
+					t.Fatal(err)
+				}
+			}
+
+			_, report, err := Load(configFlags(t), "")
+
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !reflect.DeepEqual(report.LoadedFiles, []string{tc.want}) {
+				t.Errorf("Load files = %v, want [%s]", report.LoadedFiles, tc.want)
+			}
+		})
 	}
 }
 

@@ -9,15 +9,20 @@ import (
 )
 
 func newTrackingCategoriesList(o *options) *cobra.Command {
+	var output collectionOptions
 	var archived, all bool
 	command := &cobra.Command{Use: "list", Short: "List active or archived tracking categories", Args: cobra.NoArgs,
 		Long: `List active categories by default. --archived lists only archived
 categories; --all includes both. These flags are mutually exclusive.
 Human columns are NAME, STATUS and the count of active OPTIONS. Xero
 permits at most two active tracking categories per organisation.
+Machine records use the Xero Accounting API TrackingCategories schema.
 
 ` + listHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
+			if err := output.validate(command, o.json); err != nil {
+				return err
+			}
 			if archived && all {
 				return apperr.Usage("--archived and --all are mutually exclusive")
 			}
@@ -48,10 +53,11 @@ permits at most two active tracking categories per organisation.
 				}
 				rows = append(rows, []string{category.Name, category.Status, strconv.Itoa(count)})
 			}
-			return o.list(command, api.Identity(), items, []string{"NAME", "STATUS", "OPTIONS"}, rows)
+			return o.list(command, &output, api.Identity(), items, []string{"NAME", "STATUS", "OPTIONS"}, rows)
 		}),
 	}
 	command.Flags().BoolVar(&archived, "archived", false, "show only archived categories")
 	command.Flags().BoolVar(&all, "all", false, "include active and archived categories")
+	output.flags(command)
 	return command
 }

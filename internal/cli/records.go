@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func (o *options) records(command *cobra.Command, api client, resource string, query xero.ListQuery) error {
+func (o *options) records(command *cobra.Command, output *collectionOptions, api client, resource string, query xero.ListQuery) error {
 	result, err := api.Records(command.Context(), resource, query)
 	if err != nil {
 		return err
@@ -26,12 +26,8 @@ func (o *options) records(command *cobra.Command, api client, resource string, q
 			return err
 		}
 	}
-	if o.json {
-		return render.JSON(command.OutOrStdout(), struct {
-			Org      xero.Identity `json:"org"`
-			Complete bool          `json:"complete"`
-			Items    []xero.Record `json:"items"`
-		}{api.Identity(), result.Complete, result.Items})
+	if o.json || output.jsonl || output.csv {
+		return output.write(command, collectionResult{Org: api.Identity(), Complete: result.Complete, Items: result.Items})
 	}
 	return render.Records(command.OutOrStdout(), api.Identity(), resource, result.Items, o.color)
 }

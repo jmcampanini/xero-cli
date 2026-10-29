@@ -35,6 +35,7 @@ command does not make extra accounting requests to obtain them.
 Every organisation is reported before the first failing org's error is
 written to stderr and the process exits 1. --org does not restrict this
 diagnostic; use the NAME operand. This command never changes Xero data.
+Nothing prompts or requires an interactive terminal.
 
 ` + credentialFileHelp,
 		RunE: o.run(func(command *cobra.Command, args []string) error {

@@ -141,6 +141,9 @@ func TestEveryApplicationCommandDeclaresPositionalGrammar(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if root.Version != "" || root.PersistentFlags().Lookup("version") == nil {
+		t.Error("root must own its version flag without Cobra's Version field")
+	}
 	walkCommands(root, func(command *cobra.Command) {
 		if command != root && command.Args == nil {
 			t.Errorf("%s has no positional grammar", command.CommandPath())
@@ -149,6 +152,55 @@ func TestEveryApplicationCommandDeclaresPositionalGrammar(t *testing.T) {
 			t.Errorf("%s is not runnable through RunE", command.CommandPath())
 		}
 	})
+}
+
+func TestVersionSkipsCommandWork(t *testing.T) {
+	for _, args := range [][]string{
+		{"--version"},
+		{"--version", "accounts", "list"},
+		{"accounts", "--version", "list"},
+		{"accounts", "list", "--version"},
+		{"account", "show", "200", "-v"},
+		{"help", "--version"},
+	} {
+		t.Run(strings.Join(args, " "), func(t *testing.T) {
+			code, out, errOut := invoke(append([]string{"--config", "missing-file"}, args...), "", func(string, config.OrgConfig) client {
+				t.Error("version constructed a client")
+				return nil
+			})
+
+			if code != 0 || out != "xero version "+Version+"\n" || errOut != "" {
+				t.Errorf("version = %d, stdout %q, stderr %q", code, out, errOut)
+			}
+		})
+	}
+
+	code, out, errOut := invoke([]string{"account", "show", "--version"}, "", nil)
+	if code != 2 || out != "" || errOut == "" {
+		t.Errorf("version with a missing operand = %d, stdout %q, stderr %q", code, out, errOut)
+	}
+}
+
+func TestHelpResolvesCommandsWithoutConfiguration(t *testing.T) {
+	for _, path := range [][]string{nil, {"report", "balance-sheet"}, {"help"}} {
+		t.Run(strings.Join(path, " "), func(t *testing.T) {
+			args := append([]string{"--config", "missing-file", "help"}, path...)
+			code, out, errOut := invoke(args, "", func(string, config.OrgConfig) client {
+				t.Error("help constructed a client")
+				return nil
+			})
+			_, want, _ := invoke(append(append([]string{}, path...), "--help"), "", nil)
+
+			if code != 0 || out != want || errOut != "" {
+				t.Errorf("help = %d, stdout %q, stderr %q; want stdout %q", code, out, errOut, want)
+			}
+		})
+	}
+
+	code, out, errOut := invoke([]string{"help", "unknown-topic"}, "", nil)
+	if code != 0 || !strings.Contains(out, "Unknown help topic") || !strings.Contains(out, "Usage:") || errOut != "" {
+		t.Errorf("unknown help topic = %d, stdout %q, stderr %q", code, out, errOut)
+	}
 }
 
 func TestEveryApplicationCommandRendersCompleteHelp(t *testing.T) {
@@ -186,6 +238,11 @@ func TestEveryApplicationCommandRendersCompleteHelp(t *testing.T) {
 	})
 	if topics == 0 {
 		t.Fatal("no help topic is annotated")
+	}
+	_, help, _ := invoke([]string{"--help"}, "", nil)
+	_, topicsHelp, found := strings.Cut(help, "Help topics:\n")
+	if !found || !strings.HasPrefix(topicsHelp, "  exit-codes") {
+		t.Errorf("root help lacks a separate topic group: %q", help)
 	}
 }
 
