@@ -47,7 +47,7 @@ func Load(flags *pflag.FlagSet, explicitPath string) (Config, configloader.LoadR
 		fileLoader, err = configloader.NewRequiredFileLoader[Config](explicitPath)
 	} else {
 		base := os.Getenv("XDG_CONFIG_HOME")
-		if base == "" {
+		if !filepath.IsAbs(base) {
 			home, homeErr := os.UserHomeDir()
 			if homeErr != nil {
 				return Config{}, configloader.LoadReport{}, apperr.New("invalid_argument", "resolve config home: %v", homeErr)

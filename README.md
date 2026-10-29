@@ -5,20 +5,34 @@
 
 ## Install
 
-Until the first versioned release is published, install from HEAD or build from source. The release workflow will provide prebuilt binaries for Linux and macOS on amd64 and arm64; no first-release version has been selected.
+Versioned releases provide prebuilt binaries for Linux and macOS on amd64 and arm64.
 
-After the first stable release, install and upgrade with [mise](https://mise.jdx.dev) or the shared Homebrew tap:
+Install and upgrade with [mise](https://mise.jdx.dev):
 
 ```sh
 mise use -g github:jmcampanini/xero-cli
 mise upgrade github:jmcampanini/xero-cli
+```
+
+If the HEAD formula is installed, first run `brew uninstall jmcampanini/xero-cli/xero`; install and upgrade the release cask with [Homebrew](https://brew.sh):
+
+```sh
 brew install --cask jmcampanini/tap/xero
 brew upgrade --cask jmcampanini/tap/xero
 ```
 
-Alternatively, download your platform's archive from the [releases page](https://github.com/jmcampanini/xero-cli/releases), extract it, and copy `xero` onto your `PATH`; to upgrade, replace the binary with the new release. Releases include SHA-256 checksums and GitHub build provenance attestations. If macOS quarantines a browser download, run `xattr -d com.apple.quarantine xero` before running it.
+For [release archives](https://github.com/jmcampanini/xero-cli/releases), download your platform's archive and use `tar` to install or upgrade into `~/.local/bin` on your `PATH`, replacing `VERSION`, `OS` (`linux` or `darwin`), and `ARCH` (`amd64` or `arm64`):
 
-The existing HEAD formula remains available for installation and upgrades from the latest source:
+```sh
+tar -xzf xero_VERSION_OS_ARCH.tar.gz
+if [ "$(uname -s)" = Darwin ] && xattr -p com.apple.quarantine xero >/dev/null 2>&1; then
+  xattr -d com.apple.quarantine xero
+fi
+install -d ~/.local/bin
+install ./xero ~/.local/bin/xero
+```
+
+If the release cask is installed, first run `brew uninstall --cask jmcampanini/tap/xero`; install and upgrade the latest source with Homebrew's HEAD formula:
 
 ```sh
 brew tap jmcampanini/xero-cli https://github.com/jmcampanini/xero-cli
@@ -26,9 +40,7 @@ brew install --HEAD jmcampanini/xero-cli/xero
 brew upgrade --fetch-HEAD jmcampanini/xero-cli/xero
 ```
 
-Both Homebrew packages install the `xero` executable and bash, zsh, and fish completions. When switching from the HEAD formula to the release cask, first run `brew uninstall jmcampanini/xero-cli/xero` to avoid an executable conflict.
-
-To build from source, install Git and [mise](https://mise.jdx.dev) (`brew install git mise` on macOS), clone the repository, and let mise supply the pinned tools. The last step copies the binary into `~/.local/bin`; add that directory to `PATH` if your shell does not already include it.
+To build from source, use Git and mise to clone and build the repository, then install into `~/.local/bin`, which must be on your `PATH`:
 
 ```sh
 git clone https://github.com/jmcampanini/xero-cli
@@ -55,6 +67,7 @@ Start with `xero orgs` and `xero auth status` to confirm which organisation is s
 | `xero report trial-balance --date 2025-12-31 --json` | Debit and credit columns as decimal strings |
 | `xero bank-transactions list --account 'Example Bank' --month 2025-12` | Saved transactions for the bank account and month, excluding deleted records |
 | `xero contacts list --search Example` | Contact names, roles, statuses, and IDs |
+| `xero contacts list --jsonl --output-file contacts.jsonl` | Save native contact records without replacing an existing file |
 | `xero api Organisation` | The raw Accounting API response |
 
 `xero --help`, each command's `--help`, and `xero help exit-codes` are the canonical reference.

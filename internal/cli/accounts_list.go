@@ -10,6 +10,7 @@ import (
 )
 
 func newAccountsList(o *options) *cobra.Command {
+	var output collectionOptions
 	var accountType, class, status string
 	var bank bool
 	command := &cobra.Command{Use: "list", Short: "List accounts with optional type and status filters", Args: cobra.NoArgs,
@@ -17,9 +18,13 @@ func newAccountsList(o *options) *cobra.Command {
 status filter. Type and class use Xero enums, uppercased before comparison.
 --bank is equivalent to --type BANK; a different --type conflicts with it.
 Human columns are CODE, NAME, TYPE, TAX, STATUS and bank CURRENCY.
+Machine records use the Xero Accounting API Accounts resource schema.
 
 ` + listHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
+			if err := output.validate(command, o.json); err != nil {
+				return err
+			}
 			if status != "active" && status != "archived" && status != "all" {
 				return apperr.Usage("--status must be active, archived or all, not %q", status)
 			}
@@ -60,12 +65,13 @@ Human columns are CODE, NAME, TYPE, TAX, STATUS and bank CURRENCY.
 				}
 				rows = append(rows, []string{account.Code, account.Name, account.Type, account.TaxType, account.Status, currency})
 			}
-			return o.list(command, api.Identity(), accounts, []string{"CODE", "NAME", "TYPE", "TAX", "STATUS", "CURRENCY"}, rows)
+			return o.list(command, &output, api.Identity(), accounts, []string{"CODE", "NAME", "TYPE", "TAX", "STATUS", "CURRENCY"}, rows)
 		}),
 	}
 	command.Flags().StringVar(&accountType, "type", "", "Xero account type")
 	command.Flags().StringVar(&class, "class", "", "Xero account class")
 	command.Flags().StringVar(&status, "status", "active", "active, archived or all")
 	command.Flags().BoolVar(&bank, "bank", false, "show bank accounts")
+	output.flags(command)
 	return command
 }

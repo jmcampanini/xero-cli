@@ -3,7 +3,9 @@ package xero
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"regexp"
 	"strconv"
 	"strings"
@@ -34,6 +36,12 @@ func NormalizeDates(raw []byte) ([]byte, error) {
 	decoder.UseNumber()
 	var value any
 	if err := decoder.Decode(&value); err != nil {
+		return nil, err
+	}
+	var trailing json.RawMessage
+	if err := decoder.Decode(&trailing); err == nil {
+		return nil, errors.New("expected a single JSON value")
+	} else if err != io.EOF {
 		return nil, err
 	}
 	normalizeValue(value)

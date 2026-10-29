@@ -378,3 +378,68 @@ func TestPagingAcrossThreePages(t *testing.T) {
 		}
 	}
 }
+
+func TestPagingRejectsUnverifiableCollection(t *testing.T) {
+	for _, tc := range []struct {
+		name   string
+		bodies []string
+		code   string
+	}{
+		{
+			name:   "short collection",
+			bodies: []string{`{"pagination":{"page":1,"pageSize":100,"pageCount":1,"itemCount":2},"Items":[{"ID":1}]}`},
+			code:   "api",
+		},
+		{
+			name: "changed item count",
+			bodies: []string{
+				`{"pagination":{"page":1,"pageSize":100,"pageCount":2,"itemCount":2},"Items":[{"ID":1}]}`,
+				`{"pagination":{"page":2,"pageSize":100,"pageCount":2,"itemCount":3},"Items":[{"ID":2},{"ID":3}]}`,
+			},
+			code: "api",
+		},
+		{
+			name:   "wrong page size",
+			bodies: []string{`{"pagination":{"page":1,"pageSize":50,"pageCount":1,"itemCount":1},"Items":[{"ID":1}]}`},
+			code:   "api",
+		},
+		{
+			name:   "missing item count",
+			bodies: []string{`{"pagination":{"page":1,"pageSize":100,"pageCount":0},"Items":[]}`},
+			code:   "invalid_argument",
+		},
+		{
+			name:   "missing page count",
+			bodies: []string{`{"pagination":{"page":1,"pageSize":100,"itemCount":0},"Items":[]}`},
+			code:   "invalid_argument",
+		},
+		{
+			name:   "zero pages with records",
+			bodies: []string{`{"pagination":{"page":1,"pageSize":100,"pageCount":0,"itemCount":1},"Items":[{"ID":1}]}`},
+			code:   "api",
+		},
+		{
+			name:   "negative item count",
+			bodies: []string{`{"pagination":{"page":1,"pageSize":100,"pageCount":1,"itemCount":-1},"Items":[]}`},
+			code:   "api",
+		},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			calls := 0
+			do := func(context.Context, Request) (int, http.Header, []byte, error) {
+				if calls >= len(tc.bodies) {
+					t.Fatal("requested another page after invalid pagination")
+				}
+				body := []byte(tc.bodies[calls])
+				calls++
+				return http.StatusOK, nil, body, nil
+			}
+
+			_, _, body, err := All(context.Background(), Request{}, do)
+
+			if err == nil || apperr.From(err).Code != tc.code || body != nil {
+				t.Errorf("All() = %s, %v; want no body and %s error", body, err, tc.code)
+			}
+		})
+	}
+}

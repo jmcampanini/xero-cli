@@ -22,7 +22,8 @@ func newExitCodes() *cobra.Command {
 
 --json never changes the exit status. This topic prints help to stdout,
 never loads configuration or contacts Xero, and is identical through
-xero exit-codes and xero help exit-codes.`,
+xero exit-codes and xero help exit-codes. Nothing prompts or requires an
+interactive terminal.`,
 		RunE: func(command *cobra.Command, _ []string) error { return command.Help() },
 	}
 }

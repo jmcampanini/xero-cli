@@ -44,6 +44,7 @@ type options struct {
 	configPath string
 	factory    func(string, config.OrgConfig) client
 	json       bool
+	version    bool
 }
 
 // Execute runs with process streams; only main owns os.Exit.
@@ -98,7 +99,7 @@ func newRoot(o *options) (*cobra.Command, error) {
 			return xero.New(xero.Options{Budget: budget, ClientID: org.ClientID, Name: name, OrganisationID: org.OrganisationID, Scopes: org.Scopes, SecretFile: org.SecretFile, Version: Version})
 		}
 	}
-	root := &cobra.Command{Use: "xero", Short: "Inspect Xero accounts, transactions, contacts and reports", Version: Version, SilenceUsage: true, SilenceErrors: true, DisableSuggestions: true,
+	root := &cobra.Command{Use: "xero", Short: "Inspect Xero accounts, transactions, contacts and reports", SilenceUsage: true, SilenceErrors: true, DisableSuggestions: true,
 		Long: `Read Xero settings, accounts, tracking, reports, transactions and contacts.
 Inspect saved document lines and download bank transaction or journal files.
 Use api to call Accounting API endpoints without a dedicated command.
@@ -108,12 +109,15 @@ Configure a Custom Connection per organisation with xero config --help.
 Tokens stay in memory; every run verifies the selected organisation.
 Nothing prompts. Dedicated resource commands only read data; api can write.
 
-Payloads go to stdout and diagnostics to stderr. --json writes compact JSON
-for resource commands; config writes TOML and api retains the raw response.
+Payloads go to stdout unless an output file is selected; diagnostics go to
+stderr. --json writes compact JSON for resource commands; config writes
+TOML and api retains the raw response. Collection commands also offer
+--jsonl, --csv and --output-file; their help explains schemas and file rules.
 --color auto colors only human stdout on a terminal and is off when TERM is
 dumb or NO_COLOR is nonempty; always and never override that detection.
-JSON, CSV and TOML output is never colored. Use xero help exit-codes for
+JSON, JSONL, CSV and TOML are never colored. Use xero help exit-codes for
 error categories and exit statuses.
+--version prints the build identity to stdout without loading configuration.
 
 Common tasks:
   Check credentials and access:      xero auth status
@@ -142,6 +146,7 @@ Command groups:
 	// Cobra's default trailer exceeds 80 columns for the longest group paths.
 	root.SetUsageTemplate(strings.Replace(root.UsageTemplate(), "for more information about a command.", "for details about a command.", 1))
 	root.PersistentFlags().BoolVar(&o.json, "json", false, "write machine-readable JSON")
+	root.PersistentFlags().BoolVarP(&o.version, "version", "v", false, "print the build version")
 	o.color = "auto"
 	root.PersistentFlags().Var(colorFlag{&o.color}, "color", "human output color: auto, always, never")
 	root.PersistentFlags().StringVar(&o.configPath, "config", "", "required TOML configuration file")
@@ -149,11 +154,38 @@ Command groups:
 		return nil, err
 	}
 	root.InitDefaultHelpFlag()
-	root.InitDefaultVersionFlag()
 	root.CompletionOptions.DisableDefaultCmd = true
 	root.AddCommand(newConfig(o), newExitCodes(), newCompletion(), newAuth(o), newOrgs(o), newOrg(o), newAPI(o), newAccounts(o), newAccount(o), newTrackingCategories(o), newTrackingCategory(o), newReport(o))
 	root.AddCommand(newBankTransactions(o), newBankTransaction(o), newBankTransfers(o), newBankTransfer(o), newManualJournals(o), newManualJournal(o), newContacts(o), newContact(o))
+	root.SetHelpCommand(newHelp(o))
+	root.InitDefaultHelpCmd()
+	root.AddGroup(&cobra.Group{ID: "commands", Title: "Commands:"}, &cobra.Group{ID: "help-topics", Title: "Help topics:"})
+	for _, command := range root.Commands() {
+		command.GroupID = "commands"
+		if command.Annotations[helpTopicAnnotation] == "true" {
+			command.GroupID = "help-topics"
+		}
+	}
+	o.addVersionHandling(root)
 	return root, nil
+}
+
+func (o *options) addVersionHandling(command *cobra.Command) {
+	if run := command.RunE; run != nil {
+		command.RunE = func(command *cobra.Command, args []string) error {
+			if !o.version {
+				return run(command, args)
+			}
+			_, err := fmt.Fprintf(command.OutOrStdout(), "xero version %s\n", Version)
+			if err != nil {
+				return &apperr.ApplicationError{Err: err}
+			}
+			return nil
+		}
+	}
+	for _, child := range command.Commands() {
+		o.addVersionHandling(child)
+	}
 }
 
 func (o *options) run(fn func(*cobra.Command, []string) error) func(*cobra.Command, []string) error {

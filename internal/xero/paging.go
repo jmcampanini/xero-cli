@@ -23,6 +23,7 @@ func All(ctx context.Context, request Request, do func(context.Context, Request)
 	var items []json.RawMessage
 	resource := ""
 	pageCount := 1
+	itemCount := 0
 	status := 0
 	var headers http.Header
 	for page := 1; page <= pageCount; page++ {
@@ -39,12 +40,19 @@ func All(ctx context.Context, request Request, do func(context.Context, Request)
 		var pagination struct {
 			Page      int
 			PageSize  int
-			PageCount int
-			ItemCount int
+			PageCount *int
+			ItemCount *int
 		}
-		// Page one with pageCount 0 is an empty collection, not invalid paging.
-		if err := json.Unmarshal(envelope["pagination"], &pagination); err != nil || pagination.Page != page || pagination.PageCount < page && (page > 1 || pagination.PageCount != 0) {
-			return status, headers, nil, apperr.New("invalid_argument", "--all requires valid pagination with page and pageCount")
+		if err := json.Unmarshal(envelope["pagination"], &pagination); err != nil || pagination.Page != page || pagination.PageCount == nil || pagination.ItemCount == nil {
+			return status, headers, nil, apperr.New("invalid_argument", "--all requires valid pagination with page, pageSize, pageCount and itemCount")
+		}
+		responsePageCount, responseItemCount := *pagination.PageCount, *pagination.ItemCount
+		emptyCollection := page == 1 && responsePageCount == 0 && responseItemCount == 0
+		if responseItemCount < 0 || responsePageCount < page && !emptyCollection {
+			return status, headers, nil, apperr.New("api", "invalid pagination counts; completeness cannot be verified")
+		}
+		if pagination.PageSize != 100 {
+			return status, headers, nil, apperr.New("api", "returned pageSize %d for a requested 100; completeness cannot be verified", pagination.PageSize)
 		}
 		key := ""
 		for field, value := range envelope {
@@ -60,16 +68,22 @@ func All(ctx context.Context, request Request, do func(context.Context, Request)
 		}
 		if page == 1 {
 			combined = envelope
-			pageCount = pagination.PageCount
+			pageCount, itemCount = responsePageCount, responseItemCount
 			resource = key
-		} else if pagination.PageCount != pageCount {
+		} else if responsePageCount != pageCount || responseItemCount != itemCount {
 			return status, headers, nil, apperr.New("api", "pagination changed during retrieval; retry the request")
 		}
 		var batch []json.RawMessage
 		if err := json.Unmarshal(envelope[key], &batch); err != nil {
 			return status, headers, nil, apperr.New("api", "decode paginated resource: %v", err)
 		}
+		if len(batch) > pagination.PageSize {
+			return status, headers, nil, apperr.New("api", "page %d returned more than %d items; completeness cannot be verified", page, pagination.PageSize)
+		}
 		items = append(items, batch...)
+	}
+	if len(items) != itemCount {
+		return status, headers, nil, apperr.New("api", "returned %d of %d items; retry the request", len(items), itemCount)
 	}
 	if items == nil {
 		items = []json.RawMessage{}

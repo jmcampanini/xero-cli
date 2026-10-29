@@ -43,7 +43,6 @@
 - Write payloads to stdout and diagnostics to stderr.
 - Ordinary application errors leave stdout empty.
 - `auth status` prints all diagnostic blocks before failure.
-- `api` preserves its raw-body contract.
 - Use these exit codes:
   - 0 for success.
   - 1 for coded application errors.
@@ -66,7 +65,6 @@
 - Never persist tokens.
 - Verify the configured organisation before every process's first accounting call.
 - An unset organisation ID is allowed only for `auth status`.
-- An organisation ID mismatch must stop accounting access.
 - Keep authentication, headers, bounded retries, the shared process request budget, paging, error mapping, and date parsing in the client.
 - Add resource files as commands require them.
 - Preserve every source field in resource JSON.
@@ -83,5 +81,5 @@
 - Run `mise run check` for every PR.
 - Explain changes, verification, and deviations in every PR.
 - Omit agent attribution trailers.
-- Maintain HEAD-only Homebrew installation and upgrade instructions until versioned releases exist.
+- Keep installation and upgrade instructions for versioned releases and the HEAD-only Homebrew formula accurate.
 - Obtain explicit authorization before merging a PR.

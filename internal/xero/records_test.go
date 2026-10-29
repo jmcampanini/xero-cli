@@ -152,7 +152,7 @@ func TestRecordsPaginationAndCompleteness(t *testing.T) {
 }
 
 func TestRecordsRejectUnverifiableCollection(t *testing.T) {
-	for _, fault := range []string{"missing pagination", "changed count", "changed pages", "duplicate ID", "missing ID", "short collection", "HTTP failure", "invalid money", "wrong size"} {
+	for _, fault := range []string{"missing pagination", "missing counts", "null counts", "changed count", "changed pages", "duplicate ID", "missing ID", "short collection", "HTTP failure", "invalid money", "wrong size", "zero pages with records"} {
 		t.Run(fault, func(t *testing.T) {
 			c := testClient(t, map[string]http.HandlerFunc{"/api/Contacts": func(w http.ResponseWriter, r *http.Request) {
 				page, _ := strconv.Atoi(r.URL.Query().Get("page"))
@@ -164,6 +164,14 @@ func TestRecordsRejectUnverifiableCollection(t *testing.T) {
 					_, _ = fmt.Fprint(w, `{"Contacts":[]}`)
 					return
 				}
+				if fault == "missing counts" {
+					_, _ = fmt.Fprint(w, `{"pagination":{"page":1,"pageSize":100},"Contacts":[]}`)
+					return
+				}
+				if fault == "null counts" {
+					_, _ = fmt.Fprint(w, `{"pagination":{"page":1,"pageSize":100,"pageCount":null,"itemCount":null},"Contacts":[]}`)
+					return
+				}
 				if fault == "missing ID" {
 					id = ""
 				}
@@ -172,6 +180,9 @@ func TestRecordsRejectUnverifiableCollection(t *testing.T) {
 				}
 				if fault == "short collection" {
 					pages = 1
+				}
+				if fault == "zero pages with records" {
+					pages, count = 0, 1
 				}
 				if fault == "invalid money" {
 					_, _ = fmt.Fprint(w, `{"Contacts":[{"Total":"NaN"}]}`)
@@ -220,6 +231,22 @@ func TestRecordsEmptyAndUnpaged(t *testing.T) {
 			got, err := c.Records(context.Background(), resource, ListQuery{})
 			if err != nil || !got.Complete || got.Items == nil || len(got.Items) != 0 {
 				t.Errorf("list %+v, error %v", got, err)
+			}
+		})
+	}
+}
+
+func TestRecordsRejectTrailingJSONInput(t *testing.T) {
+	for _, trailing := range []string{"garbage", `{"BankTransfers":[]}`} {
+		t.Run(trailing, func(t *testing.T) {
+			c := testClient(t, map[string]http.HandlerFunc{"/api/BankTransfers": func(w http.ResponseWriter, _ *http.Request) {
+				_, _ = fmt.Fprint(w, `{"BankTransfers":[]}`+trailing)
+			}})
+
+			got, err := c.Records(context.Background(), "BankTransfers", ListQuery{})
+
+			if err == nil || apperr.From(err).Code != "api" || got.Complete || len(got.Items) != 0 {
+				t.Errorf("Records() = %+v, %v; want no records and an api error", got, err)
 			}
 		})
 	}

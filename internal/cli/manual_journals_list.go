@@ -10,6 +10,7 @@ import (
 )
 
 func newManualJournalsList(o *options) *cobra.Command {
+	var output collectionOptions
 	listing := listingOptions{withPeriod: true, withWhere: true, withYear: true}
 	var status string
 	command := &cobra.Command{Use: "list", Short: "List manual journals for a period", Args: cobra.NoArgs,
@@ -19,9 +20,13 @@ Records follow Xero's date order; order within a date is unspecified.
 DEBITS sums positive journal line amounts exactly. Cash-basis treatment
 comes from ShowOnCashBasisReports. --modified-since accepts RFC 3339 or
 YYYY-MM-DDTHH:MM:SS (UTC) and sends If-Modified-Since in UTC.
+Machine records use the Xero Accounting API ManualJournals resource schema.
 
 ` + pagingHelp + "\n" + documentListHelp + "\n\n" + readHelp,
 		RunE: o.run(func(command *cobra.Command, _ []string) error {
+			if err := output.validate(command, o.json); err != nil {
+				return err
+			}
 			query, clauses, err := listing.validate(command)
 			if err != nil {
 				return err
@@ -37,10 +42,11 @@ YYYY-MM-DDTHH:MM:SS (UTC) and sends If-Modified-Since in UTC.
 			if err != nil {
 				return err
 			}
-			return o.records(command, api, "ManualJournals", query)
+			return o.records(command, &output, api, "ManualJournals", query)
 		}),
 	}
 	listing.flags(command)
+	output.flags(command)
 	command.Flags().StringVar(&status, "status", "posted", "draft, posted, voided or all")
 	command.Flags().StringVar(&listing.modifiedSince, "modified-since", "", "only records modified since this timestamp")
 	return command

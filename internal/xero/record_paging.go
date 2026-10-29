@@ -85,21 +85,31 @@ func (c *Client) Records(ctx context.Context, resource string, options ListQuery
 			return RecordList{}, err
 		}
 		var envelope struct {
-			Pagination *struct{ Page, PageSize, PageCount, ItemCount int } `json:"pagination"`
+			Pagination *struct {
+				Page, PageSize       int
+				PageCount, ItemCount *int
+			} `json:"pagination"`
 		}
 		if err := json.Unmarshal(body, &envelope); err != nil {
 			return RecordList{}, err
 		}
 		p := envelope.Pagination
-		if p == nil || p.Page != page || p.PageCount < 0 || p.ItemCount < 0 {
+		if p == nil || p.Page != page || p.PageCount == nil || p.ItemCount == nil {
 			return RecordList{}, apperr.New("api", "%s returned invalid pagination for page %d; completeness cannot be verified", resource, page)
+		}
+		pageCount, itemCount := *p.PageCount, *p.ItemCount
+		if pageCount < 0 || itemCount < 0 {
+			return RecordList{}, apperr.New("api", "%s returned invalid pagination counts; completeness cannot be verified", resource)
+		}
+		if pageCount == 0 && (itemCount != 0 || len(items) != 0) {
+			return RecordList{}, apperr.New("api", "%s returned records for zero pages; completeness cannot be verified", resource)
 		}
 		if p.PageSize != size {
 			return RecordList{}, apperr.New("api", "%s returned pageSize %d for a requested %d; completeness cannot be verified", resource, p.PageSize, size)
 		}
 		if result.Page == 0 {
-			result.Page, result.PageCount, result.ItemCount = page, p.PageCount, p.ItemCount
-		} else if p.PageCount != result.PageCount || p.ItemCount != result.ItemCount {
+			result.Page, result.PageCount, result.ItemCount = page, pageCount, itemCount
+		} else if pageCount != result.PageCount || itemCount != result.ItemCount {
 			return RecordList{}, apperr.New("api", "pagination changed during retrieval; retry the request")
 		}
 		for _, item := range items {
