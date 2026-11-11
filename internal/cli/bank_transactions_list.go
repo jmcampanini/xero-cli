@@ -93,8 +93,8 @@ Machine records use the Xero Accounting API BankTransactions schema.
 	}
 	listing.flags(command)
 	output.flags(command)
-	command.Flags().StringVar(&account, "account", "", "required bank account code, GUID or exact name")
-	command.Flags().StringVar(&kind, "type", "all", "spend, receive, transfer or all")
+	command.Flags().StringVar(&account, "account", "", "required account code, GUID or exact name")
+	command.Flags().StringVar(&kind, "type", "all", "spend, receive, transfer")
 	command.Flags().StringVar(&contact, "contact", "", "exact contact GUID")
 	command.Flags().StringVar(&reference, "reference", "", "exact reference")
 	command.Flags().StringVar(&amount, "amount", "", "exact decimal total")

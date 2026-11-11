@@ -13,7 +13,7 @@ and expense YTD values cover the organisation's financial year to date.
 ` + reportHelp,
 		RunE: o.runReport(r),
 	}
-	command.Flags().StringVar(&r.date, "date", "", "balance date, YYYY-MM-DD; default today locally")
+	command.Flags().StringVar(&r.date, "date", "", "date, YYYY-MM-DD; default today locally")
 	command.Flags().StringVar(&r.basis, "basis", "accrual", "cash or accrual basis")
 	command.Flags().BoolVar(&r.csv, "csv", false, "write CSV, with report context on stderr")
 	return command
