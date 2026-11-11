@@ -148,7 +148,7 @@ Command groups:
 	root.PersistentFlags().BoolVar(&o.json, "json", false, "write machine-readable JSON")
 	root.PersistentFlags().BoolVarP(&o.version, "version", "v", false, "print the build version")
 	o.color = "auto"
-	root.PersistentFlags().Var(colorFlag{&o.color}, "color", "human output color: auto, always, never")
+	root.PersistentFlags().Var(colorFlag{&o.color}, "color", "color mode: auto, always, never")
 	root.PersistentFlags().StringVar(&o.configPath, "config", "", "required TOML configuration file")
 	if err := pflagloader.Register[config.Config](root.PersistentFlags()); err != nil {
 		return nil, err

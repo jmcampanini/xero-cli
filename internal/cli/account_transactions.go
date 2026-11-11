@@ -108,8 +108,8 @@ color or grouped numbers. All reads finish before any payload is written.
 	command.Flags().StringVar(&period.from, "from", "", "first accounting date (YYYY-MM-DD)")
 	command.Flags().StringVar(&period.to, "to", "", "last accounting date (YYYY-MM-DD)")
 	command.Flags().StringVar(&period.month, "month", "", "whole calendar month (YYYY-MM)")
-	command.Flags().StringArrayVar(&period.tracking, "tracking", nil, "matching CATEGORY=OPTION; at most two categories")
-	command.Flags().BoolVar(&deleted, "include-deleted", false, "show deleted/voided rows without counting them")
-	command.Flags().BoolVar(&csv, "csv", false, "write CSV rows; context and totals go to stderr")
+	command.Flags().StringArrayVar(&period.tracking, "tracking", nil, "matching CATEGORY=OPTION; at most two")
+	command.Flags().BoolVar(&deleted, "include-deleted", false, "show deleted/voided rows; never counted")
+	command.Flags().BoolVar(&csv, "csv", false, "write CSV; context and totals to stderr")
 	return command
 }

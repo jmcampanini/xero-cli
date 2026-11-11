@@ -23,11 +23,11 @@ to Total. A filter on the other category also applies to Total.
 		RunE: o.runReport(r),
 	}
 	flags := command.Flags()
-	flags.StringVar(&r.date, "date", "", "balance date, YYYY-MM-DD; default today locally")
-	flags.IntVar(&r.periods, "periods", 0, "additional native comparison periods, 1..11")
+	flags.StringVar(&r.date, "date", "", "date, YYYY-MM-DD; default today locally")
+	flags.IntVar(&r.periods, "periods", 0, "extra native comparison periods, 1..11")
 	flags.StringVar(&r.timeframe, "timeframe", "", "comparison interval: month, quarter, year")
 	flags.StringVar(&r.basis, "basis", "accrual", "cash or accrual basis")
-	flags.StringArrayVar(&r.tracking, "tracking", nil, "filter CATEGORY=OPTION; repeat per category")
+	flags.StringArrayVar(&r.tracking, "tracking", nil, "filter CATEGORY=OPTION; once per category")
 	flags.StringVar(&r.by, "by", "", "tracking category to show as columns")
 	flags.BoolVar(&r.standardLayout, "standard-layout", false, "request Xero's standard report layout")
 	flags.BoolVar(&r.csv, "csv", false, "write CSV, with report context on stderr")
