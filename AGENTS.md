@@ -81,5 +81,5 @@
 - Run `mise run check` for every PR.
 - Explain changes, verification, and deviations in every PR.
 - Omit agent attribution trailers.
-- Keep installation and upgrade instructions for versioned releases and the HEAD-only Homebrew formula accurate.
+- Keep installation and upgrade instructions for release archives, mise, and source builds accurate.
 - Obtain explicit authorization before merging a PR.

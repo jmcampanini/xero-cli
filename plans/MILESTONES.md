@@ -10,7 +10,7 @@ Write slices need two things: write scopes on the Custom Connection, and a test 
 
 ### 1 - Access, chart, and tracking
 
-Repository files (root `main.go`, `internal/cli/`, `config`, the `exit-codes` help topic, guard tests, `mise run check`, the check workflow, a Homebrew formula, agent instructions), plus `auth status`, `orgs`, `org show`, `xero api`, `accounts list`, `account show`, `tracking-categories list`, and `tracking-category show`. Client credentials from the TOML-named secret file, a token per run, the organisation identity check, `--org` selection with no fallback, rate limiting, error mapping, exit codes, secret redaction, name-to-ID resolution for tracking. Proof: each configured organisation reads its own identity, chart, and tracking structure across restarts and after a token would have expired; a missing secret file, a wrong secret, and a missing scope each fail by name.
+Repository files (root `main.go`, `internal/cli/`, `config`, the `exit-codes` help topic, guard tests, `mise run check`, the check workflow, agent instructions), plus `auth status`, `orgs`, `org show`, `xero api`, `accounts list`, `account show`, `tracking-categories list`, and `tracking-category show`. Client credentials from the TOML-named secret file, a token per run, the organisation identity check, `--org` selection with no fallback, rate limiting, error mapping, exit codes, secret redaction, name-to-ID resolution for tracking. Proof: each configured organisation reads its own identity, chart, and tracking structure across restarts and after a token would have expired; a missing secret file, a wrong secret, and a missing scope each fail by name.
 
 
 ## Round 2 - Understanding the books

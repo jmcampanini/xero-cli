@@ -14,13 +14,6 @@ mise use -g github:jmcampanini/xero-cli
 mise upgrade github:jmcampanini/xero-cli
 ```
 
-If the HEAD formula is installed, first run `brew uninstall jmcampanini/xero-cli/xero`; install and upgrade the release cask with [Homebrew](https://brew.sh):
-
-```sh
-brew install --cask jmcampanini/tap/xero
-brew upgrade --cask jmcampanini/tap/xero
-```
-
 For [release archives](https://github.com/jmcampanini/xero-cli/releases), download your platform's archive and use `tar` to install or upgrade into `~/.local/bin` on your `PATH`, replacing `VERSION`, `OS` (`linux` or `darwin`), and `ARCH` (`amd64` or `arm64`):
 
 ```sh
@@ -30,14 +23,6 @@ if [ "$(uname -s)" = Darwin ] && xattr -p com.apple.quarantine xero >/dev/null 2
 fi
 install -d ~/.local/bin
 install ./xero ~/.local/bin/xero
-```
-
-If the release cask is installed, first run `brew uninstall --cask jmcampanini/tap/xero`; install and upgrade the latest source with Homebrew's HEAD formula:
-
-```sh
-brew tap jmcampanini/xero-cli https://github.com/jmcampanini/xero-cli
-brew install --HEAD jmcampanini/xero-cli/xero
-brew upgrade --fetch-HEAD jmcampanini/xero-cli/xero
 ```
 
 To build from source, use Git and mise to clone and build the repository, then install into `~/.local/bin`, which must be on your `PATH`:
