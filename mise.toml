@@ -7,10 +7,10 @@ lockfile_platforms = ["linux-x64", "macos-arm64"]
 [tools]
 go = "1.27.4"
 golangci-lint = "2.15.0"
-goreleaser = "2.19.0"
+goreleaser = "2.20.2"
 "go:golang.org/x/vuln/cmd/govulncheck" = "1.9.0"
-node = "24.22.2"
-"npm:markdownlint-cli2" = "0.24.0"
+node = "24.22.3"
+"npm:markdownlint-cli2" = "0.24.1"
 
 [env]
 # Go's default GOTOOLCHAIN=auto lets it download and run whatever toolchain go.mod asks for. local pins execution to the Go that mise installed, so mise.toml is the only place the toolchain version is decided.
